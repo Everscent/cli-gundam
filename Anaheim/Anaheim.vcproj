@@ -42,6 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories=".\Class;.\Class\TcpSocket;.\Class\UdpSocket;.\Class\Tetris"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -113,6 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories=".\Class;.\Class\TcpSocket;.\Class\UdpSocket;.\Class\Tetris"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -241,73 +243,85 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Class\TcpAcceptWorkerArgs.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TcpClientSocket.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TcpEventArgs.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TcpServerSocket.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisDrawAPI.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisDrawing.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisField.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisMino.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisRemoteControl.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisRemoteEventArgs.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisRemoteManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisScore.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisScoreEventArgs.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\UdpClientSocket.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\UdpEventArgs.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Class\Window.cpp"
 				>
 			</File>
+			<Filter
+				Name="UdpSocket"
+				>
+				<File
+					RelativePath=".\Class\UdpSocket\UdpClientSocket.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\UdpSocket\UdpEventArgs.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tetris"
+				>
+				<File
+					RelativePath=".\Class\Tetris\TetrisDrawAPI.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisDrawing.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisField.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisMino.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteControl.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteEventArgs.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisScore.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisScoreEventArgs.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="TcpSocket"
+				>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpAcceptWorkerArgs.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpClientSocket.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpEventArgs.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpServerSocket.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="ヘッダー ファイル"
@@ -343,73 +357,85 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Class\TcpAcceptWorkerArgs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TcpClientSocket.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TcpEventArgs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TcpServerSocket.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisDrawAPI.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisDrawing.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisField.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisManager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisMino.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisRemoteControl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisRemoteEventArgs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisRemoteManager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisScore.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\TetrisScoreEventArgs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\UdpClientSocket.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\UdpEventArgs.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Class\Window.h"
 				>
 			</File>
+			<Filter
+				Name="UdpSocket"
+				>
+				<File
+					RelativePath=".\Class\UdpSocket\UdpClientSocket.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\UdpSocket\UdpEventArgs.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tetris"
+				>
+				<File
+					RelativePath=".\Class\Tetris\TetrisDrawAPI.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisDrawing.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisField.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisMino.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteControl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteEventArgs.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\Tetris\TetrisScore.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisScoreEventArgs.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="TcpSocket"
+				>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpAcceptWorkerArgs.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpClientSocket.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpEventArgs.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\TcpSocket\TcpServerSocket.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="リソース ファイル"

@@ -18,32 +18,39 @@ TetrisRemoteControl::TetrisRemoteControl()
 TetrisMino^ TetrisRemoteControl::CreateMino(cli::array<unsigned char,1> ^bytes, Anaheim::Tetris::TetrisField ^field)
 {
 	Color color = Color::FromArgb(bytes[0], bytes[1], bytes[2]);
+	Color icolor = ITetrisMino::COLOR;
+	Color jcolor = JTetrisMino::COLOR;
+	Color lcolor = LTetrisMino::COLOR;
+	Color scolor = STetrisMino::COLOR;
+	Color zcolor = ZTetrisMino::COLOR;
+	Color tcolor = TTetrisMino::COLOR;
+	Color ocolor = OTetrisMino::COLOR;
 
-	if (color.ToArgb() == ITetrisMino::COLOR.ToArgb())
+	if (color.ToArgb() == icolor.ToArgb())
 	{
 		return gcnew ITetrisMino(Point(), field);
 	}
-	else if (color.ToArgb() == JTetrisMino::COLOR.ToArgb())
+	else if (color.ToArgb() == jcolor.ToArgb())
 	{
 		return gcnew JTetrisMino(Point(), field);
 	}
-	else if (color.ToArgb()== LTetrisMino::COLOR.ToArgb())
+	else if (color.ToArgb()== lcolor.ToArgb())
 	{
 		return gcnew LTetrisMino(Point(), field);
 	}
-	else if (color.ToArgb() == STetrisMino::COLOR.ToArgb())
+	else if (color.ToArgb() == scolor.ToArgb())
 	{
 		return gcnew STetrisMino(Point(), field);
 	}
-	else if (color.ToArgb() == ZTetrisMino::COLOR.ToArgb())
+	else if (color.ToArgb() == zcolor.ToArgb())
 	{
 		return gcnew ZTetrisMino(Point(), field);
 	}
-	else if (color.ToArgb() == TTetrisMino::COLOR.ToArgb())
+	else if (color.ToArgb() == tcolor.ToArgb())
 	{
 		return gcnew TTetrisMino(Point(), field);
 	}
-	else if (color.ToArgb() == OTetrisMino::COLOR.ToArgb())
+	else if (color.ToArgb() == ocolor.ToArgb())
 	{
 		return gcnew OTetrisMino(Point(), field);
 	}

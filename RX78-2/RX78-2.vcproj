@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Form;.\Class"
+				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Form;.\Class"
+				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -207,18 +207,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Class\ArrowDrawing.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ArrowInsectCage.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ArrowUtility.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\AssemblyInfo.cpp"
 				>
 			</File>
@@ -236,38 +224,6 @@
 			</File>
 			<File
 				RelativePath=".\Form\FtpConnectForm.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\Insect.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\PicturePuzzle.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\PuzzleBitmap.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\PuzzleDrag.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportBook.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportCommand.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportEditor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportEventArgs.cpp"
 				>
 			</File>
 			<File
@@ -302,24 +258,68 @@
 				RelativePath=".\Form\VersionForm.cpp"
 				>
 			</File>
+			<Filter
+				Name="Arrow"
+				>
+				<File
+					RelativePath=".\Class\Arrow\ArrowDrawing.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Arrow\ArrowInsectCage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Arrow\ArrowUtility.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Arrow\Insect.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Puzzle"
+				>
+				<File
+					RelativePath=".\Class\Puzzle\PicturePuzzle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Puzzle\PuzzleBitmap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Puzzle\PuzzleDrag.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Report"
+				>
+				<File
+					RelativePath=".\Class\Report\ReportBook.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Report\ReportCommand.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Report\ReportEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Report\ReportEventArgs.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="ヘッダー ファイル"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\Class\ArrowDrawing.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ArrowInsectCage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ArrowUtility.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Class\BinaryClock.h"
 				>
@@ -347,10 +347,6 @@
 				</File>
 			</File>
 			<File
-				RelativePath=".\Class\Insect.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Form\MainForm.h"
 				FileType="3"
 				>
@@ -359,34 +355,6 @@
 					SubType="Designer"
 					>
 				</File>
-			</File>
-			<File
-				RelativePath=".\Class\PicturePuzzle.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\PuzzleBitmap.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\PuzzleDrag.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportBook.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportCommand.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportEditor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\ReportEventArgs.h"
-				>
 			</File>
 			<File
 				RelativePath=".\resource.h"
@@ -414,6 +382,62 @@
 					>
 				</File>
 			</File>
+			<Filter
+				Name="Arrow"
+				>
+				<File
+					RelativePath=".\Class\Arrow\ArrowDrawing.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Arrow\ArrowInsectCage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Arrow\ArrowUtility.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Arrow\Insect.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Puzzle"
+				>
+				<File
+					RelativePath=".\Class\Puzzle\PicturePuzzle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Puzzle\PuzzleBitmap.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Puzzle\PuzzleDrag.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Report"
+				>
+				<File
+					RelativePath=".\Class\Report\ReportBook.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Report\ReportCommand.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Report\ReportEditor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Report\ReportEventArgs.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="リソース ファイル"
