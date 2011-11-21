@@ -1,5 +1,8 @@
 #include "StdAfx.h"
 #include "TetrisDrawing.h"
+#include "TetrisField.h"
+#include "TetrisMino.h"
+#include "TetrisDrawAPI.h"
 
 using namespace Anaheim;
 using namespace Anaheim::Tetris;

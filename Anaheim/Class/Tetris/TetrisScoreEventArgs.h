@@ -7,6 +7,7 @@ namespace Anaheim
 	namespace Tetris
 	{
 		using namespace System;
+		using namespace Anaheim::Tetris;
 
 		/**
 		 * テトリス得点イベントArgs

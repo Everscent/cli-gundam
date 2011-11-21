@@ -24,7 +24,7 @@ namespace RX77_2
 
 #pragma region フィールド
 
-	private: TetrisRemoteManager^ tetris;
+	private: TetrisRemotePackage^ tetris;
 
 	private: System::Windows::Forms::Panel^  panelCanvas;
 
@@ -98,7 +98,7 @@ namespace RX77_2
 	/// 初期化
 	private: void Initialize()
 			 {
-				 this->tetris = gcnew TetrisRemoteManager(this->panelCanvas);
+				 this->tetris = gcnew TetrisRemotePackage(this->panelCanvas);
 				 this->tetris->StartRemote();
 			 }
 	};

@@ -10,6 +10,7 @@ namespace Anaheim
 		using namespace System;
 		using namespace System::Drawing;
 		using namespace System::Collections::Generic;
+
 		ref class TetrisMino;
 
 		/**
@@ -88,7 +89,7 @@ namespace Anaheim
 		 */
 		private:
 			bool IsEmptyRows();
-			bool RemoveMatch(TetrisFieldRow^ row);
+			bool RemoveCompleteRowsMatch(TetrisFieldRow^ row);
 
 		public:
 			/// ÉNÉäÉA

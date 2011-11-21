@@ -262,6 +262,10 @@
 				Name="Tetris"
 				>
 				<File
+					RelativePath=".\Class\Tetris\TetrisController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\Tetris\TetrisDrawAPI.cpp"
 					>
 				</File>
@@ -274,15 +278,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisManager.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Class\Tetris\TetrisMino.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoteControl.cpp"
+					RelativePath=".\Class\Tetris\TetrisModel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisPackage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteController.cpp"
 					>
 				</File>
 				<File
@@ -290,7 +298,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoteManager.cpp"
+					RelativePath=".\Class\Tetris\TetrisRemotePackage.cpp"
 					>
 				</File>
 				<File
@@ -299,6 +307,10 @@
 				</File>
 				<File
 					RelativePath=".\Class\Tetris\TetrisScoreEventArgs.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisView.cpp"
 					>
 				</File>
 			</Filter>
@@ -376,6 +388,10 @@
 				Name="Tetris"
 				>
 				<File
+					RelativePath=".\Class\Tetris\TetrisController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\Tetris\TetrisDrawAPI.h"
 					>
 				</File>
@@ -388,15 +404,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisManager.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Class\Tetris\TetrisMino.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoteControl.h"
+					RelativePath=".\Class\Tetris\TetrisModel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisPackage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoteController.h"
 					>
 				</File>
 				<File
@@ -404,15 +424,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoteManager.h"
+					RelativePath=".\Class\Tetris\TetrisRemotePackage.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\Tetris\TetrisScore.h"
+					RelativePath=".\Class\Tetris\TetrisScore.h"
 					>
 				</File>
 				<File
 					RelativePath=".\Class\Tetris\TetrisScoreEventArgs.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisView.h"
 					>
 				</File>
 			</Filter>

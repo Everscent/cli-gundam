@@ -22,7 +22,6 @@ namespace RX78_2
 	using namespace System::Net;
 	using namespace Report;
 	using namespace Puzzle;
-	using namespace Tetris;
 	using namespace Arrow;
 	using namespace Anaheim;
 	using namespace Anaheim::TcpSocket;
@@ -54,7 +53,7 @@ namespace RX78_2
 	private: PicturePuzzle^ puzzle;					///< ピクチャーパズル
 	private: array<PictureBox^, 2>^ pictureArray;	///< パズル用分割イメージ
 	private: BinaryClock^ clock;					///< バイナリクロック
-	private: TetrisManager^ tetris;					///< テトリス
+	private: TetrisPackage^ tetris;					///< テトリス
 	private: ArrowInsectCage^ arrow;				///< Arrow虫
 
 	private: System::Windows::Forms::MenuStrip^  menuStrip;
@@ -245,7 +244,7 @@ namespace RX78_2
 	private: System::Windows::Forms::ToolStripMenuItem^  menuRanking;
 	private: System::Windows::Forms::ToolStripSeparator^  toolSeparator06;
 	private: System::Windows::Forms::ToolStripButton^  toolRanking;
-	private: System::Windows::Forms::Timer^  timerTetris;
+
 	private: System::Windows::Forms::TabPage^  tabArrow;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuArrow;
 	private: System::Windows::Forms::Panel^  a_panelCanvas;
@@ -331,6 +330,7 @@ namespace RX78_2
 			this->menuOffColor = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuTetris = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuRanking = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuRemote = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuArrow = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuReset = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuOption = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -491,9 +491,7 @@ namespace RX78_2
 			this->timerBinaryClock = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timerBinaryTimer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->colorDialog = (gcnew System::Windows::Forms::ColorDialog());
-			this->timerTetris = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timerArrow = (gcnew System::Windows::Forms::Timer(this->components));
-			this->menuRemote = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip->SuspendLayout();
 			this->toolStrip->SuspendLayout();
 			this->tabControl->SuspendLayout();
@@ -777,7 +775,7 @@ namespace RX78_2
 			// 
 			this->menuTimer->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuTimer.Image")));
 			this->menuTimer->Name = L"menuTimer";
-			this->menuTimer->Size = System::Drawing::Size(152, 22);
+			this->menuTimer->Size = System::Drawing::Size(142, 22);
 			this->menuTimer->Text = L"タイマー(&T)";
 			this->menuTimer->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuTimer->Click += gcnew System::EventHandler(this, &MainForm::menuTimer_Click);
@@ -788,7 +786,7 @@ namespace RX78_2
 				this->menuOffColor});
 			this->menuColor->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuColor.Image")));
 			this->menuColor->Name = L"menuColor";
-			this->menuColor->Size = System::Drawing::Size(152, 22);
+			this->menuColor->Size = System::Drawing::Size(142, 22);
 			this->menuColor->Text = L"色設定(&C)";
 			// 
 			// menuOnColor
@@ -819,10 +817,17 @@ namespace RX78_2
 			// 
 			this->menuRanking->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuRanking.Image")));
 			this->menuRanking->Name = L"menuRanking";
-			this->menuRanking->Size = System::Drawing::Size(154, 22);
+			this->menuRanking->Size = System::Drawing::Size(166, 22);
 			this->menuRanking->Text = L"ランキング(&R)";
 			this->menuRanking->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuRanking->Click += gcnew System::EventHandler(this, &MainForm::menuRanking_Click);
+			// 
+			// menuRemote
+			// 
+			this->menuRemote->Name = L"menuRemote";
+			this->menuRemote->Size = System::Drawing::Size(166, 22);
+			this->menuRemote->Text = L"リモート表示(&V)";
+			this->menuRemote->Click += gcnew System::EventHandler(this, &MainForm::menuRemote_Click);
 			// 
 			// menuArrow
 			// 
@@ -2389,7 +2394,6 @@ namespace RX78_2
 			this->g_panelNext3->Name = L"g_panelNext3";
 			this->g_panelNext3->Size = System::Drawing::Size(87, 43);
 			this->g_panelNext3->TabIndex = 20;
-			this->g_panelNext3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::TetrisPanelPaint);
 			// 
 			// g_panelNext2
 			// 
@@ -2399,7 +2403,6 @@ namespace RX78_2
 			this->g_panelNext2->Name = L"g_panelNext2";
 			this->g_panelNext2->Size = System::Drawing::Size(87, 43);
 			this->g_panelNext2->TabIndex = 19;
-			this->g_panelNext2->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::TetrisPanelPaint);
 			// 
 			// g_panelNext1
 			// 
@@ -2409,7 +2412,6 @@ namespace RX78_2
 			this->g_panelNext1->Name = L"g_panelNext1";
 			this->g_panelNext1->Size = System::Drawing::Size(109, 54);
 			this->g_panelNext1->TabIndex = 18;
-			this->g_panelNext1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::TetrisPanelPaint);
 			// 
 			// g_labelNext
 			// 
@@ -2434,7 +2436,6 @@ namespace RX78_2
 			this->g_panelTetris->Name = L"g_panelTetris";
 			this->g_panelTetris->Size = System::Drawing::Size(274, 548);
 			this->g_panelTetris->TabIndex = 1;
-			this->g_panelTetris->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::TetrisPanelPaint);
 			// 
 			// g_labelMessage
 			// 
@@ -2526,22 +2527,10 @@ namespace RX78_2
 			// 
 			this->timerBinaryTimer->Tick += gcnew System::EventHandler(this, &MainForm::timerBinaryTimer_Tick);
 			// 
-			// timerTetris
-			// 
-			this->timerTetris->Interval = 700;
-			this->timerTetris->Tick += gcnew System::EventHandler(this, &MainForm::timerTetris_Tick);
-			// 
 			// timerArrow
 			// 
 			this->timerArrow->Interval = 70;
 			this->timerArrow->Tick += gcnew System::EventHandler(this, &MainForm::timerArrow_Tick);
-			// 
-			// menuRemote
-			// 
-			this->menuRemote->Name = L"menuRemote";
-			this->menuRemote->Size = System::Drawing::Size(166, 22);
-			this->menuRemote->Text = L"リモート表示(&V)";
-			this->menuRemote->Click += gcnew System::EventHandler(this, &MainForm::menuRemote_Click);
 			// 
 			// MainForm
 			// 
@@ -2711,14 +2700,13 @@ namespace RX78_2
 
 				 // テトリス
 				 array<Control^>^ canvases = { this->g_panelNext1, this->g_panelNext2, this->g_panelNext3 };
-				 this->tetris = gcnew TetrisManager(this->g_panelTetris, canvases);
-				 this->tetris->TurnEnd += gcnew System::EventHandler(this, &MainForm::TetrisTurnEnd);
-				 this->tetris->ChangedScore += gcnew RX78_2::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisChangedScore);
-				 this->tetris->GameOver += gcnew System::EventHandler(this, &MainForm::TetrisGameOver);
+				 this->tetris = gcnew TetrisPackage(this->g_panelTetris, canvases);
+				 this->tetris->ChangedScore += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisChangedScore);
+				 this->tetris->GameOver += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisGameOver);
 				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
 				 if (this->menuRemote->Checked)
 				 {
-					 this->tetris->StartRemote();
+					 this->tetris->Controller->StartRemote();
 				 }
 
 				 // Arrow虫
@@ -2737,8 +2725,11 @@ namespace RX78_2
 			 {
 				 if (this->canClose)
 				 {
-					 bool enabled = this->timerTetris->Enabled;
-					 this->timerTetris->Enabled = false;
+					 bool isRunning = this->tetris->Controller->IsRunning;
+					 if (isRunning)
+					 {
+						 this->tetris->Controller->Stop();
+					 }
 
 					 ExitForm^ form = gcnew ExitForm();
 					 if (this->Visible)
@@ -2757,7 +2748,10 @@ namespace RX78_2
 						 e->Cancel = true;
 						 this->canClose = false;
 						 this->contextTaskTray->Enabled = true;
-						 this->timerTetris->Enabled = enabled;
+						 if (isRunning)
+						 {
+							 this->tetris->Controller->Start();
+						 }
 					 }
 
 					 delete form;
@@ -3086,8 +3080,11 @@ namespace RX78_2
 			 {
 				 this->tabControl->SelectedTab = this->tabTetris;
 
-				 bool enabled = this->timerTetris->Enabled;
-				 this->timerTetris->Enabled = false;
+				 bool isRunning = this->tetris->Controller->IsRunning;
+				 if (isRunning)
+				 {
+					 this->tetris->Controller->Stop();
+				 }
 
 				 int score1 = this->config->GetTetrisScore(1);
 				 int score2 = this->config->GetTetrisScore(2);
@@ -3099,7 +3096,10 @@ namespace RX78_2
 								   "BEST 3：" + String::Format("{0:D6}", score3);
 				 System::Windows::Forms::MessageBox::Show(message, this->Text, MessageBoxButtons::OK, MessageBoxIcon::Information);
 
-				 this->timerTetris->Enabled = enabled;
+				 if (isRunning)
+				 {
+					 this->tetris->Controller->Start();
+				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
@@ -3110,11 +3110,12 @@ namespace RX78_2
 
 				 if (this->menuRemote->Checked)
 				 {
+					 this->tetris->Controller->StopRemote();
 					 this->menuRemote->Checked = false;
 				 }
 				 else
 				 {
-					 if (this->tetris->StartRemote())
+					 if (this->tetris->Controller->StartRemote())
 					 {
 						 this->menuRemote->Checked = true;
 					 }
@@ -4650,59 +4651,68 @@ namespace RX78_2
 
 #pragma region TETRiS
 
-	/// Start/Stop/Restart
+	/// Start/Stop/Restartボタン
 	private: System::Void g_buttonStart_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
 				 if (this->g_buttonStart->Text == "START")
 				 {
-					 this->tetris->Initialize();
-					 this->UpdateTetrisScore();
+					 this->tetris->Controller->Initialize();
 					 this->ShowTetrisMessage("TETRiS START !!");
 					 this->Refresh();
 					 System::Threading::Thread::Sleep(1000);
 					 this->g_labelMessage->Visible = false;
-					 this->timerTetris->Enabled = true;
+					 this->tetris->Controller->Start();
 					 this->g_buttonStart->Text = "STOP";
 					 this->g_buttonEnd->Enabled = true;
 				 }
 				 else if (this->g_buttonStart->Text == "RESTART")
 				 {
 					 this->g_labelMessage->Visible = false;
-					 this->timerTetris->Enabled = true;
+					 this->tetris->Controller->Start();
 					 this->g_buttonStart->Text = "STOP";
 				 }
 				 else if (this->g_buttonStart->Text == "STOP")
 				 {
 					 this->ShowTetrisMessage("STOP !!");
-					 this->timerTetris->Enabled = false;
+					 this->tetris->Controller->Stop();
 					 this->g_buttonStart->Text = "RESTART";
 				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// End
+	/// Endボタン
 	private: System::Void g_buttonEnd_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
-				 bool enabled = this->timerTetris->Enabled;
-				 this->timerTetris->Enabled = false;
+				 bool isRunning = this->tetris->Controller->IsRunning;
+				 if (isRunning)
+				 {
+					 this->tetris->Controller->Stop();
+				 }
 
 				 String^ message = "TETRiSを終了しますか？";
 				 if (System::Windows::Forms::MessageBox::Show(message, this->Text, MessageBoxButtons::OKCancel, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::OK)
 				 {
-					 this->EndTetris(true);
+					 this->tetris->Controller->Clear();
+					 this->g_labelMessage->Visible = false;
 				 }
 				 else
 				 {
-					 this->timerTetris->Enabled = enabled;
+					 if (isRunning)
+					 {
+						 this->tetris->Controller->Start();
+					 }
 				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// How To
+	/// How Toボタン
 	private: System::Void g_buttonHowTo_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
-				 bool tempTimeEnabled = this->timerTetris->Enabled;
-				 this->timerTetris->Enabled = false;
+				 bool isRunning = this->tetris->Controller->IsRunning;
+				 if (isRunning)
+				 {
+					 this->tetris->Controller->Stop();
+				 }
 
 				 String^ message = "Down\t  ： Num2 or ↓\n" +
 								   "Left\t  ： Num4 or ←\n" + 
@@ -4712,15 +4722,10 @@ namespace RX78_2
 				                   "Hard Drop ： Space";
 				 System::Windows::Forms::MessageBox::Show(message, this->Text, MessageBoxButtons::OK, MessageBoxIcon::Information);
 
-				 this->timerTetris->Enabled = tempTimeEnabled;
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
-	/// タイマー処理
-	private: System::Void timerTetris_Tick(System::Object^  sender, System::EventArgs^  e)
-			 {
-				 this->tetris->MoveDownAutomatic();
-				 this->tetris->Draw(this->g_panelTetris);
+				 if (isRunning)
+				 {
+					 this->tetris->Controller->Start();
+				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
@@ -4734,21 +4739,14 @@ namespace RX78_2
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// スコア更新
-	private: void UpdateTetrisScore()
+	/// スコア更新　イベントハンドラ
+	private: void TetrisChangedScore(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e)
 			 {
-				 this->UpdateTetrisScore(this->tetris->Score);
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
-	/// スコア更新
-	private: void UpdateTetrisScore(Tetris::PublicTetrisScore^ score)
-			 {
-				 this->g_labelScore->Text = String::Format("{0:D3}", score->Score);
-				 this->g_labelSingle->Text = score->SingleCount.ToString();
-				 this->g_labelDouble->Text = score->DoubleCount.ToString();
-				 this->g_labelTriple->Text = score->TripleCount.ToString();
-				 this->g_labelTetris->Text = score->TetrisCount.ToString();
+				 this->g_labelScore->Text = String::Format("{0:D3}", e->Score->Score);
+				 this->g_labelSingle->Text = e->Score->SingleCount.ToString();
+				 this->g_labelDouble->Text = e->Score->DoubleCount.ToString();
+				 this->g_labelTriple->Text = e->Score->TripleCount.ToString();
+				 this->g_labelTetris->Text = e->Score->TetrisCount.ToString();
 
 				 this->g_labelScore->Left = this->g_labelScoreTitle->Left + this->g_labelScoreTitle->Width - this->g_labelScore->Width;
 				 this->g_labelSingle->Left = this->g_labelSingleTitle->Left + this->g_labelSingleTitle->Width - this->g_labelSingle->Width;
@@ -4758,49 +4756,15 @@ namespace RX78_2
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// 終了処理
-	private: void EndTetris(bool isClear)
+	/// ゲームオーバー　イベントハンドラ
+	private: void TetrisGameOver(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e)
 			 {
-				 this->timerTetris->Enabled = false;
-				 
 				 this->g_buttonStart->Text = "START";
 				 this->g_buttonEnd->Enabled = false;
 
-				 this->config->SetTetrisScore(this->tetris->Score->Score);
+				 this->config->SetTetrisScore(e->Score->Score);
 
-				 if (isClear)
-				 {
-					 this->tetris->Clear();
-					 this->g_labelMessage->Visible = false;
-					 this->UpdateTetrisScore();
-				 }
-				 else
-				 {
-					 this->ShowTetrisMessage("GAME OVER !!");
-				 }
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
-	/// ターンエンド　イベントハンドラ
-	private: void TetrisTurnEnd(System::Object^  sender, System::EventArgs^  e)
-			 {
-				 this->tetris->Draw(this->g_panelNext1);
-				 this->tetris->Draw(this->g_panelNext2);
-				 this->tetris->Draw(this->g_panelNext3);
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
-	/// スコア更新　イベントハンドラ
-	private: void TetrisChangedScore(System::Object^  sender, RX78_2::Tetris::TetrisScoreEventArgs^  e)
-			 {
-				 this->UpdateTetrisScore(e->Score);
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
-	/// ゲームオーバー　イベントハンドラ
-	private: void TetrisGameOver(System::Object^  sender, System::EventArgs^  e)
-			 {
-				 this->EndTetris(false);
+				 this->ShowTetrisMessage("GAME OVER !!");
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
@@ -4832,52 +4796,15 @@ namespace RX78_2
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// 描画
-	private: System::Void TetrisPanelPaint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e)
-			 {
-				 this->tetris->Draw(dynamic_cast<Control^>(sender));
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
 	/// キーダウン（ダイアログ文字）
 	protected: virtual bool ProcessDialogKey(System::Windows::Forms::Keys keyData) override
 			   {
-				   if (this->tabControl->SelectedTab == this->tabTetris && this->timerTetris->Enabled)
+				   if (this->tabControl->SelectedTab == this->tabTetris)
 				   {
-					   bool hasMoved = false;
-					   switch (keyData)
+					   if (this->tetris->Controller->ProcessDialogKey(keyData))
 					   {
-						   case Keys::NumPad2:
-						   case Keys::Down:
-							   hasMoved = this->tetris->MoveDown();
-							   break;
-						   case Keys::NumPad4:
-						   case Keys::Left:
-							   hasMoved = this->tetris->MoveLeft();
-							   break;
-						   case Keys::NumPad6:
-						   case Keys::Right:
-							   hasMoved = this->tetris->MoveRight();
-							   break;
-						   case Keys::NumPad7:
-							   hasMoved = this->tetris->RotateLeft();
-							   break;
-						   case Keys::NumPad9:
-						   case Keys::Up:
-							   hasMoved = this->tetris->RotateRight();
-							   break;
-						   case Keys::Space:
-							   this->tetris->Teleport();
-							   hasMoved = true;
-							   break;
-						   default:
-							   return Form::ProcessDialogKey(keyData);
+						   return true;
 					   }
-					   if (hasMoved)
-					   {
-						   this->tetris->Draw(this->g_panelTetris);
-					   }
-					   return true;
 				   }
 
 				   return Form::ProcessDialogKey(keyData);

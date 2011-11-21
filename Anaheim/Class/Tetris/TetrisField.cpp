@@ -125,7 +125,7 @@ bool TetrisField::IsEmptyRows()
 }
 // ----------------------------------------------------------------------------------------------------
 
-bool TetrisField::RemoveMatch(Anaheim::Tetris::TetrisFieldRow ^row)
+bool TetrisField::RemoveCompleteRowsMatch(Anaheim::Tetris::TetrisFieldRow ^row)
 {
 	if (row->IsComplete())
 	{
@@ -155,7 +155,7 @@ void TetrisField::SetMino(Anaheim::Tetris::TetrisMino ^mino)
 
 int TetrisField::RemoveCompleteRows()
 {
-	this->rows->RemoveAll(gcnew Predicate<TetrisFieldRow^>(this, &TetrisField::RemoveMatch));
+	this->rows->RemoveAll(gcnew Predicate<TetrisFieldRow^>(this, &TetrisField::RemoveCompleteRowsMatch));
 
 	int removeCount = TetrisField::ROW_COUNT - this->rows->Count;
 

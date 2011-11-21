@@ -1,9 +1,5 @@
 #pragma once
 
-#include "TetrisField.h"
-#include "TetrisMino.h"
-#include "TetrisDrawAPI.h"
-
 namespace Anaheim
 {
 	namespace Tetris
@@ -12,6 +8,11 @@ namespace Anaheim
 		using namespace System::Drawing;
 		using namespace System::Windows::Forms;
 		using namespace System::Collections::Generic;
+
+		ref class TetrisField;
+		ref class TetrisMino;
+
+		interface class ITetrisDrawAPI;
 
 		/**
 		 * ƒeƒgƒŠƒX•`‰æ

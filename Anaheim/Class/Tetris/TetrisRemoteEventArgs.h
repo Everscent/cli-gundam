@@ -1,13 +1,14 @@
 #pragma once
 
-#include "TetrisField.h"
-#include "TetrisMino.h"
-
 namespace Anaheim
 {
 	namespace Tetris
 	{
 		using namespace System;
+		using namespace Anaheim::Tetris;
+
+		ref class TetrisField;
+		ref class TetrisMino;
 
 		/**
 		 * テトリスリモートイベントArgs
