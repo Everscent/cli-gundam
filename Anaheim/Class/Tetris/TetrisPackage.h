@@ -46,6 +46,7 @@ namespace Anaheim
 		 * プロパティ
 		 */
 		public:
+			/// コントローラ
 			property TetrisController^ Controller
 			{
 				TetrisController^ get() { return this->controller; }
