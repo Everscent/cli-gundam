@@ -10,6 +10,7 @@ namespace Anaheim
 		using namespace System::Drawing;
 
 		ref class TetrisField;
+		ref class GhostTetrisMino;
 
 		/**
 		 * テトリスミノ
@@ -79,7 +80,7 @@ namespace Anaheim
 			/// 他ミノの位置へ移動
 			bool MoveTo(TetrisMino^ mino);
 			/// ゴースト作成
-			TetrisMino^ CreateGhost();
+			GhostTetrisMino^ CreateGhost();
 			/// Next表示用ブロック位置調整
 			virtual PointF AdjustPointForNext(PointF location, SizeF size) abstract;
 			/// シリアライズ
@@ -410,6 +411,8 @@ namespace Anaheim
 		protected:
 			virtual void RefreshPoints() override;
 			System::Drawing::Color GetColor();
+			System::Drawing::Color GetBrightBorderColor();
+			System::Drawing::Color GetDarkBorderColor();
 
 		public:
 			/// 右回転
@@ -431,6 +434,16 @@ namespace Anaheim
 			property System::Drawing::Color Color
 			{
 				virtual System::Drawing::Color get() override { return this->GetColor(); }
+			}
+			/// 明るい枠線の色
+			property System::Drawing::Color BrightBorderColor
+			{
+				System::Drawing::Color get() { return this->GetBrightBorderColor(); }
+			}
+			/// 暗い枠線の色
+			property System::Drawing::Color DarkBorderColor
+			{
+				System::Drawing::Color get() { return this->GetDarkBorderColor(); }
 			}
 		};
 		// ----------------------------------------------------------------------------------------------------

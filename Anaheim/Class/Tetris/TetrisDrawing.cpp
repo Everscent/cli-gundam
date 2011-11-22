@@ -76,6 +76,27 @@ void MainTetrisDrawing::DrawMino(Anaheim::Tetris::TetrisMino ^mino)
 }
 // ----------------------------------------------------------------------------------------------------
 
+void MainTetrisDrawing::DrawGhostMino(Anaheim::Tetris::GhostTetrisMino ^mino)
+{
+	this->DrawMino(mino);
+
+	// ˜gü•`‰æ
+	SizeF size = this->GetBlockSize();
+	for each (Point point in mino->Points)
+	{
+		PointF location = this->GetBlockLocation(point, size);
+		this->api->DrawLine(mino->DarkBorderColor, 1, PointF(location.X + size.Width, location.Y + size.Height), PointF(location.X, location.Y + size.Height));
+		this->api->DrawLine(mino->DarkBorderColor, 1, PointF(location.X, location.Y + size.Height), location);
+	}
+	for each (Point point in mino->Points)
+	{
+		PointF location = this->GetBlockLocation(point, size);
+		this->api->DrawLine(mino->BrightBorderColor, 1, location, PointF(location.X + size.Width, location.Y));
+		this->api->DrawLine(mino->BrightBorderColor, 1, PointF(location.X + size.Width, location.Y), PointF(location.X + size.Width, location.Y + size.Height));
+	}
+}
+// ----------------------------------------------------------------------------------------------------
+
 SizeF MainTetrisDrawing::GetBlockSize()
 {
 	const int margin = 6;
@@ -105,8 +126,8 @@ void MainTetrisDrawing::DrawCore(Anaheim::Tetris::TetrisMino ^mino)
 		y++;
 	}
 
-	TetrisMino^ ghost = mino->CreateGhost();
-	this->DrawMino(ghost);
+	GhostTetrisMino^ ghost = mino->CreateGhost();
+	this->DrawGhostMino(ghost);
 	this->DrawMino(mino);
 }
 // ----------------------------------------------------------------------------------------------------

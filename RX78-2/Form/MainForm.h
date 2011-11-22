@@ -244,7 +244,6 @@ namespace RX78_2
 	private: System::Windows::Forms::ToolStripMenuItem^  menuRanking;
 	private: System::Windows::Forms::ToolStripSeparator^  toolSeparator06;
 	private: System::Windows::Forms::ToolStripButton^  toolRanking;
-
 	private: System::Windows::Forms::TabPage^  tabArrow;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuArrow;
 	private: System::Windows::Forms::Panel^  a_panelCanvas;

@@ -158,9 +158,9 @@ bool TetrisMino::MoveTo(Anaheim::Tetris::TetrisMino ^mino)
 }
 // ----------------------------------------------------------------------------------------------------
 
-TetrisMino^ TetrisMino::CreateGhost()
+GhostTetrisMino^ TetrisMino::CreateGhost()
 {
-	TetrisMino^ ghost = gcnew GhostTetrisMino(this->location, this->field, this);
+	GhostTetrisMino^ ghost = gcnew GhostTetrisMino(this->location, this->field, this);
 	while (ghost->MoveDown());
 	return ghost;
 }
@@ -537,6 +537,19 @@ System::Drawing::Color GhostTetrisMino::GetColor()
 	System::Drawing::Color color = this->master->Color;
 	int alpha = (color == JTetrisMino::COLOR) ? 98 : 64;
 	return System::Drawing::Color::FromArgb(alpha, color);
+}
+// ----------------------------------------------------------------------------------------------------
+
+System::Drawing::Color GhostTetrisMino::GetBrightBorderColor()
+{
+	return this->master->Color;
+}
+// ----------------------------------------------------------------------------------------------------
+
+System::Drawing::Color GhostTetrisMino::GetDarkBorderColor()
+{
+	System::Drawing::Color color = this->master->Color;
+	return System::Drawing::Color::FromArgb(color.R / 2, color.G / 2, color.B / 2);
 }
 // ----------------------------------------------------------------------------------------------------
 

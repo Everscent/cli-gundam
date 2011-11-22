@@ -11,6 +11,7 @@ namespace Anaheim
 
 		ref class TetrisField;
 		ref class TetrisMino;
+		ref class GhostTetrisMino;
 
 		interface class ITetrisDrawAPI;
 
@@ -76,6 +77,7 @@ namespace Anaheim
 		 */
 		private:
 			void DrawMino(TetrisMino^ mino);
+			void DrawGhostMino(GhostTetrisMino^ mino);
 
 		protected:
 			/// ブロックサイズ取得
