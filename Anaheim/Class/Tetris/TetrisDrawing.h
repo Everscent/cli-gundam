@@ -84,6 +84,16 @@ namespace Anaheim
 			virtual SizeF GetBlockSize() override;
 			///　描画
 			virtual void DrawCore(TetrisMino^ mino) override;
+
+		/**
+		 * プロパティ
+		 */
+		public:
+			/// フィールド
+			property TetrisField^ Field
+			{
+				void set(TetrisField^ value) { this->field = value; }
+			}
 		};
 		// ----------------------------------------------------------------------------------------------------
 

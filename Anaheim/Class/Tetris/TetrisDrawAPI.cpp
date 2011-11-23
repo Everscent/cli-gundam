@@ -10,7 +10,7 @@ using namespace Anaheim::Tetris;
 GraphicsTetrisDrawAPI::GraphicsTetrisDrawAPI(Control ^canvas)
 {
 	this->canvas = canvas;
-	this->canvas->Resize +=  gcnew System::EventHandler(this, &GraphicsTetrisDrawAPI::CanvasResize);
+	this->canvas->Resize += gcnew System::EventHandler(this, &GraphicsTetrisDrawAPI::CanvasResize);
 	this->bitmap = gcnew Bitmap(canvas->Width, canvas->Height);
 	this->graphics = nullptr;
 }

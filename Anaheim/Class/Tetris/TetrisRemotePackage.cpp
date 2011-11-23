@@ -15,14 +15,14 @@ TetrisRemotePackage::TetrisRemotePackage(System::Windows::Forms::Control ^canvas
 	this->canvas->Resize += gcnew System::EventHandler(this, &TetrisRemotePackage::CanvasResize);
 	this->remote = gcnew TetrisRemoteController();
 	this->remote->Received += gcnew TetrisRemoteEventHandler(this, &TetrisRemotePackage::RemoteReceived);
-	this->drawing = nullptr;
+	this->drawing = gcnew MainTetrisDrawing(this->canvas, gcnew GraphicsTetrisDrawAPI(this->canvas), nullptr);
 	this->mino = nullptr;
 }
 // ----------------------------------------------------------------------------------------------------
 
 void TetrisRemotePackage::RemoteReceived(System::Object ^sender, Anaheim::Tetris::TetrisRemoteEventArgs ^e)
 {
-	this->drawing = gcnew MainTetrisDrawing(this->canvas, gcnew GraphicsTetrisDrawAPI(this->canvas), e->Field);
+	this->drawing->Field = e->Field;
 	this->mino = e->Mino;
 	this->Draw();
 }
@@ -54,7 +54,7 @@ bool TetrisRemotePackage::StopRemote()
 
 bool TetrisRemotePackage::Draw()
 {
-	if (this->drawing == nullptr) return false;
+	if (this->mino == nullptr) return false;
 
 	this->drawing->Draw(this->mino);
 	return true;

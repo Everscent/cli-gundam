@@ -10,7 +10,7 @@ namespace Anaheim
 		using namespace System::Windows::Forms;
 
 		ref class TetrisRemoteController;
-		ref class TetrisDrawing;
+		ref class MainTetrisDrawing;
 		ref class TetrisMino;
 
 		/**
@@ -24,7 +24,7 @@ namespace Anaheim
 		private:
 			Control^ canvas;
 			TetrisRemoteController^ remote;
-			TetrisDrawing^ drawing;
+			MainTetrisDrawing^ drawing;
 			TetrisMino^ mino;
 
 		/**
