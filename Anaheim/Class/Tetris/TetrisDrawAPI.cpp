@@ -66,6 +66,15 @@ void GraphicsTetrisDrawAPI::FillRectangle(System::Drawing::Color color, System::
 }
 // ----------------------------------------------------------------------------------------------------
 
+void GraphicsTetrisDrawAPI::FillRectangleGradation(System::Drawing::Color color1, System::Drawing::Color color2, System::Drawing::PointF point, System::Drawing::SizeF size)
+{
+	if (this->graphics == nullptr) return;
+
+	LinearGradientBrush^ gbrush = gcnew LinearGradientBrush(point, PointF(point.X + size.Width, point.Y + size.Width), color1, color2);
+	this->graphics->FillRectangle(gbrush, point.X , point.Y, size.Width, size.Height);
+}
+// ----------------------------------------------------------------------------------------------------
+
 void GraphicsTetrisDrawAPI::EndDraw()
 {
 	Graphics^ gr = this->canvas->CreateGraphics();

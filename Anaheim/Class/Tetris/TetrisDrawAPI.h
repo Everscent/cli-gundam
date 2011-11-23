@@ -6,6 +6,7 @@ namespace Anaheim
 	{
 		using namespace System;
 		using namespace System::Drawing;
+		using namespace System::Drawing::Drawing2D;
 		using namespace System::Windows::Forms;
 
 		/**
@@ -25,6 +26,8 @@ namespace Anaheim
 			virtual void DrawRectangle(Color color, float width, PointF point, SizeF size);
 			/// 四角形塗りつぶし
 			virtual void FillRectangle(Color color, PointF point, SizeF size);
+			/// 四角形塗りつぶし（グラデーション）
+			virtual void FillRectangleGradation(Color color1, Color color2, PointF point, SizeF size);
 			/// 描画終了
 			virtual void EndDraw();
 			/// クリア
@@ -67,6 +70,8 @@ namespace Anaheim
 			virtual void DrawRectangle(Color color, float width, PointF point, SizeF size);
 			/// 四角形塗りつぶし
 			virtual void FillRectangle(Color color, PointF point, SizeF size);
+			/// 四角形塗りつぶし（グラデーション）
+			virtual void FillRectangleGradation(Color color1, Color color2, PointF point, SizeF size);
 			/// 描画終了
 			virtual void EndDraw();
 			/// クリア

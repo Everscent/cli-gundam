@@ -27,7 +27,14 @@ PointF TetrisDrawing::GetBlockLocation(System::Drawing::Point point, System::Dra
 
 void TetrisDrawing::DrawBlock(System::Drawing::PointF location, System::Drawing::SizeF size, System::Drawing::Color color)
 {
-	this->api->FillRectangle(color, location, size);
+	if (color.A.Equals(Byte::MaxValue))
+	{
+		this->api->FillRectangleGradation(color, Color::White, location, size);
+	}
+	else
+	{
+		this->api->FillRectangleGradation(color, Color::FromArgb(color.A, Color::White), location, size);
+	}
 	this->api->DrawRectangle(this->canvas->BackColor, 2, location, size);
 }
 // ----------------------------------------------------------------------------------------------------
