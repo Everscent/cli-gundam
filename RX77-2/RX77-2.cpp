@@ -9,7 +9,7 @@ using namespace RX77_2;
 int main(array<System::String ^> ^args)
 {
 	// 二重起動チェック
-	System::Threading::Mutex^ mutex = gcnew System::Threading::Mutex(true, "RX78-2");
+	System::Threading::Mutex^ mutex = gcnew System::Threading::Mutex(true, "RX77-2");
     if (!mutex->WaitOne(0, false))
 	{
 		Anaheim::Window::WakeupHasStartedWindow();
