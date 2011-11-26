@@ -12,6 +12,7 @@ namespace Anaheim
 		ref class TetrisModel;
 		ref class TetrisView;
 		ref class TetrisRemoteController;
+		ref class TetrisSound;
 
 		/**
 		 * テトリスController
@@ -25,7 +26,9 @@ namespace Anaheim
 			TetrisModel^ model;
 			TetrisView^ view;
 			TetrisRemoteController^ remote;
+			TetrisSound^ sound;
 			Timer^ timer;
+			bool isPause;
 
 		/**
 		 * コンストラクタ
@@ -41,6 +44,7 @@ namespace Anaheim
 			void CanvasPaint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
 			void ModelGameOver(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e);
 			void RemoteSend();
+			void SetSoundON(bool isON);
 
 		public:
 			/// クリア
@@ -66,6 +70,11 @@ namespace Anaheim
 			property bool IsRunning
 			{
 				bool get() { return this->timer->Enabled; }
+			}
+			/// 音楽ON
+			property bool SoundON
+			{
+				void set(bool value) { this->SetSoundON(value); }
 			}
 
 		/**

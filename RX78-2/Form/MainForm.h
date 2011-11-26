@@ -252,6 +252,7 @@ namespace RX78_2
 	private: System::Windows::Forms::ToolStripSeparator^  toolSeparator07;
 	private: System::Windows::Forms::Timer^  timerArrow;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuRemote;
+	private: System::Windows::Forms::ToolStripMenuItem^  menuSound;
 	private: System::Windows::Forms::ToolStripSeparator^  menuFileSeparator;
 
 #pragma endregion
@@ -293,7 +294,7 @@ namespace RX78_2
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
-			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
 			this->menuFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuView = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -329,6 +330,7 @@ namespace RX78_2
 			this->menuOffColor = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuTetris = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuRanking = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuSound = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuRemote = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuArrow = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuReset = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -806,8 +808,8 @@ namespace RX78_2
 			// 
 			// menuTetris
 			// 
-			this->menuTetris->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->menuRanking, 
-				this->menuRemote});
+			this->menuTetris->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->menuRanking, 
+				this->menuSound, this->menuRemote});
 			this->menuTetris->Name = L"menuTetris";
 			this->menuTetris->Size = System::Drawing::Size(190, 22);
 			this->menuTetris->Text = L"TETRiS(&G)";
@@ -821,11 +823,20 @@ namespace RX78_2
 			this->menuRanking->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuRanking->Click += gcnew System::EventHandler(this, &MainForm::menuRanking_Click);
 			// 
+			// menuSound
+			// 
+			this->menuSound->Name = L"menuSound";
+			this->menuSound->Size = System::Drawing::Size(166, 22);
+			this->menuSound->Text = L"サウンド(&S)";
+			this->menuSound->CheckedChanged += gcnew System::EventHandler(this, &MainForm::menuSound_CheckedChanged);
+			this->menuSound->Click += gcnew System::EventHandler(this, &MainForm::menuSound_Click);
+			// 
 			// menuRemote
 			// 
 			this->menuRemote->Name = L"menuRemote";
 			this->menuRemote->Size = System::Drawing::Size(166, 22);
 			this->menuRemote->Text = L"リモート表示(&V)";
+			this->menuRemote->CheckedChanged += gcnew System::EventHandler(this, &MainForm::menuRemote_CheckedChanged);
 			this->menuRemote->Click += gcnew System::EventHandler(this, &MainForm::menuRemote_Click);
 			// 
 			// menuArrow
@@ -839,7 +850,7 @@ namespace RX78_2
 			// 
 			this->menuReset->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuReset.Image")));
 			this->menuReset->Name = L"menuReset";
-			this->menuReset->Size = System::Drawing::Size(142, 22);
+			this->menuReset->Size = System::Drawing::Size(152, 22);
 			this->menuReset->Text = L"リセット(&R)";
 			this->menuReset->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuReset->Click += gcnew System::EventHandler(this, &MainForm::menuReset_Click);
@@ -1272,9 +1283,9 @@ namespace RX78_2
 			this->r_gridReport->AllowUserToDeleteRows = false;
 			this->r_gridReport->AllowUserToResizeColumns = false;
 			this->r_gridReport->AllowUserToResizeRows = false;
-			dataGridViewCellStyle3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)), 
+			dataGridViewCellStyle2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)), 
 				static_cast<System::Int32>(static_cast<System::Byte>(224)), static_cast<System::Int32>(static_cast<System::Byte>(224)));
-			this->r_gridReport->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			this->r_gridReport->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
 			this->r_gridReport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 				| System::Windows::Forms::AnchorStyles::Left) 
 				| System::Windows::Forms::AnchorStyles::Right));
@@ -2702,11 +2713,8 @@ namespace RX78_2
 				 this->tetris = gcnew TetrisPackage(this->g_panelTetris, canvases);
 				 this->tetris->ChangedScore += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisChangedScore);
 				 this->tetris->GameOver += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisGameOver);
+				 this->menuSound->Checked = this->config->GetTetrisSoundON();
 				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
-				 if (this->menuRemote->Checked)
-				 {
-					 this->tetris->Controller->StartRemote();
-				 }
 
 				 // Arrow虫
 				 this->arrow = gcnew ArrowInsectCage(this->a_panelCanvas, 10);
@@ -2810,7 +2818,7 @@ namespace RX78_2
 				 }
 
 				 // TETRiS
-				 if (this->g_buttonStart->Text == "STOP")
+				 if (this->tetris->Controller->IsRunning)
 				 {
 					 this->g_buttonStart_Click(this->g_buttonStart, nullptr);
 				 }
@@ -3102,6 +3110,29 @@ namespace RX78_2
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
+	/// TETRiSサウンド
+	private: System::Void menuSound_Click(System::Object^  sender, System::EventArgs^  e)
+			 {
+				 this->tabControl->SelectedTab = this->tabTetris;
+
+				 if (this->menuSound->Checked)
+				 {
+					 this->menuSound->Checked = false;
+				 }
+				 else
+				 {
+					 this->menuSound->Checked = true;
+				 }
+				 this->config->SetTetrisSoundON(this->menuRemote->Checked);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
+	private: System::Void menuSound_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+			 {
+				 this->tetris->Controller->SoundON = this->menuSound->Checked;
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	/// TETRiSリモート
 	private: System::Void menuRemote_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
@@ -3109,17 +3140,29 @@ namespace RX78_2
 
 				 if (this->menuRemote->Checked)
 				 {
-					 this->tetris->Controller->StopRemote();
 					 this->menuRemote->Checked = false;
 				 }
 				 else
 				 {
-					 if (this->tetris->Controller->StartRemote())
-					 {
-						 this->menuRemote->Checked = true;
-					 }
+					 this->menuRemote->Checked = true;
 				 }
 				 this->config->SetTetrisRemoteEnabled(this->menuRemote->Checked);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
+	private: System::Void menuRemote_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+			 {
+				 if (this->menuRemote->Checked)
+				 {
+					 if (!this->tetris->Controller->StartRemote())
+					 {
+						 this->menuRemote->Checked = false;
+					 }
+				 }
+				 else
+				 {
+					 this->tetris->Controller->StopRemote();
+				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
@@ -3201,7 +3244,11 @@ namespace RX78_2
 	/// デバッグ用ボタン
 	private: System::Void toolDebug_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
-				 //
+				 System::Reflection::Assembly^ assembly = System::Reflection::Assembly::GetExecutingAssembly();
+				 System::Resources::ResourceManager^ resources = gcnew System::Resources::ResourceManager("RX78_2.RX78_2", assembly);
+				 System::IO::Stream^ stream = safe_cast<System::IO::Stream^>(resources->GetObject(L"TestSound"));
+				 Anaheim::SoundPlayer^ player = gcnew SoundPlayer();
+				 player->Play(stream);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
@@ -4661,18 +4708,18 @@ namespace RX78_2
 					 System::Threading::Thread::Sleep(1000);
 					 this->g_labelMessage->Visible = false;
 					 this->tetris->Controller->Start();
-					 this->g_buttonStart->Text = "STOP";
+					 this->g_buttonStart->Text = "PAUSE";
 					 this->g_buttonEnd->Enabled = true;
 				 }
 				 else if (this->g_buttonStart->Text == "RESTART")
 				 {
 					 this->g_labelMessage->Visible = false;
 					 this->tetris->Controller->Start();
-					 this->g_buttonStart->Text = "STOP";
+					 this->g_buttonStart->Text = "PAUSE";
 				 }
-				 else if (this->g_buttonStart->Text == "STOP")
+				 else if (this->g_buttonStart->Text == "PAUSE")
 				 {
-					 this->ShowTetrisMessage("STOP !!");
+					 this->ShowTetrisMessage("PAUSE !!");
 					 this->tetris->Controller->Stop();
 					 this->g_buttonStart->Text = "RESTART";
 				 }
@@ -4685,7 +4732,7 @@ namespace RX78_2
 				 bool isRunning = this->tetris->Controller->IsRunning;
 				 if (isRunning)
 				 {
-					 this->tetris->Controller->Stop();
+					 this->g_buttonStart->PerformClick();
 				 }
 
 				 String^ message = "TETRiSを終了しますか？";
@@ -4698,7 +4745,7 @@ namespace RX78_2
 				 {
 					 if (isRunning)
 					 {
-						 this->tetris->Controller->Start();
+						 this->g_buttonStart->PerformClick();
 					 }
 				 }
 			 }
@@ -4710,7 +4757,7 @@ namespace RX78_2
 				 bool isRunning = this->tetris->Controller->IsRunning;
 				 if (isRunning)
 				 {
-					 this->tetris->Controller->Stop();
+					 this->g_buttonStart->PerformClick();
 				 }
 
 				 String^ message = "Down\t  ： Num2 or ↓\n" +
@@ -4723,7 +4770,7 @@ namespace RX78_2
 
 				 if (isRunning)
 				 {
-					 this->tetris->Controller->Start();
+					 this->g_buttonStart->PerformClick();
 				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------

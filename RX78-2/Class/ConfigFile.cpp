@@ -461,6 +461,20 @@ void ConfigFile::SetTetrisScore(int score)
 }
 // ----------------------------------------------------------------------------------------------------
 
+bool ConfigFile::GetTetrisSoundON()
+{
+	XmlElement^ ele = this->GetTetrisElement();
+	return bool::Parse(this->GetValue(ele, "SoundON", false.ToString()));
+}
+// ----------------------------------------------------------------------------------------------------
+
+void ConfigFile::SetTetrisSoundON(bool isON)
+{
+	XmlElement^ ele = this->GetTetrisElement();
+	this->SetValue(ele, "SoundON", isON.ToString());
+}
+// ----------------------------------------------------------------------------------------------------
+
 bool ConfigFile::GetTetrisRemoteEnabled()
 {
 	XmlElement^ ele = this->GetTetrisElement();

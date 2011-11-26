@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="User32.lib $(NOINHERIT)"
+				AdditionalDependencies="User32.lib winmm.lib $(NOINHERIT)"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -132,7 +132,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="User32.lib $(NOINHERIT)"
+				AdditionalDependencies="User32.lib winmm.lib $(NOINHERIT)"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Class\SoundPlayer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Stdafx.cpp"
 				>
 				<FileConfiguration
@@ -310,6 +314,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Class\Tetris\TetrisSound.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\Tetris\TetrisView.cpp"
 					>
 				</File>
@@ -362,6 +370,10 @@
 			</File>
 			<File
 				RelativePath=".\Class\ShortcutFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Class\SoundPlayer.h"
 				>
 			</File>
 			<File
@@ -436,6 +448,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Class\Tetris\TetrisSound.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\Tetris\TetrisView.h"
 					>
 				</File>
@@ -466,6 +482,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\Anaheim.resX"
+				>
+			</File>
 			<File
 				RelativePath=".\app.ico"
 				>

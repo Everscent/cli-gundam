@@ -135,6 +135,10 @@ namespace RX78_2
 		int GetTetrisScore(int ranking);
 		/// ランキング保存
 		void SetTetrisScore(int score);
+		/// サウンドON読み込み
+		bool GetTetrisSoundON();
+		/// サウンドON保存
+		void SetTetrisSoundON(bool isON);
 		/// リモート有効読み込み
 		bool GetTetrisRemoteEnabled();
 		/// リモート有効保存

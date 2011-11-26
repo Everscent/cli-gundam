@@ -3,6 +3,7 @@
 #include "TetrisModel.h"
 #include "TetrisView.h"
 #include "TetrisRemoteController.h"
+#include "TetrisSound.h"
 
 using namespace Anaheim;
 using namespace Anaheim::Tetris;
@@ -16,9 +17,11 @@ TetrisController::TetrisController(Anaheim::Tetris::TetrisModel ^model, Anaheim:
 	this->model->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisController::ModelGameOver);
 	this->view = view;
 	this->remote = gcnew TetrisRemoteController();
+	this->sound = gcnew TetrisSound();
 	this->timer = gcnew Timer();
 	this->timer->Interval = 700;
 	this->timer->Tick += gcnew EventHandler(this, &TetrisController::TimerTick);
+	this->isPause = false;
 	mainCanvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &TetrisController::CanvasPaint);
 	for each (Control^ canvas in nextCanvases)
 	{
@@ -37,13 +40,17 @@ void TetrisController::TimerTick(System::Object ^sender, System::EventArgs ^e)
 
 void TetrisController::CanvasPaint(System::Object ^sender, System::Windows::Forms::PaintEventArgs ^e)
 {
+	if (this->isPause) return;
+
 	this->view->Draw(dynamic_cast<Control^>(sender));
 }
 // ----------------------------------------------------------------------------------------------------
 
 void TetrisController::ModelGameOver(System::Object ^sender, Anaheim::Tetris::TetrisScoreEventArgs ^e)
 {
-	this->timer->Stop();
+	this->Stop();
+	this->isPause = false;
+	this->sound->PlayGameOverSound();
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -53,9 +60,19 @@ void TetrisController::RemoteSend()
 }
 // ----------------------------------------------------------------------------------------------------
 
+void TetrisController::SetSoundON(bool isON)
+{
+	this->sound->ON = isON;
+	if (isON && this->timer->Enabled)
+	{
+		this->sound->PlayMainSound();
+	}
+}
+// ----------------------------------------------------------------------------------------------------
+
 void TetrisController::Clear()
 {
-	this->timer->Stop();
+	this->Stop();
 	this->OnGameOver(gcnew TetrisScoreEventArgs(this->model->Score));
 	this->model->Clear();
 	this->view->Clear();
@@ -73,7 +90,10 @@ bool TetrisController::Start()
 {
 	if (this->timer->Enabled) return false;
 
+	this->view->Draw();
+	this->sound->PlayMainSound();
 	this->timer->Start();
+	this->isPause = false;
 	return true;
 }
 // ----------------------------------------------------------------------------------------------------
@@ -82,7 +102,10 @@ bool TetrisController::Stop()
 {
 	if (!this->timer->Enabled) return false;
 
+	this->view->Clear();
+	this->sound->StopMainSound();
 	this->timer->Stop();
+	this->isPause = true;
 	return true;
 }
 // ----------------------------------------------------------------------------------------------------
