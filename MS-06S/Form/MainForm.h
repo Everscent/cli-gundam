@@ -337,7 +337,7 @@ namespace MS_06S
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// Closed
+	/// ƒNƒ[ƒYŒãˆ—
 	private: System::Void MainForm_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e)
 			 {
 				 if (this->tcpClient->Connected)

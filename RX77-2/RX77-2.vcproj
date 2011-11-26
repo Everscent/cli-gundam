@@ -206,6 +206,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Class\ConfigFile.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RX77-2.cpp"
 				>
 			</File>
@@ -235,6 +239,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\Class\ConfigFile.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Form\MainForm.h"
 				FileType="3"

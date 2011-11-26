@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ConfigFile.h"
+
 namespace RX77_2
 {
 	using namespace System;
@@ -24,7 +26,8 @@ namespace RX77_2
 
 #pragma region フィールド
 
-	private: TetrisRemotePackage^ tetris;
+	private: ConfigFile^ config;			///< コンフィグファイル
+	private: TetrisRemotePackage^ tetris;	///< テトリス
 
 	private: System::Windows::Forms::Panel^  panelCanvas;
 
@@ -88,8 +91,9 @@ namespace RX77_2
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MinimumSize = System::Drawing::Size(316, 637);
 			this->Name = L"MainForm";
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"RX77-2";
+			this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &MainForm::MainForm_FormClosed);
 			this->ResumeLayout(false);
 
 		}
@@ -98,9 +102,22 @@ namespace RX77_2
 	/// 初期化
 	private: void Initialize()
 			 {
+				 String^ filename = System::IO::Path::ChangeExtension(System::Windows::Forms::Application::ExecutablePath, ".ini");
+				 this->config = gcnew ConfigFile(filename);
+				 this->config->LoadFormSizeAndLocation(this);
+
 				 this->tetris = gcnew TetrisRemotePackage(this->panelCanvas);
 				 this->tetris->StartRemote();
 			 }
+			 // ----------------------------------------------------------------------------------------------------
+
+	/// クローズ後処理
+	private: System::Void MainForm_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e)
+			 {
+				 this->config->SaveFormSizeAndLocation(this);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	};
 }
 

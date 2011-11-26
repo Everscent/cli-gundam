@@ -1,6 +1,6 @@
 #pragma once
 
-namespace MS_06S
+namespace RX77_2
 {
 	using namespace System;
 	using namespace System::Windows::Forms;
@@ -20,16 +20,12 @@ namespace MS_06S
 	private:
 		IniFile ^ iniFile;
 
-		literal String^ INI_FILE_NAME     = "MS-06S.ini";		///< iniファイル名
+		literal String^ INI_FILE_NAME     = "RX77-2.ini";		///< iniファイル名
 		literal String^ WINDOW_SECTION    = "WINDOW";			///< Window関連 セクション名
 		literal String^ TOP_LOCATION_KEY  = "WINDOW_TOP";		///< Window Top
 		literal String^ LEFT_LOCATION_KEY = "WINDOW_LEFT";		///< Window Left
 		literal String^ WIDTH_SIZE_KEY    = "WINDOW_WIDTH";		///< Window Width
 		literal String^ HEIGHT_SIZE_KEY   = "WINDOW_HEIGHT";	///< Window Height
-		literal String^ TCP_IP_SECTION    = "TCP_IP";			///< TCP IP関連 セクション名
-		literal String^ IP_ADDRESS_KEY    = "IP_ADDRESS";		///< IPアドレス
-		literal String^ PORT_NUMBER_KEY   = "PORT_NUMBER";		///< ポートNo.
-		literal String^ ENCODING_KEY      = "ENCODING";			///< エンコード
 
 	/**
 	 * コストラクタ
@@ -47,18 +43,6 @@ namespace MS_06S
 		void LoadFormSizeAndLocation(Form^ form);
 		/// 位置，サイズ保存
 		void SaveFormSizeAndLocation(Form^ form);
-
-
-		/// TCPクライアント
-
-		/// IPアドレス，ポート読み込み
-		IPEndPoint^ GetTcpIPEndPoint();
-		/// IPアドレス，ポート保存
-		void SetTcpIPEndPoint(IPEndPoint^ endPoint);
-		/// エンコード読み込み
-		Encoding^ GetTcpEncoding();
-		/// エンコード保存
-		void SetTcpEncoding(Encoding^ encoding);
 	};
 	// ----------------------------------------------------------------------------------------------------
 }
