@@ -2765,6 +2765,12 @@ namespace RX78_2
 				 }
 				 else
 				 {
+					 // TETRiS
+					 if (this->tetris->Controller->IsRunning)
+					 {
+						 this->g_buttonStart->PerformClick();
+					 }
+
 					 this->menuHide->PerformClick();
 					 e->Cancel = true;
 				 }
@@ -2786,9 +2792,10 @@ namespace RX78_2
 			 {
 				 if (this->WindowState == System::Windows::Forms::FormWindowState::Minimized)
 				 {
-					 if (this->g_buttonStart->Text == "STOP")
+					 // TETRiS
+					 if (this->tetris->Controller->IsRunning)
 					 {
-						 this->g_buttonStart->PerformClick();
+						 this->g_buttonStart_Click(this->g_buttonStart, nullptr);
 					 }
 				 }
 
