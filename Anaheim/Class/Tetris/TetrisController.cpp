@@ -54,6 +54,7 @@ void TetrisController::ModelChangedField(System::Object ^sender, System::EventAr
 
 	this->timer->Stop();
 	this->view->Draw();
+	this->RemoteSend();
 	System::Threading::Thread::Sleep(500);
 	this->timer->Start();
 }
@@ -94,6 +95,7 @@ void TetrisController::Clear()
 
 void TetrisController::Initialize()
 {
+	this->Stop();
 	this->view->Clear();
 	this->model->Initialize();
 }
@@ -104,6 +106,7 @@ bool TetrisController::Start()
 	if (this->timer->Enabled) return false;
 
 	this->view->Draw();
+	this->RemoteSend();
 	this->sound->PlayMainSound();
 	this->timer->Start();
 	this->isPause = false;
