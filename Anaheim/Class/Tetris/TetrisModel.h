@@ -87,17 +87,17 @@ namespace Anaheim
 		 */
 		protected:
 			virtual void OnTurnEnd(EventArgs^ e);
-			virtual void OnChangedField(EventArgs^ e);
-			virtual void OnChangedScore(TetrisScoreEventArgs^ e);
+			virtual void OnFieldChanged(EventArgs^ e);
+			virtual void OnScoreChanged(TetrisScoreEventArgs^ e);
 			virtual void OnGameOver(TetrisScoreEventArgs^ e);
 
 		public:
 			/// ターンエンドイベント
 			event EventHandler^ TurnEnd;
 			/// フィールド更新イベント
-			event EventHandler^ ChangedField;
+			event EventHandler^ FieldChanged;
 			/// スコア更新イベント
-			event TetrisScoreEventHandler^ ChangedScore;
+			event TetrisScoreEventHandler^ ScoreChanged;
 			/// ゲームオーバーイベント
 			event TetrisScoreEventHandler^ GameOver;
 		};

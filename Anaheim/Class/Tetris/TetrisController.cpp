@@ -15,7 +15,7 @@ using namespace Anaheim::Tetris;
 TetrisController::TetrisController(Anaheim::Tetris::TetrisModel ^model, Anaheim::Tetris::TetrisView ^view, System::Windows::Forms::Control ^mainCanvas, cli::array<System::Windows::Forms::Control ^,1> ^nextCanvases)
 {
 	this->model = model;
-	this->model->ChangedField += gcnew EventHandler(this, &TetrisController::ModelChangedField);
+	this->model->FieldChanged += gcnew EventHandler(this, &TetrisController::ModelFieldChanged);
 	this->model->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisController::ModelGameOver);
 	this->view = view;
 	this->remote = gcnew TetrisRemoteController();
@@ -48,7 +48,7 @@ void TetrisController::CanvasPaint(System::Object ^sender, System::Windows::Form
 }
 // ----------------------------------------------------------------------------------------------------
 
-void TetrisController::ModelChangedField(System::Object ^sender, System::EventArgs ^e)
+void TetrisController::ModelFieldChanged(System::Object ^sender, System::EventArgs ^e)
 {
 	if (!this->model->Field->ExistsCompleteRow()) return;
 

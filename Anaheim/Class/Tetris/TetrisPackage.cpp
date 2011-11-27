@@ -21,7 +21,7 @@ TetrisPackage::TetrisPackage(System::Windows::Forms::Control ^mainCanvas, cli::a
 	this->model = gcnew TetrisModel(field, minos, gcnew TetrisScore(), nextCanvases->Length);
 	this->controller = gcnew TetrisController(this->model, this->view, mainCanvas, nextCanvases);
 	this->model->TurnEnd += gcnew EventHandler(this, &TetrisPackage::ModelTurnEnd);
-	this->model->ChangedScore += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ModelChangedScore);
+	this->model->ScoreChanged += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ModelScoreChanged);
 	this->model->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ModelGameOver);
 	this->controller->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ControllerGameOver);
 }
@@ -33,9 +33,9 @@ void TetrisPackage::ModelTurnEnd(System::Object ^sender, System::EventArgs ^e)
 }
 // ----------------------------------------------------------------------------------------------------
 
-void TetrisPackage::ModelChangedScore(System::Object ^sender, Anaheim::Tetris::TetrisScoreEventArgs ^e)
+void TetrisPackage::ModelScoreChanged(System::Object ^sender, Anaheim::Tetris::TetrisScoreEventArgs ^e)
 {
-	this->OnChangedScore(e);
+	this->OnScoreChanged(e);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -57,9 +57,9 @@ void TetrisPackage::OnTurnEnd(System::EventArgs ^e)
 }
 // ----------------------------------------------------------------------------------------------------
 
-void TetrisPackage::OnChangedScore(Anaheim::Tetris::TetrisScoreEventArgs ^e)
+void TetrisPackage::OnScoreChanged(Anaheim::Tetris::TetrisScoreEventArgs ^e)
 {
-	this->ChangedScore(this, e);
+	this->ScoreChanged(this, e);
 }
 // ----------------------------------------------------------------------------------------------------
 

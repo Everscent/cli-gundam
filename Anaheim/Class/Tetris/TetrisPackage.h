@@ -38,7 +38,7 @@ namespace Anaheim
 		 */
 		private:
 			void ModelTurnEnd(System::Object^  sender, System::EventArgs^  e);
-			void ModelChangedScore(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e);
+			void ModelScoreChanged(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e);
 			void ModelGameOver(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e);
 			void ControllerGameOver(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e);
 
@@ -57,14 +57,14 @@ namespace Anaheim
 		 */
 		protected:
 			virtual void OnTurnEnd(EventArgs^ e);
-			virtual void OnChangedScore(TetrisScoreEventArgs^ e);
+			virtual void OnScoreChanged(TetrisScoreEventArgs^ e);
 			virtual void OnGameOver(TetrisScoreEventArgs^ e);
 
 		public:
 			/// ターンエンドイベント
 			event EventHandler^ TurnEnd;
 			/// スコア更新イベント
-			event TetrisScoreEventHandler^ ChangedScore;
+			event TetrisScoreEventHandler^ ScoreChanged;
 			/// ゲームオーバーイベント
 			event TetrisScoreEventHandler^ GameOver;
 		};

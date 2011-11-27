@@ -63,14 +63,14 @@ bool TetrisModel::SetNewMino()
 bool TetrisModel::EndDown()
 {
 	this->field->SetMino(this->CurrentMino);
-	this->OnChangedField(gcnew EventArgs());
+	this->OnFieldChanged(gcnew EventArgs());
 
 	int count = this->field->RemoveCompleteRows();
 	
 	bool isPerfect = this->field->IsEmpty;
 	if (this->score->UpdateScore(count, isPerfect))
 	{
-		this->OnChangedScore(gcnew TetrisScoreEventArgs(this->score));
+		this->OnScoreChanged(gcnew TetrisScoreEventArgs(this->score));
 	}
 
 	return this->SetNewMino();
@@ -82,7 +82,7 @@ void TetrisModel::Clear()
 	this->field->Clear();
 	this->minos->Clear();
 	this->score->Clear();
-	this->OnChangedScore(gcnew TetrisScoreEventArgs(this->score));
+	this->OnScoreChanged(gcnew TetrisScoreEventArgs(this->score));
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -158,15 +158,15 @@ void TetrisModel::OnTurnEnd(System::EventArgs ^e)
 }
 // ----------------------------------------------------------------------------------------------------
 
-void TetrisModel::OnChangedField(System::EventArgs ^e)
+void TetrisModel::OnFieldChanged(System::EventArgs ^e)
 {
-	this->ChangedField(this, e);
+	this->FieldChanged(this, e);
 }
 // ----------------------------------------------------------------------------------------------------
 
-void TetrisModel::OnChangedScore(Anaheim::Tetris::TetrisScoreEventArgs ^e)
+void TetrisModel::OnScoreChanged(Anaheim::Tetris::TetrisScoreEventArgs ^e)
 {
-	this->ChangedScore(this, e);
+	this->ScoreChanged(this, e);
 }
 // ----------------------------------------------------------------------------------------------------
 

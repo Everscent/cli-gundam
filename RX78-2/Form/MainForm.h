@@ -2711,7 +2711,7 @@ namespace RX78_2
 				 // テトリス
 				 array<Control^>^ canvases = { this->g_panelNext1, this->g_panelNext2, this->g_panelNext3 };
 				 this->tetris = gcnew TetrisPackage(this->g_panelTetris, canvases);
-				 this->tetris->ChangedScore += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisChangedScore);
+				 this->tetris->ScoreChanged += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisScoreChanged);
 				 this->tetris->GameOver += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisGameOver);
 				 this->menuSound->Checked = this->config->GetTetrisSoundON();
 				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
@@ -4793,7 +4793,7 @@ namespace RX78_2
 			 // ----------------------------------------------------------------------------------------------------
 
 	/// スコア更新　イベントハンドラ
-	private: void TetrisChangedScore(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e)
+	private: void TetrisScoreChanged(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e)
 			 {
 				 this->g_labelScore->Text = String::Format("{0:D3}", e->Score->Score);
 				 this->g_labelSingle->Text = e->Score->SingleCount.ToString();
