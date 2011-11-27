@@ -157,7 +157,7 @@ bool TetrisController::ProcessDialogKey(System::Windows::Forms::Keys keyData)
 			hasMoved = true;
 			break;
 		default:
-			break;
+			return false;
 	}
 
 	if (hasMoved)
@@ -166,7 +166,7 @@ bool TetrisController::ProcessDialogKey(System::Windows::Forms::Keys keyData)
 		this->RemoteSend();
 	}
 
-	return hasMoved;
+	return true;
 }
 // ----------------------------------------------------------------------------------------------------
 
