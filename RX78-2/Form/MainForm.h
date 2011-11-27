@@ -3130,7 +3130,7 @@ namespace RX78_2
 				 {
 					 this->menuSound->Checked = true;
 				 }
-				 this->config->SetTetrisSoundON(this->menuRemote->Checked);
+				 this->config->SetTetrisSoundON(this->menuSound->Checked);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
