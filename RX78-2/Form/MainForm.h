@@ -294,7 +294,7 @@ namespace RX78_2
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
-			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
 			this->menuFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuView = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -850,7 +850,7 @@ namespace RX78_2
 			// 
 			this->menuReset->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuReset.Image")));
 			this->menuReset->Name = L"menuReset";
-			this->menuReset->Size = System::Drawing::Size(152, 22);
+			this->menuReset->Size = System::Drawing::Size(142, 22);
 			this->menuReset->Text = L"ƒŠƒZƒbƒg(&R)";
 			this->menuReset->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuReset->Click += gcnew System::EventHandler(this, &MainForm::menuReset_Click);
@@ -1283,9 +1283,9 @@ namespace RX78_2
 			this->r_gridReport->AllowUserToDeleteRows = false;
 			this->r_gridReport->AllowUserToResizeColumns = false;
 			this->r_gridReport->AllowUserToResizeRows = false;
-			dataGridViewCellStyle2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)), 
+			dataGridViewCellStyle1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)), 
 				static_cast<System::Int32>(static_cast<System::Byte>(224)), static_cast<System::Int32>(static_cast<System::Byte>(224)));
-			this->r_gridReport->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+			this->r_gridReport->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this->r_gridReport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 				| System::Windows::Forms::AnchorStyles::Left) 
 				| System::Windows::Forms::AnchorStyles::Right));

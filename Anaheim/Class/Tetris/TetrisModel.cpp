@@ -63,7 +63,10 @@ bool TetrisModel::SetNewMino()
 bool TetrisModel::EndDown()
 {
 	this->field->SetMino(this->CurrentMino);
+	this->OnChangedField(gcnew EventArgs());
+
 	int count = this->field->RemoveCompleteRows();
+	
 	bool isPerfect = this->field->IsEmpty;
 	if (this->score->UpdateScore(count, isPerfect))
 	{
@@ -125,11 +128,14 @@ bool TetrisModel::MoveDownAutomatic()
 	if (!this->MoveDown())
 	{
 		bool result = this->EndDown();
-		if (!result)
+		if (result)
+		{
+			this->OnTurnEnd(gcnew EventArgs());			
+		}
+		else
 		{
 			this->OnGameOver(gcnew TetrisScoreEventArgs(this->score));
 		}
-		this->OnTurnEnd(gcnew EventArgs());
 
 		return result;
 	}
@@ -149,6 +155,12 @@ bool TetrisModel::Teleport()
 void TetrisModel::OnTurnEnd(System::EventArgs ^e)
 {
 	this->TurnEnd(this, e);
+}
+// ----------------------------------------------------------------------------------------------------
+
+void TetrisModel::OnChangedField(System::EventArgs ^e)
+{
+	this->ChangedField(this, e);
 }
 // ----------------------------------------------------------------------------------------------------
 

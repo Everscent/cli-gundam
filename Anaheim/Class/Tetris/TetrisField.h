@@ -96,6 +96,8 @@ namespace Anaheim
 			void Clear();
 			/// ミノをcolorsにセット
 			void SetMino(TetrisMino^ mino);
+			/// 完了行が存在するか判定
+			bool ExistsCompleteRow();
 			/// 完了行を削除
 			int RemoveCompleteRows();
 			/// シリアライズ

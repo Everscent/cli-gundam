@@ -4,6 +4,7 @@
 #include "TetrisView.h"
 #include "TetrisRemoteController.h"
 #include "TetrisSound.h"
+#include "TetrisField.h"
 
 using namespace Anaheim;
 using namespace Anaheim::Tetris;
@@ -14,6 +15,7 @@ using namespace Anaheim::Tetris;
 TetrisController::TetrisController(Anaheim::Tetris::TetrisModel ^model, Anaheim::Tetris::TetrisView ^view, System::Windows::Forms::Control ^mainCanvas, cli::array<System::Windows::Forms::Control ^,1> ^nextCanvases)
 {
 	this->model = model;
+	this->model->ChangedField += gcnew EventHandler(this, &TetrisController::ModelChangedField);
 	this->model->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisController::ModelGameOver);
 	this->view = view;
 	this->remote = gcnew TetrisRemoteController();
@@ -43,6 +45,17 @@ void TetrisController::CanvasPaint(System::Object ^sender, System::Windows::Form
 	if (this->isPause) return;
 
 	this->view->Draw(dynamic_cast<Control^>(sender));
+}
+// ----------------------------------------------------------------------------------------------------
+
+void TetrisController::ModelChangedField(System::Object ^sender, System::EventArgs ^e)
+{
+	if (!this->model->Field->ExistsCompleteRow()) return;
+
+	this->timer->Stop();
+	this->view->Draw();
+	System::Threading::Thread::Sleep(500);
+	this->timer->Start();
 }
 // ----------------------------------------------------------------------------------------------------
 

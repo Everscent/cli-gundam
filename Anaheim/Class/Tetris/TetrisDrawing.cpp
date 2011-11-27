@@ -64,6 +64,13 @@ MainTetrisDrawing::MainTetrisDrawing(System::Windows::Forms::Control ^canvas, An
 }
 // ----------------------------------------------------------------------------------------------------
 
+void MainTetrisDrawing::DrawRemoveBlock(System::Drawing::PointF location, System::Drawing::SizeF size)
+{
+	this->api->FillRectangleGradation(Color::FromArgb(192, Color::White), Color::FromArgb(192, this->canvas->BackColor), location, size);
+	this->api->DrawRectangle(this->canvas->BackColor, 2, location, size);
+}
+// ----------------------------------------------------------------------------------------------------
+
 void MainTetrisDrawing::DrawMino(Anaheim::Tetris::TetrisMino ^mino)
 {
 	SizeF size = this->GetBlockSize();
@@ -113,22 +120,36 @@ void MainTetrisDrawing::DrawCore(Anaheim::Tetris::TetrisMino ^mino)
 	int y = 0;
 	for each (TetrisFieldRow^ row in this->field->Rows)
 	{
-		int x = 0;
-		for each (Color color in row->Colors)
+		if (row->IsComplete())
 		{
-			if (!color.Equals(Color::Empty))
+			for (int x = 0; x < TetrisField::COL_COUNT; x++)
 			{
 				PointF location = this->GetBlockLocation(Point(x, y), size);
-				this->DrawBlock(location, size, color);
+				this->DrawRemoveBlock(location, size);
+			}			
+		}
+		else
+		{
+			int x = 0;
+			for each (Color color in row->Colors)
+			{
+				if (!color.Equals(Color::Empty))
+				{
+					PointF location = this->GetBlockLocation(Point(x, y), size);
+					this->DrawBlock(location, size, color);
+				}
+				x++;
 			}
-			x++;
 		}
 		y++;
 	}
 
-	GhostTetrisMino^ ghost = mino->CreateGhost();
-	this->DrawGhostMino(ghost);
-	this->DrawMino(mino);
+	if (!this->field->ExistsCompleteRow())
+	{
+		GhostTetrisMino^ ghost = mino->CreateGhost();
+		this->DrawGhostMino(ghost);
+		this->DrawMino(mino);
+	}
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -144,9 +165,8 @@ NextTetrisDrawing::NextTetrisDrawing(System::Windows::Forms::Control ^canvas, An
 SizeF NextTetrisDrawing::GetBlockSize()
 {
 	const int margin = 6;
-
-	float width = (float)(this->canvas->Width - margin) / TetrisMino::HORI_COUNT;
-	float height = (float)(this->canvas->Height - margin) / TetrisMino::VERT_COUNT;
+	float width = static_cast<float>(this->canvas->Width - margin) / TetrisMino::HORI_COUNT;
+	float height = static_cast<float>(this->canvas->Height - margin) / TetrisMino::VERT_COUNT;
 	return SizeF(width, height);
 }
 // ----------------------------------------------------------------------------------------------------

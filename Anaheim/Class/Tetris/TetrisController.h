@@ -42,6 +42,7 @@ namespace Anaheim
 		private:
 			void TimerTick(System::Object^  sender, System::EventArgs^  e);
 			void CanvasPaint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
+			void ModelChangedField(System::Object^  sender, System::EventArgs^  e);
 			void ModelGameOver(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e);
 			void RemoteSend();
 			void SetSoundON(bool isON);

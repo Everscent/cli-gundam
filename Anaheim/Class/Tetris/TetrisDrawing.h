@@ -76,6 +76,7 @@ namespace Anaheim
 		 * ÉÅÉ\ÉbÉh
 		 */
 		private:
+			void DrawRemoveBlock(PointF location, SizeF size);
 			void DrawMino(TetrisMino^ mino);
 			void DrawGhostMino(GhostTetrisMino^ mino);
 

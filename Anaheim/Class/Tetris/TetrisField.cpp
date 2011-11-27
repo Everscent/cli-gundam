@@ -153,6 +153,19 @@ void TetrisField::SetMino(Anaheim::Tetris::TetrisMino ^mino)
 }
 // ----------------------------------------------------------------------------------------------------
 
+bool TetrisField::ExistsCompleteRow()
+{
+	for each (TetrisFieldRow^ row in this->rows)
+	{
+		if (row->IsComplete())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+// ----------------------------------------------------------------------------------------------------
+
 int TetrisField::RemoveCompleteRows()
 {
 	this->rows->RemoveAll(gcnew Predicate<TetrisFieldRow^>(this, &TetrisField::RemoveCompleteRowsMatch));
