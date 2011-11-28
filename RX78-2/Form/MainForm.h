@@ -1093,7 +1093,7 @@ namespace RX78_2
 			this->toolReset->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->toolReset->Name = L"toolReset";
 			this->toolReset->Size = System::Drawing::Size(23, 22);
-			this->toolReset->Text = L"BEETLリセット";
+			this->toolReset->Text = L"ARROWリセット";
 			this->toolReset->Click += gcnew System::EventHandler(this, &MainForm::ToolButtonClick);
 			// 
 			// toolSeparatorDebug
