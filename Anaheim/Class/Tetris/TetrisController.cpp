@@ -2,7 +2,7 @@
 #include "TetrisController.h"
 #include "TetrisModel.h"
 #include "TetrisView.h"
-#include "TetrisRemoteController.h"
+#include "TetrisRemoting.h"
 #include "TetrisSound.h"
 #include "TetrisField.h"
 
@@ -18,11 +18,12 @@ TetrisController::TetrisController(Anaheim::Tetris::TetrisModel ^model, Anaheim:
 	this->model->FieldChanged += gcnew EventHandler(this, &TetrisController::ModelFieldChanged);
 	this->model->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisController::ModelGameOver);
 	this->view = view;
-	this->remote = gcnew TetrisRemoteController();
-	this->sound = gcnew TetrisSound();
+	this->remoting = gcnew TetrisRemoting();
+	this->sound = gcnew TetrisSound(mainCanvas);
 	this->timer = gcnew Timer();
 	this->timer->Interval = 700;
 	this->timer->Tick += gcnew EventHandler(this, &TetrisController::TimerTick);
+	this->key = gcnew TetrisKey(this->model, this->timer);
 	this->isPause = false;
 	mainCanvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &TetrisController::CanvasPaint);
 	for each (Control^ canvas in nextCanvases)
@@ -50,13 +51,19 @@ void TetrisController::CanvasPaint(System::Object ^sender, System::Windows::Form
 
 void TetrisController::ModelFieldChanged(System::Object ^sender, System::EventArgs ^e)
 {
-	if (!this->model->Field->ExistsCompleteRow()) return;
-
-	this->timer->Stop();
-	this->view->Draw();
-	this->RemoteSend();
-	System::Threading::Thread::Sleep(500);
-	this->timer->Start();
+	if (!this->model->Field->ExistsCompleteRow())
+	{
+		this->sound->PlayEndDownSound();
+	}
+	else
+	{
+		this->timer->Stop();
+		this->sound->PlayRemoveSound();
+		this->view->Draw();
+		this->RemoteSend();
+		System::Threading::Thread::Sleep(300);
+		this->timer->Start();
+	}
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -64,13 +71,14 @@ void TetrisController::ModelGameOver(System::Object ^sender, Anaheim::Tetris::Te
 {
 	this->Stop();
 	this->isPause = false;
+	this->sound->StopBGM();
 	this->sound->PlayGameOverSound();
 }
 // ----------------------------------------------------------------------------------------------------
 
 void TetrisController::RemoteSend()
 {
-	this->remote->Send(this->model->Field, this->model->CurrentMino, gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 50005));
+	this->remoting->Send(this->model->Field, this->model->CurrentMino, gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 50005));
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -79,7 +87,7 @@ void TetrisController::SetSoundON(bool isON)
 	this->sound->ON = isON;
 	if (isON && this->timer->Enabled)
 	{
-		this->sound->PlayMainSound();
+		this->sound->PlayBGM();
 	}
 }
 // ----------------------------------------------------------------------------------------------------
@@ -87,6 +95,7 @@ void TetrisController::SetSoundON(bool isON)
 void TetrisController::Clear()
 {
 	this->Stop();
+	this->sound->StopBGM();
 	this->OnGameOver(gcnew TetrisScoreEventArgs(this->model->Score));
 	this->model->Clear();
 	this->view->Clear();
@@ -107,7 +116,7 @@ bool TetrisController::Start()
 
 	this->view->Draw();
 	this->RemoteSend();
-	this->sound->PlayMainSound();
+	this->sound->PlayBGM();
 	this->timer->Start();
 	this->isPause = false;
 	return true;
@@ -119,7 +128,7 @@ bool TetrisController::Stop()
 	if (!this->timer->Enabled) return false;
 
 	this->view->Clear();
-	this->sound->StopMainSound();
+	this->sound->PauseBGM();
 	this->timer->Stop();
 	this->isPause = true;
 	return true;
@@ -129,38 +138,9 @@ bool TetrisController::Stop()
 bool TetrisController::ProcessDialogKey(System::Windows::Forms::Keys keyData)
 {
 	if (!this->timer->Enabled) return false;
+	if (!this->key->IsRegisteredKey(keyData)) return false;
 
-	bool hasMoved = false;
-	switch (keyData)
-	{
-		case Keys::NumPad2:
-		case Keys::Down:
-			hasMoved = this->model->MoveDown();
-			break;
-		case Keys::NumPad4:
-		case Keys::Left:
-			hasMoved = this->model->MoveLeft();
-			break;
-		case Keys::NumPad6:
-		case Keys::Right:
-			hasMoved = this->model->MoveRight();
-			break;
-		case Keys::NumPad7:
-			hasMoved = this->model->RotateLeft();
-			break;
-		case Keys::NumPad9:
-		case Keys::Up:
-			hasMoved = this->model->RotateRight();
-			break;
-		case Keys::Space:
-			this->model->Teleport();
-			hasMoved = true;
-			break;
-		default:
-			return false;
-	}
-
-	if (hasMoved)
+	if (this->key->ExecuteKeyAction(keyData))
 	{
 		this->view->Draw();
 		this->RemoteSend();
@@ -172,13 +152,13 @@ bool TetrisController::ProcessDialogKey(System::Windows::Forms::Keys keyData)
 
 bool TetrisController::StartRemote()
 {
-	return this->remote->Start(gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 50000));
+	return this->remoting->Start(gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 50000));
 }
 // ----------------------------------------------------------------------------------------------------
 
 bool TetrisController::StopRemote()
 {
-	return this->remote->Stop();
+	return this->remoting->Stop();
 }
 // ----------------------------------------------------------------------------------------------------
 

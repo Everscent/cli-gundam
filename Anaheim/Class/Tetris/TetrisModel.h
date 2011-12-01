@@ -59,8 +59,8 @@ namespace Anaheim
 			bool MoveDown();
 			/// 下移動（自動後処理）
 			bool MoveDownAutomatic();
-			/// テレポート
-			bool Teleport();
+			/// ハードドロップ
+			bool HardDrop();
 
 		/**
 		 * プロパティ

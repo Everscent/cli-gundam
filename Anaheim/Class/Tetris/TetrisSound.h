@@ -2,12 +2,13 @@
 
 namespace Anaheim
 {
-	ref class SoundPlayer;
+	ref class WavPlayerDX;
 
 	namespace Tetris
 	{
 		using namespace System;
 		using namespace System::IO;
+		using namespace System::Windows::Forms;
 
 		/**
 		 * テトリス音楽
@@ -19,13 +20,16 @@ namespace Anaheim
 		 */
 		private:
 			bool isON;
-			SoundPlayer^ player;
+			WavPlayerDX^ bgmPlayer;
+			WavPlayerDX^ gameoverPlayer;
+			WavPlayerDX^ removePlayer;
+			WavPlayerDX^ enddownPlayer;
 
 		/**
 		 * コンストラクタ
 		 */
 		public:
-			TetrisSound();
+			TetrisSound(Control^ owner);
 
 		/**
 		 * メソッド
@@ -35,11 +39,17 @@ namespace Anaheim
 
 		public:
 			/// 再生
-			bool PlayMainSound();
+			bool PlayBGM();
+			/// 一時停止
+			void PauseBGM();
 			/// 停止
-			bool StopMainSound();
+			void StopBGM();
 			/// ゲームオーバー音
 			bool PlayGameOverSound();
+			/// 削除音
+			bool PlayRemoveSound();
+			/// 下移動終了音
+			bool PlayEndDownSound();
 
 		/**
 		 * プロパティ

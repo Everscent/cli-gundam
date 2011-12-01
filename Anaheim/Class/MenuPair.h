@@ -79,19 +79,14 @@ namespace Anaheim
 	public:
 		/// 登録（メインメニュー，コンテキストメニュー）
 		void SetPair(ToolStripMenuItem^ mainMenu, ToolStripMenuItem^ contextMenu);
-
 		/// 登録（メインメニュー，ツールボタン
 		void SetPair(ToolStripMenuItem^ mainMenu, ToolStripButton^ toolButton);
-
 		/// 登録（メインメニュー，コンテキストメニュー，ツールボタン）
 		void SetPair(ToolStripMenuItem^ mainMenu, ToolStripMenuItem^ contextMenu, ToolStripButton^ toolButton);
-
 		/// ペアのコンテキストメニュー実行
 		bool ExecuteContext(Object^ contextMenu);
-
 		/// ペアのツールボタン実行
 		bool ExecuteToolButtont(Object^ toolButton);
-
 		/// ペアのEnabled更新
 		bool UpdateEnabled(Object^ mainMenu);
 	};

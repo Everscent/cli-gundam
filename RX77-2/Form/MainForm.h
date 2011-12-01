@@ -114,6 +114,7 @@ namespace RX77_2
 	/// ƒNƒ[ƒYŒãˆ—
 	private: System::Void MainForm_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e)
 			 {
+				 this->tetris->StopRemote();
 				 this->config->SaveFormSizeAndLocation(this);
 			 }
 			 // ----------------------------------------------------------------------------------------------------

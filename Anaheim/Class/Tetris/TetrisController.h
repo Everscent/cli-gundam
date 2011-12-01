@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TetrisScoreEventArgs.h"
+#include "TetrisKey.h"
 
 namespace Anaheim
 {
@@ -11,7 +12,7 @@ namespace Anaheim
 
 		ref class TetrisModel;
 		ref class TetrisView;
-		ref class TetrisRemoteController;
+		ref class TetrisRemoting;
 		ref class TetrisSound;
 
 		/**
@@ -25,7 +26,8 @@ namespace Anaheim
 		private:
 			TetrisModel^ model;
 			TetrisView^ view;
-			TetrisRemoteController^ remote;
+			TetrisKey^ key;
+			TetrisRemoting^ remoting;
 			TetrisSound^ sound;
 			Timer^ timer;
 			bool isPause;
@@ -72,10 +74,40 @@ namespace Anaheim
 			{
 				bool get() { return this->timer->Enabled; }
 			}
-			/// 音楽ON
+			/// 音楽ON設定
 			property bool SoundON
 			{
 				void set(bool value) { this->SetSoundON(value); }
+			}
+			/// 下移動キー設定
+			property array<Keys>^ MoveDownKeys
+			{
+				void set(array<Keys>^ value) { this->key->MoveDownKeys = value; }
+			}
+			/// 左移動キー設定
+			property array<Keys>^ MoveLeftKeys
+			{
+				void set(array<Keys>^ value) { this->key->MoveLeftKeys = value; }
+			}
+			/// 右移動キー設定
+			property array<Keys>^ MoveRightKeys
+			{
+				void set(array<Keys>^ value) { this->key->MoveRightKeys = value; }
+			}
+			/// 左回転キー設定
+			property array<Keys>^ RotateLeftKeys
+			{
+				void set(array<Keys>^ value) { this->key->RotateLeftKeys = value; }
+			}
+			/// 右回転キー設定
+			property array<Keys>^ RotateRightKeys
+			{
+				void set(array<Keys>^ value) { this->key->RotateRightKeys = value; }
+			}
+			/// ハードドロップキー設定
+			property array<Keys>^ HardDropKeys
+			{
+				void set(array<Keys>^ value) { this->key->HardDropKeys = value; }
 			}
 
 		/**

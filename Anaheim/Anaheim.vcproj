@@ -191,6 +191,16 @@
 			AssemblyName="System.Drawing, Version=2.0.0.0, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
+		<AssemblyReference
+			RelativePath="Microsoft.DirectX.dll"
+			AssemblyName="Microsoft.DirectX, Version=1.0.2902.0, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86"
+			MinFrameworkVersion="0"
+		/>
+		<AssemblyReference
+			RelativePath="Microsoft.DirectX.DirectSound.dll"
+			AssemblyName="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86"
+			MinFrameworkVersion="0"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -223,10 +233,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Class\SoundPlayer.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Stdafx.cpp"
 				>
 				<FileConfiguration
@@ -245,6 +251,14 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Class\WavPlayer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Class\WavPlayerDX.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\Class\Window.cpp"
@@ -282,6 +296,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Class\Tetris\TetrisKey.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\Tetris\TetrisMino.cpp"
 					>
 				</File>
@@ -294,15 +312,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoteController.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Class\Tetris\TetrisRemoteEventArgs.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Class\Tetris\TetrisRemotePackage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoting.cpp"
 					>
 				</File>
 				<File
@@ -373,11 +391,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Class\SoundPlayer.h"
+				RelativePath=".\Stdafx.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Stdafx.h"
+				RelativePath=".\Class\WavPlayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Class\WavPlayerDX.h"
 				>
 			</File>
 			<File
@@ -416,6 +438,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Class\Tetris\TetrisKey.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\Tetris\TetrisMino.h"
 					>
 				</File>
@@ -428,15 +454,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoteController.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Class\Tetris\TetrisRemoteEventArgs.h"
 					>
 				</File>
 				<File
 					RelativePath=".\Class\Tetris\TetrisRemotePackage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\Tetris\TetrisRemoting.h"
 					>
 				</File>
 				<File

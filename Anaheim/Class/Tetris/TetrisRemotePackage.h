@@ -9,7 +9,7 @@ namespace Anaheim
 		using namespace System;
 		using namespace System::Windows::Forms;
 
-		ref class TetrisRemoteController;
+		ref class TetrisRemoting;
 		ref class MainTetrisDrawing;
 		ref class TetrisMino;
 
@@ -23,7 +23,7 @@ namespace Anaheim
 		 */
 		private:
 			Control^ canvas;
-			TetrisRemoteController^ remote;
+			TetrisRemoting^ remoting;
 			MainTetrisDrawing^ drawing;
 			TetrisMino^ mino;
 
@@ -40,14 +40,13 @@ namespace Anaheim
 			void RemoteReceived(System::Object^ sender, TetrisRemoteEventArgs^ e);
 			void CanvasPaint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
 			void CanvasResize(System::Object^  sender, System::EventArgs^  e);
+			bool Draw();
 
 		public:
 			/// リモートスタート
 			bool StartRemote();
 			/// リモートストップ
 			bool StopRemote();
-			/// 描画
-			bool Draw();
 		};
 		// ----------------------------------------------------------------------------------------------------
 	}

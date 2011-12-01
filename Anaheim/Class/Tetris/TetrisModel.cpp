@@ -144,11 +144,11 @@ bool TetrisModel::MoveDownAutomatic()
 }
 // ----------------------------------------------------------------------------------------------------
 
-bool TetrisModel::Teleport()
+bool TetrisModel::HardDrop()
 {
 	TetrisMino^ ghost = this->CurrentMino->CreateGhost();
 	this->CurrentMino->MoveTo(ghost);
-	return this->CurrentMino->IsIllegalLocation();
+	return this->MoveDownAutomatic();
 }
 // ----------------------------------------------------------------------------------------------------
 

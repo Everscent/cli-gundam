@@ -2713,6 +2713,18 @@ namespace RX78_2
 				 this->tetris = gcnew TetrisPackage(this->g_panelTetris, canvases);
 				 this->tetris->ScoreChanged += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisScoreChanged);
 				 this->tetris->GameOver += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisGameOver);
+				 array<Keys>^ moveDownKeys = { Keys::NumPad2, Keys::Down };
+				 array<Keys>^ moveLeftKeys = { Keys::NumPad4, Keys::Left };
+				 array<Keys>^ moveRightKeys = { Keys::NumPad6, Keys::Right };
+				 array<Keys>^ rotateLeftKeys = { Keys::NumPad7 };
+				 array<Keys>^ rotateRightKeys = { Keys::NumPad9, Keys::Up };
+				 array<Keys>^ hardDropKeys = { Keys::Space };
+				 this->tetris->Controller->MoveDownKeys = moveDownKeys;
+				 this->tetris->Controller->MoveLeftKeys = moveLeftKeys;
+				 this->tetris->Controller->MoveRightKeys = moveRightKeys;
+				 this->tetris->Controller->RotateLeftKeys = rotateLeftKeys;
+				 this->tetris->Controller->RotateRightKeys = rotateRightKeys;
+				 this->tetris->Controller->HardDropKeys = hardDropKeys;
 				 this->menuSound->Checked = this->config->GetTetrisSoundON();
 				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
 
@@ -3251,11 +3263,6 @@ namespace RX78_2
 	/// デバッグ用ボタン
 	private: System::Void toolDebug_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
-				 System::Reflection::Assembly^ assembly = System::Reflection::Assembly::GetExecutingAssembly();
-				 System::Resources::ResourceManager^ resources = gcnew System::Resources::ResourceManager("RX78_2.RX78_2", assembly);
-				 System::IO::Stream^ stream = safe_cast<System::IO::Stream^>(resources->GetObject(L"TestSound"));
-				 Anaheim::SoundPlayer^ player = gcnew SoundPlayer();
-				 player->Play(stream);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
