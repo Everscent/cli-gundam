@@ -2719,12 +2719,12 @@ namespace RX78_2
 				 array<Keys>^ rotateLeftKeys = { Keys::NumPad7 };
 				 array<Keys>^ rotateRightKeys = { Keys::NumPad9, Keys::Up };
 				 array<Keys>^ hardDropKeys = { Keys::Space };
-				 this->tetris->Controller->MoveDownKeys = moveDownKeys;
-				 this->tetris->Controller->MoveLeftKeys = moveLeftKeys;
-				 this->tetris->Controller->MoveRightKeys = moveRightKeys;
-				 this->tetris->Controller->RotateLeftKeys = rotateLeftKeys;
-				 this->tetris->Controller->RotateRightKeys = rotateRightKeys;
-				 this->tetris->Controller->HardDropKeys = hardDropKeys;
+				 this->tetris->Controller->Key->MoveDownKeys = moveDownKeys;
+				 this->tetris->Controller->Key->MoveLeftKeys = moveLeftKeys;
+				 this->tetris->Controller->Key->MoveRightKeys = moveRightKeys;
+				 this->tetris->Controller->Key->RotateLeftKeys = rotateLeftKeys;
+				 this->tetris->Controller->Key->RotateRightKeys = rotateRightKeys;
+				 this->tetris->Controller->Key->HardDropKeys = hardDropKeys;
 				 this->menuSound->Checked = this->config->GetTetrisSoundON();
 				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
 

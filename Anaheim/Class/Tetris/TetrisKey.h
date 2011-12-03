@@ -10,9 +10,57 @@ namespace Anaheim
 		ref class TetrisModel;
 
 		/**
+		 * テトリスキー（公開用）
+		 */
+		public ref class PublicTetrisKey abstract
+		{
+		/**
+		 * コンストラクタ
+		 */
+		public:
+			PublicTetrisKey();
+
+		/**
+		 * プロパティ
+		 */
+		public:
+			/// 下移動キー設定
+			property array<Keys>^ MoveDownKeys
+			{
+				virtual void set(array<Keys>^ value) abstract;
+			}
+			/// 左移動キー設定
+			property array<Keys>^ MoveLeftKeys
+			{
+				virtual void set(array<Keys>^ value) abstract;
+			}
+			/// 右移動キー設定
+			property array<Keys>^ MoveRightKeys
+			{
+				virtual void set(array<Keys>^ value) abstract;
+			}
+			/// 左回転キー設定
+			property array<Keys>^ RotateLeftKeys
+			{
+				virtual void set(array<Keys>^ value) abstract;
+			}
+			/// 右回転キー設定
+			property array<Keys>^ RotateRightKeys
+			{
+				virtual void set(array<Keys>^ value) abstract;
+			}
+			/// ハードドロップキー設定
+			property array<Keys>^ HardDropKeys
+			{
+				virtual void set(array<Keys>^ value) abstract;
+			}
+		};
+		// ----------------------------------------------------------------------------------------------------
+
+		/**
 		 * テトリスキー
 		 */
-		ref class TetrisKey
+		ref class TetrisKey : public PublicTetrisKey
 		{
 		/**
 		 * enum class
@@ -62,32 +110,32 @@ namespace Anaheim
 			/// 下移動キー設定
 			property array<Keys>^ MoveDownKeys
 			{
-				void set(array<Keys>^ value) { this->keysArray[static_cast<int>(ActionType::MoveDown)] = value; }
+				virtual void set(array<Keys>^ value) override { this->keysArray[static_cast<int>(ActionType::MoveDown)] = value; }
 			}
 			/// 左移動キー設定
 			property array<Keys>^ MoveLeftKeys
 			{
-				void set(array<Keys>^ value) { this->keysArray[static_cast<int>(ActionType::MoveLeft)] = value; }
+				virtual void set(array<Keys>^ value) override { this->keysArray[static_cast<int>(ActionType::MoveLeft)] = value; }
 			}
 			/// 右移動キー設定
 			property array<Keys>^ MoveRightKeys
 			{
-				void set(array<Keys>^ value) { this->keysArray[static_cast<int>(ActionType::MoveRight)] = value; }
+				virtual void set(array<Keys>^ value) override { this->keysArray[static_cast<int>(ActionType::MoveRight)] = value; }
 			}
 			/// 左回転キー設定
 			property array<Keys>^ RotateLeftKeys
 			{
-				void set(array<Keys>^ value) { this->keysArray[static_cast<int>(ActionType::RotateLeft)] = value; }
+				virtual void set(array<Keys>^ value) override { this->keysArray[static_cast<int>(ActionType::RotateLeft)] = value; }
 			}
 			/// 右回転キー設定
 			property array<Keys>^ RotateRightKeys
 			{
-				void set(array<Keys>^ value) { this->keysArray[static_cast<int>(ActionType::RotateRight)] = value; }
+				virtual void set(array<Keys>^ value) override { this->keysArray[static_cast<int>(ActionType::RotateRight)] = value; }
 			}
 			/// ハードドロップキー設定
 			property array<Keys>^ HardDropKeys
 			{
-				void set(array<Keys>^ value) { this->keysArray[static_cast<int>(ActionType::HardDrop)] = value; }
+				virtual void set(array<Keys>^ value) override { this->keysArray[static_cast<int>(ActionType::HardDrop)] = value; }
 			}
 		};
 		// ----------------------------------------------------------------------------------------------------

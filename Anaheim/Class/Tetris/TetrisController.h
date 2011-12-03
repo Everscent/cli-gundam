@@ -80,34 +80,9 @@ namespace Anaheim
 				void set(bool value) { this->SetSoundON(value); }
 			}
 			/// 下移動キー設定
-			property array<Keys>^ MoveDownKeys
+			property PublicTetrisKey^ Key
 			{
-				void set(array<Keys>^ value) { this->key->MoveDownKeys = value; }
-			}
-			/// 左移動キー設定
-			property array<Keys>^ MoveLeftKeys
-			{
-				void set(array<Keys>^ value) { this->key->MoveLeftKeys = value; }
-			}
-			/// 右移動キー設定
-			property array<Keys>^ MoveRightKeys
-			{
-				void set(array<Keys>^ value) { this->key->MoveRightKeys = value; }
-			}
-			/// 左回転キー設定
-			property array<Keys>^ RotateLeftKeys
-			{
-				void set(array<Keys>^ value) { this->key->RotateLeftKeys = value; }
-			}
-			/// 右回転キー設定
-			property array<Keys>^ RotateRightKeys
-			{
-				void set(array<Keys>^ value) { this->key->RotateRightKeys = value; }
-			}
-			/// ハードドロップキー設定
-			property array<Keys>^ HardDropKeys
-			{
-				void set(array<Keys>^ value) { this->key->HardDropKeys = value; }
+				PublicTetrisKey^ get() { return this->key; }
 			}
 
 		/**

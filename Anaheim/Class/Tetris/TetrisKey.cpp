@@ -6,6 +6,14 @@ using namespace Anaheim;
 using namespace Anaheim::Tetris;
 
 /**
+ * テトリスキー（公開用）
+ */
+PublicTetrisKey::PublicTetrisKey()
+{
+}
+// ----------------------------------------------------------------------------------------------------
+
+/**
  * テトリスキー
  */
 TetrisKey::TetrisKey(Anaheim::Tetris::TetrisModel ^model, System::Windows::Forms::Timer ^timer)
