@@ -17,19 +17,12 @@ TetrisPackage::TetrisPackage(System::Windows::Forms::Control ^mainCanvas, cli::a
 {
 	TetrisField^ field = gcnew TetrisField();
 	List<TetrisMino^>^ minos = gcnew List<TetrisMino^>;
-	this->view = gcnew TetrisView(mainCanvas, nextCanvases, field, minos);
 	this->model = gcnew TetrisModel(field, minos, gcnew TetrisScore(), nextCanvases->Length);
+	this->view = gcnew TetrisView(mainCanvas, nextCanvases, this->model, field, minos);
 	this->controller = gcnew TetrisController(this->model, this->view, mainCanvas, nextCanvases);
-	this->model->TurnEnd += gcnew EventHandler(this, &TetrisPackage::ModelTurnEnd);
 	this->model->ScoreChanged += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ModelScoreChanged);
 	this->model->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ModelGameOver);
-	this->controller->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ControllerGameOver);
-}
-// ----------------------------------------------------------------------------------------------------
-
-void TetrisPackage::ModelTurnEnd(System::Object ^sender, System::EventArgs ^e)
-{
-	this->OnTurnEnd(e);
+	this->controller->GameOver += gcnew TetrisScoreEventHandler(this, &TetrisPackage::ModelGameOver);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -48,12 +41,6 @@ void TetrisPackage::ModelGameOver(System::Object ^sender, Anaheim::Tetris::Tetri
 void TetrisPackage::ControllerGameOver(System::Object ^sender, Anaheim::Tetris::TetrisScoreEventArgs ^e)
 {
 	this->OnGameOver(e);
-}
-// ----------------------------------------------------------------------------------------------------
-
-void TetrisPackage::OnTurnEnd(System::EventArgs ^e)
-{
-	this->TurnEnd(this, e);
 }
 // ----------------------------------------------------------------------------------------------------
 

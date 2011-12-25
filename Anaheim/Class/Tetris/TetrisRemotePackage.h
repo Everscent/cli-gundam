@@ -6,12 +6,21 @@ namespace Anaheim
 {
 	namespace Tetris
 	{
+		namespace Model
+		{
+			ref class TetrisMino;
+			ref class TetrisRemoting;
+		}
+
+		namespace View
+		{
+			ref class MainTetrisDrawing;
+		}
+
 		using namespace System;
 		using namespace System::Windows::Forms;
-
-		ref class TetrisRemoting;
-		ref class MainTetrisDrawing;
-		ref class TetrisMino;
+		using namespace Model;
+		using namespace View;
 
 		/**
 		 * テトリスリモート

@@ -1,13 +1,16 @@
 #pragma once
 
-#include "TetrisScore.h"
-
 namespace Anaheim
 {
 	namespace Tetris
 	{
+		namespace Model
+		{
+			ref class PublicTetrisScore;
+		}
+
 		using namespace System;
-		using namespace Anaheim::Tetris;
+		using namespace Model;
 
 		/**
 		 * テトリス得点イベントArgs

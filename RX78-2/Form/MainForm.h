@@ -2747,7 +2747,7 @@ namespace RX78_2
 					 bool isRunning = this->tetris->Controller->IsRunning;
 					 if (isRunning)
 					 {
-						 this->tetris->Controller->Stop();
+						 this->tetris->Controller->Pause();
 					 }
 
 					 ExitForm^ form = gcnew ExitForm();
@@ -3109,7 +3109,7 @@ namespace RX78_2
 				 bool isRunning = this->tetris->Controller->IsRunning;
 				 if (isRunning)
 				 {
-					 this->tetris->Controller->Stop();
+					 this->tetris->Controller->Pause();
 				 }
 
 				 int score1 = this->config->GetTetrisScore(1);
@@ -4734,7 +4734,7 @@ namespace RX78_2
 				 else if (this->g_buttonStart->Text == "PAUSE")
 				 {
 					 this->ShowTetrisMessage("PAUSE !!");
-					 this->tetris->Controller->Stop();
+					 this->tetris->Controller->Pause();
 					 this->g_buttonStart->Text = "RESTART";
 				 }
 			 }
@@ -4861,7 +4861,8 @@ namespace RX78_2
 			   {
 				   if (this->tabControl->SelectedTab == this->tabTetris)
 				   {
-					   if (this->tetris->Controller->ProcessDialogKey(keyData))
+					   if (this->tetris->Controller->Key->Execute
+						   (keyData))
 					   {
 						   return true;
 					   }

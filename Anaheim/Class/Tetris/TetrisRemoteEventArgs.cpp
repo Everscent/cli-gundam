@@ -1,8 +1,7 @@
 #include "StdAfx.h"
 #include "TetrisRemoteEventArgs.h"
-#include "TetrisField.h"
-#include "TetrisMino.h"
 
+using namespace Anaheim;
 using namespace Anaheim::Tetris;
 
 /**

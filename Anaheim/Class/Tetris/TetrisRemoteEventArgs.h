@@ -4,11 +4,14 @@ namespace Anaheim
 {
 	namespace Tetris
 	{
-		using namespace System;
-		using namespace Anaheim::Tetris;
+		namespace Model
+		{
+			ref class TetrisField;
+			ref class TetrisMino;
+		}
 
-		ref class TetrisField;
-		ref class TetrisMino;
+		using namespace System;
+		using namespace Model;
 
 		/**
 		 * テトリスリモートイベントArgs

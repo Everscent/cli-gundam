@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Class;.\Class\TcpSocket;.\Class\UdpSocket;.\Class\Tetris"
+				AdditionalIncludeDirectories=".\Class;.\Class\TcpSocket;.\Class\UdpSocket;.\Class\Tetris;.\Class\Tetris\Model;.\Class\Tetris\View;.\Class\Tetris\Controller"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -114,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Class;.\Class\TcpSocket;.\Class\UdpSocket;.\Class\Tetris"
+				AdditionalIncludeDirectories=".\Class;.\Class\TcpSocket;.\Class\UdpSocket;.\Class\Tetris;.\Class\Tetris\Model;.\Class\Tetris\View;.\Class\Tetris\Controller"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -280,31 +280,7 @@
 				Name="Tetris"
 				>
 				<File
-					RelativePath=".\Class\Tetris\TetrisController.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisDrawAPI.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisDrawing.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisField.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisKey.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisMino.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisModel.cpp"
+					RelativePath=".\Class\Tetris\TetrisFieldEventArgs.cpp"
 					>
 				</File>
 				<File
@@ -320,25 +296,65 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoting.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisScore.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Class\Tetris\TetrisScoreEventArgs.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisSound.cpp"
+				<Filter
+					Name="Model"
 					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisView.cpp"
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisField.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisMino.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisModel.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisRemoting.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisScore.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="View"
 					>
-				</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisDrawAPI.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisDrawing.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisSound.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisView.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Controller"
+					>
+					<File
+						RelativePath=".\Class\Tetris\Controller\TetrisController.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Controller\TetrisKey.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="TcpSocket"
@@ -422,31 +438,7 @@
 				Name="Tetris"
 				>
 				<File
-					RelativePath=".\Class\Tetris\TetrisController.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisDrawAPI.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisDrawing.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisField.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisKey.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisMino.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisModel.h"
+					RelativePath=".\Class\Tetris\TetrisFieldEventArgs.h"
 					>
 				</File>
 				<File
@@ -462,25 +454,65 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\Tetris\TetrisRemoting.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisScore.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Class\Tetris\TetrisScoreEventArgs.h"
 					>
 				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisSound.h"
+				<Filter
+					Name="Model"
 					>
-				</File>
-				<File
-					RelativePath=".\Class\Tetris\TetrisView.h"
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisField.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisMino.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisModel.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisRemoting.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Model\TetrisScore.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="View"
 					>
-				</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisDrawAPI.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisDrawing.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisSound.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\View\TetrisView.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Controller"
+					>
+					<File
+						RelativePath=".\Class\Tetris\Controller\TetrisController.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Class\Tetris\Controller\TetrisKey.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="TcpSocket"
