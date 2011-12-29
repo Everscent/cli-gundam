@@ -4859,13 +4859,9 @@ namespace RX78_2
 	/// キーダウン（ダイアログ文字）
 	protected: virtual bool ProcessDialogKey(System::Windows::Forms::Keys keyData) override
 			   {
-				   if (this->tabControl->SelectedTab == this->tabTetris)
+				   if (this->tetris->Controller->IsRunning && this->tetris->Controller->Key->IsRegisteredKey(keyData))
 				   {
-					   if (this->tetris->Controller->Key->Execute
-						   (keyData))
-					   {
-						   return true;
-					   }
+					   return this->tetris->Controller->Key->Execute(keyData);
 				   }
 
 				   return Form::ProcessDialogKey(keyData);

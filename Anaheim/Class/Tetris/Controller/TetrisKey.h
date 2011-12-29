@@ -30,6 +30,8 @@ namespace Anaheim
 			 * メソッド
 			 */
 			public:
+				/// 登録済みキーか判定
+				virtual bool IsRegisteredKey(Keys key) abstract;
 				/// 実行
 				virtual bool Execute(Keys key) abstract;
 
@@ -112,7 +114,7 @@ namespace Anaheim
 
 			public:
 				/// 登録済みキーか判定
-				bool IsRegisteredKey(Keys key);
+				virtual bool IsRegisteredKey(Keys key) override;
 				/// 実行
 				virtual bool Execute(Keys key) override;
 
