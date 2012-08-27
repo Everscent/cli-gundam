@@ -51,13 +51,17 @@ void ConfigFile::SetTcpIPEndPoint(IPEndPoint ^endPoint)
 Encoding^ ConfigFile::GetTcpEncoding()
 {
 	String^ enc = this->iniFile->GetString(this->TCP_IP_SECTION, this->ENCODING_KEY, System::Text::Encoding::ASCII->ToString());
-	if (enc->Equals(System::Text::Encoding::UTF8->ToString()))
+	if (enc->Equals(System::Text::Encoding::ASCII->ToString()))
+	{
+		return System::Text::Encoding::ASCII;
+	}
+	else if (enc->Equals(System::Text::Encoding::UTF8->ToString()))
 	{
 		return System::Text::Encoding::UTF8;
 	}
 	else
 	{
-		return System::Text::Encoding::ASCII;
+		return System::Text::Encoding::Default;
 	}
 }
 // ----------------------------------------------------------------------------------------------------

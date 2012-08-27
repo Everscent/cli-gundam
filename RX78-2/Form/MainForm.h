@@ -132,6 +132,7 @@ namespace RX78_2
 	private: System::Windows::Forms::ToolStripMenuItem^  menuCharCode;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuAscii;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuUtf8;
+	private: System::Windows::Forms::ToolStripMenuItem^  menuDefault;
 	private: System::Windows::Forms::ToolStripSeparator^  toolSeparator02;
 	private: System::Windows::Forms::ToolStripButton^  toolTcpStart;
 	private: System::Windows::Forms::ToolStripButton^  toolTcpStop;
@@ -493,6 +494,7 @@ namespace RX78_2
 			this->timerBinaryTimer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->colorDialog = (gcnew System::Windows::Forms::ColorDialog());
 			this->timerArrow = (gcnew System::Windows::Forms::Timer(this->components));
+			this->menuDefault = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip->SuspendLayout();
 			this->toolStrip->SuspendLayout();
 			this->tabControl->SuspendLayout();
@@ -687,8 +689,8 @@ namespace RX78_2
 			// 
 			// menuCharCode
 			// 
-			this->menuCharCode->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->menuAscii, 
-				this->menuUtf8});
+			this->menuCharCode->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->menuAscii, 
+				this->menuUtf8, this->menuDefault});
 			this->menuCharCode->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuCharCode.Image")));
 			this->menuCharCode->Name = L"menuCharCode";
 			this->menuCharCode->Size = System::Drawing::Size(189, 22);
@@ -699,7 +701,7 @@ namespace RX78_2
 			this->menuAscii->Checked = true;
 			this->menuAscii->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->menuAscii->Name = L"menuAscii";
-			this->menuAscii->Size = System::Drawing::Size(131, 22);
+			this->menuAscii->Size = System::Drawing::Size(152, 22);
 			this->menuAscii->Text = L"ASCII(&A)";
 			this->menuAscii->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuAscii->Click += gcnew System::EventHandler(this, &MainForm::menuAscii_Click);
@@ -707,7 +709,7 @@ namespace RX78_2
 			// menuUtf8
 			// 
 			this->menuUtf8->Name = L"menuUtf8";
-			this->menuUtf8->Size = System::Drawing::Size(131, 22);
+			this->menuUtf8->Size = System::Drawing::Size(152, 22);
 			this->menuUtf8->Text = L"UTF-8(&U)";
 			this->menuUtf8->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuUtf8->Click += gcnew System::EventHandler(this, &MainForm::menuUtf8_Click);
@@ -2542,6 +2544,13 @@ namespace RX78_2
 			this->timerArrow->Interval = 70;
 			this->timerArrow->Tick += gcnew System::EventHandler(this, &MainForm::timerArrow_Tick);
 			// 
+			// menuDefault
+			// 
+			this->menuDefault->Name = L"menuDefault";
+			this->menuDefault->Size = System::Drawing::Size(152, 22);
+			this->menuDefault->Text = L"Default(&D)";
+			this->menuDefault->Click += gcnew System::EventHandler(this, &MainForm::menuDefault_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
@@ -2661,11 +2670,19 @@ namespace RX78_2
 				 {
 					 this->menuAscii->Checked = true;
 					 this->menuUtf8->Checked = false;
+					 this->menuDefault->Checked = false;
 				 }
 				 else if (this->tcpServer->Encoding == System::Text::Encoding::UTF8)
 				 {
 					 this->menuAscii->Checked = false;
 					 this->menuUtf8->Checked = true;
+					 this->menuDefault->Checked = false;
+				 }
+				 else
+				 {
+					 this->menuAscii->Checked = false;
+					 this->menuUtf8->Checked = false;
+					 this->menuDefault->Checked = true;
 				 }
 
 				 // FTPクライアント
@@ -3009,8 +3026,9 @@ namespace RX78_2
 				 this->tabControl->SelectedTab = this->tabTcpServer;
 				 this->menuAscii->Checked = true;
 				 this->menuUtf8->Checked = false;
+				 this->menuDefault->Checked = false;
 				 this->tcpServer->Encoding = System::Text::Encoding::ASCII;
-				 this->config->SetTcpEncoding(System::Text::Encoding::ASCII);
+				 this->config->SetTcpEncoding(this->tcpServer->Encoding);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
@@ -3020,8 +3038,21 @@ namespace RX78_2
 				 this->tabControl->SelectedTab = this->tabTcpServer;
 				 this->menuAscii->Checked = false;
 				 this->menuUtf8->Checked = true;
+				 this->menuDefault->Checked = false;
 				 this->tcpServer->Encoding = System::Text::Encoding::UTF8;
-				 this->config->SetTcpEncoding(System::Text::Encoding::UTF8);
+				 this->config->SetTcpEncoding(this->tcpServer->Encoding);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
+	// Default
+	private: System::Void menuDefault_Click(System::Object^  sender, System::EventArgs^  e)
+			 {
+				 this->tabControl->SelectedTab = this->tabTcpServer;
+				 this->menuAscii->Checked = false;
+				 this->menuUtf8->Checked = false;
+				 this->menuDefault->Checked = true;
+				 this->tcpServer->Encoding = System::Text::Encoding::Default;
+				 this->config->SetTcpEncoding(this->tcpServer->Encoding);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 

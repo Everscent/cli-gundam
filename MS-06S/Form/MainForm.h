@@ -45,6 +45,7 @@ namespace MS_06S
 	private: System::Windows::Forms::Button^  buttonClear;
 	private: System::Windows::Forms::RadioButton^  radioUtf8;
 	private: System::Windows::Forms::RadioButton^  radioAscii;
+	private: System::Windows::Forms::RadioButton^  radioDefault;
 	private: System::Windows::Forms::Label^  labelMessage;
 
 #pragma endregion
@@ -102,6 +103,7 @@ namespace MS_06S
 			this->labelMessage = (gcnew System::Windows::Forms::Label());
 			this->radioUtf8 = (gcnew System::Windows::Forms::RadioButton());
 			this->radioAscii = (gcnew System::Windows::Forms::RadioButton());
+			this->radioDefault = (gcnew System::Windows::Forms::RadioButton());
 			this->SuspendLayout();
 			// 
 			// buttonDisConnect
@@ -253,7 +255,7 @@ namespace MS_06S
 			// 
 			this->radioUtf8->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->radioUtf8->AutoSize = true;
-			this->radioUtf8->Location = System::Drawing::Point(415, 60);
+			this->radioUtf8->Location = System::Drawing::Point(349, 60);
 			this->radioUtf8->Name = L"radioUtf8";
 			this->radioUtf8->Size = System::Drawing::Size(57, 16);
 			this->radioUtf8->TabIndex = 30;
@@ -266,7 +268,7 @@ namespace MS_06S
 			this->radioAscii->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->radioAscii->AutoSize = true;
 			this->radioAscii->Checked = true;
-			this->radioAscii->Location = System::Drawing::Point(357, 60);
+			this->radioAscii->Location = System::Drawing::Point(291, 60);
 			this->radioAscii->Name = L"radioAscii";
 			this->radioAscii->Size = System::Drawing::Size(52, 16);
 			this->radioAscii->TabIndex = 29;
@@ -275,12 +277,25 @@ namespace MS_06S
 			this->radioAscii->UseVisualStyleBackColor = true;
 			this->radioAscii->CheckedChanged += gcnew System::EventHandler(this, &MainForm::CharCodeRadioCheckedChanged);
 			// 
+			// radioDefault
+			// 
+			this->radioDefault->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->radioDefault->AutoSize = true;
+			this->radioDefault->Location = System::Drawing::Point(412, 60);
+			this->radioDefault->Name = L"radioDefault";
+			this->radioDefault->Size = System::Drawing::Size(60, 16);
+			this->radioDefault->TabIndex = 31;
+			this->radioDefault->Text = L"Default";
+			this->radioDefault->UseVisualStyleBackColor = true;
+			this->radioDefault->CheckedChanged += gcnew System::EventHandler(this, &MainForm::CharCodeRadioCheckedChanged);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Snow;
 			this->ClientSize = System::Drawing::Size(484, 463);
+			this->Controls->Add(this->radioDefault);
 			this->Controls->Add(this->radioUtf8);
 			this->Controls->Add(this->radioAscii);
 			this->Controls->Add(this->labelMessage);
@@ -328,11 +343,19 @@ namespace MS_06S
 				 {
 					 this->radioAscii->Checked = true;
 					 this->radioUtf8->Checked = false;
+					 this->radioDefault->Checked = false;
 				 }
 				 else if (this->tcpClient->Encoding == System::Text::Encoding::UTF8)
 				 {
 					 this->radioAscii->Checked = false;
 					 this->radioUtf8->Checked = true;
+					 this->radioDefault->Checked = false;
+				 }
+				 else
+				 {
+					 this->radioAscii->Checked = false;
+					 this->radioUtf8->Checked = false;
+					 this->radioDefault->Checked = true;
 				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
@@ -475,6 +498,10 @@ namespace MS_06S
 				 else if (this->radioUtf8->Checked)
 				 {
 					 this->tcpClient->Encoding = System::Text::Encoding::UTF8;
+				 }
+				 else if (this->radioDefault->Checked)
+				 {
+					 this->tcpClient->Encoding = System::Text::Encoding::Default;
 				 }
 				 this->config->SetTcpEncoding(this->tcpClient->Encoding);
 			 }
