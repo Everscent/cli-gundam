@@ -28,7 +28,7 @@ void TcpServerSocket::AcceptWorkerDoWork(System::Object ^sender, System::Compone
 		while (true)
 		{
 			TcpClient^ client = this->server->AcceptTcpClient();
-			TcpEventArgs^ args = gcnew TcpEventArgs(dynamic_cast<IPEndPoint^>(client->Client->RemoteEndPoint), dynamic_cast<IPEndPoint^>(client->Client->LocalEndPoint), String::Empty);
+			TcpEventArgs^ args = gcnew TcpEventArgs(dynamic_cast<IPEndPoint^>(client->Client->RemoteEndPoint), dynamic_cast<IPEndPoint^>(client->Client->LocalEndPoint), nullptr, this->encoding);
 			this->acceptWorker->ReportProgress(0, gcnew TcpAcceptWorkerArgs(args, client));
 		}
 	}

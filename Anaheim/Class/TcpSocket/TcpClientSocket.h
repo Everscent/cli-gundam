@@ -45,6 +45,8 @@ namespace Anaheim
 			bool Connect(IPEndPoint^ endPoint);
 			/// 切断
 			bool DisConnect();
+			/// データ送信
+			bool SendData(array<Byte>^ bytes);
 			/// メッセージ送信
 			bool SendMessage(String^ message);
 

@@ -15,6 +15,7 @@ UdpClientSocket::UdpClientSocket()
 	this->receiveWorker->WorkerReportsProgress = true;
 	this->receiveWorker->DoWork += gcnew DoWorkEventHandler(this, &UdpClientSocket::ReceiveWorkerDoWork);
 	this->receiveWorker->ProgressChanged += gcnew ProgressChangedEventHandler(this, &UdpClientSocket::ReceiveWorkerProgressChanged);
+	this->encoding = System::Text::Encoding::Default;
 	this->isBusy = false;
 }
 // ----------------------------------------------------------------------------------------------------
@@ -27,7 +28,8 @@ void UdpClientSocket::ReceiveWorkerDoWork(System::Object ^sender, System::Compon
 		{
 			IPEndPoint^ endPoint;
 			array<Byte>^ buff = this->client->Receive(endPoint);
-			UdpEventArgs^ args = gcnew UdpEventArgs(endPoint, buff);
+			String^ message = this->encoding->GetString(buff);
+			UdpEventArgs^ args = gcnew UdpEventArgs(endPoint, buff, this->encoding);
 			this->receiveWorker->ReportProgress(0, args);
 		}
 	}
@@ -88,8 +90,6 @@ bool UdpClientSocket::Stop()
 
 bool UdpClientSocket::SendData(cli::array<unsigned char,1> ^bytes, System::Net::IPEndPoint ^endPoint)
 {
-	if (!this->isBusy) return false;
-
 	try
 	{
 		this->client->Send(bytes, bytes->Length, endPoint);
@@ -100,6 +100,13 @@ bool UdpClientSocket::SendData(cli::array<unsigned char,1> ^bytes, System::Net::
 	}
 
 	return true;
+}
+// ----------------------------------------------------------------------------------------------------
+
+bool UdpClientSocket::SendMessage(System::String ^message, System::Net::IPEndPoint ^endPoint)
+{
+	array<Byte>^ buffer = this->encoding->GetBytes(message);
+	return this->SendData(buffer, endPoint);
 }
 // ----------------------------------------------------------------------------------------------------
 

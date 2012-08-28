@@ -7,6 +7,7 @@ namespace Anaheim
 		using namespace System;
 		using namespace System::Net;
 		using namespace System::Net::Sockets;
+		using namespace System::Text;
 
 		/**
 		 * UDPイベントArgs
@@ -19,12 +20,13 @@ namespace Anaheim
 		private:
 			IPEndPoint^ remoteEndPoint;
 			array<Byte>^ bytes;
+			String^ message;
 
 		/**
 		 * コンストラクタ
 		 */
 		public:
-			UdpEventArgs(IPEndPoint^ remoteEndPoint, array<Byte>^ bytes);
+			UdpEventArgs(IPEndPoint^ remoteEndPoint, array<Byte>^ bytes, Encoding^ encoding);
 
 		/**
 		 * プロパティ
@@ -39,6 +41,11 @@ namespace Anaheim
 			property array<Byte>^ Bytes
 			{
 				array<Byte>^ get() { return this->bytes; }
+			}
+			/// 受信メッセージ
+			property String^ Message
+			{
+				String^ get() { return this->message; }
 			}
 		};
 		// ----------------------------------------------------------------------------------------------------

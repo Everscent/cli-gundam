@@ -14,7 +14,7 @@ TcpClientSocket::TcpClientSocket()
 	this->receiveWorker->WorkerReportsProgress = true;
 	this->receiveWorker->DoWork += gcnew DoWorkEventHandler(this, &TcpClientSocket::ReceiveWorkerDoWork);
 	this->receiveWorker->ProgressChanged += gcnew ProgressChangedEventHandler(this, &TcpClientSocket::ReceiveWorkerProgressChanged);
-	this->encoding = System::Text::Encoding::ASCII;
+	this->encoding = System::Text::Encoding::Default;
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ void TcpClientSocket::ReceiveWorkerDoWork(System::Object ^sender, System::Compon
 			int size = stream->Read(buffer, 0, buffer->Length);
 			if (size == 0)	// êÿíf
 			{
-				TcpEventArgs^ args = gcnew TcpEventArgs(dynamic_cast<IPEndPoint^>(client->Client->RemoteEndPoint), dynamic_cast<IPEndPoint^>(client->Client->LocalEndPoint), String::Empty);
+				TcpEventArgs^ args = gcnew TcpEventArgs(dynamic_cast<IPEndPoint^>(client->Client->RemoteEndPoint), dynamic_cast<IPEndPoint^>(client->Client->LocalEndPoint), nullptr, this->encoding);
 				this->receiveWorker->ReportProgress(0, args);
 				stream->Close();
 				this->client->Close();
@@ -51,8 +51,9 @@ void TcpClientSocket::ReceiveWorkerDoWork(System::Object ^sender, System::Compon
 			}
 			else
 			{
-				String^ message = this->encoding->GetString(buffer, 0, size);
-				TcpEventArgs^ args = gcnew TcpEventArgs(dynamic_cast<IPEndPoint^>(client->Client->RemoteEndPoint), dynamic_cast<IPEndPoint^>(client->Client->LocalEndPoint), message);
+				array<Byte>^ bytes = gcnew array<Byte>(size);
+				Array::Copy(buffer, bytes, bytes->Length);
+				TcpEventArgs^ args = gcnew TcpEventArgs(dynamic_cast<IPEndPoint^>(client->Client->RemoteEndPoint), dynamic_cast<IPEndPoint^>(client->Client->LocalEndPoint), bytes, this->encoding);
 				this->receiveWorker->ReportProgress(0, args);
 			}
 		}
@@ -107,13 +108,12 @@ bool TcpClientSocket::DisConnect()
 }
 // ----------------------------------------------------------------------------------------------------
 
-bool TcpClientSocket::SendMessage(System::String ^message)
+bool TcpClientSocket::SendData(cli::array<unsigned char,1> ^bytes)
 {
 	try
 	{
 		NetworkStream^ stream = this->client->GetStream();
-		array<Byte>^ buffer = this->encoding->GetBytes(message);
-		stream->Write(buffer, 0, buffer->Length);
+		stream->Write(bytes, 0, bytes->Length);
 	}
 	catch (Exception^)
 	{
@@ -121,6 +121,13 @@ bool TcpClientSocket::SendMessage(System::String ^message)
 	}
 
 	return true;
+}
+// ----------------------------------------------------------------------------------------------------
+
+bool TcpClientSocket::SendMessage(System::String ^message)
+{
+	array<Byte>^ buffer = this->encoding->GetBytes(message);
+	return this->SendData(buffer);
 }
 // ----------------------------------------------------------------------------------------------------
 

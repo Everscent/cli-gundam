@@ -4850,6 +4850,8 @@ namespace RX78_2
 	/// ゲームオーバー　イベントハンドラ
 	private: void TetrisGameOver(System::Object^  sender, Anaheim::Tetris::TetrisScoreEventArgs^  e)
 			 {
+				 this->tabTetris->Focus();	// スペースキーで続けてスタートボタンが押下されるのを防止
+
 				 this->g_buttonStart->Text = "START";
 				 this->g_buttonEnd->Enabled = false;
 

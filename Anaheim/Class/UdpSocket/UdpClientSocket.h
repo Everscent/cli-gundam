@@ -23,6 +23,7 @@ namespace Anaheim
 		private:
 			UdpClient^ client;
 			BackgroundWorker^ receiveWorker;
+			Encoding^ encoding;
 			bool isBusy;
 
 		/**
@@ -45,6 +46,8 @@ namespace Anaheim
 			bool Stop();
 			/// データ送信
 			bool SendData(array<Byte>^ bytes, IPEndPoint^ endPoint);
+			/// メッセージ送信
+			bool SendMessage(String^ message, IPEndPoint^ endPoint);
 
 		/**
 		 * イベント

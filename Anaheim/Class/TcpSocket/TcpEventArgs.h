@@ -7,6 +7,7 @@ namespace Anaheim
 		using namespace System;
 		using namespace System::Net;
 		using namespace System::Net::Sockets;
+		using namespace System::Text;
 
 		/**
 		 * TCPイベントArgs
@@ -19,13 +20,14 @@ namespace Anaheim
 		private:
 			IPEndPoint^ remoteEndPoint;
 			IPEndPoint^ localEndPoint;
+			array<Byte>^ bytes;
 			String^ message;
 
 		/**
 		 * コンストラクタ
 		 */
 		public:
-			TcpEventArgs(IPEndPoint^ remoteEndPoint, IPEndPoint^ localEndPoint, String^ message);
+			TcpEventArgs(IPEndPoint^ remoteEndPoint, IPEndPoint^ localEndPoint, array<Byte>^ bytes, Encoding^ encoding);
 
 		/**
 		 * プロパティ
@@ -41,7 +43,12 @@ namespace Anaheim
 			{
 				IPEndPoint^ get() { return this->localEndPoint; }
 			}
-			/// メッセージ
+			/// 受信データ
+			property array<Byte>^ Bytes
+			{
+				array<Byte>^ get() { return this->bytes; }
+			}
+			/// 受信メッセージ
 			property String^ Message
 			{
 				String^ get() { return this->message; }
