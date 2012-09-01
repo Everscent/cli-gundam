@@ -92,7 +92,7 @@ void TetrisModel::SendRemote()
 {
 	if (this->minos->Count == 0) return;
 
-	this->remoting->Send(this->field, this->minos[0], gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 50005));
+	this->remoting->Send(this->field, this->minos[0], gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 55005));
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -175,7 +175,7 @@ bool TetrisModel::HardDrop()
 
 bool TetrisModel::StartRemote()
 {
-	return this->remoting->Start(gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 50000));
+	return this->remoting->Start(gcnew IPEndPoint(IPAddress::Parse("127.0.0.1"), 55000));
 }
 // ----------------------------------------------------------------------------------------------------
 
