@@ -272,7 +272,7 @@ IPEndPoint^ ConfigFile::GetTcpIPEndPoint()
 {
 	XmlElement^ ele = this->GetTcpServerElement();
 	String^ ip = this->GetValue(ele, "IPAddress", "127.0.0.1");
-	String^ port = this->GetValue(ele, "Port", "7070");
+	String^ port = this->GetValue(ele, "Port", "50000");
 	return gcnew IPEndPoint(IPAddress::Parse(ip), int::Parse(port));
 }
 // ----------------------------------------------------------------------------------------------------

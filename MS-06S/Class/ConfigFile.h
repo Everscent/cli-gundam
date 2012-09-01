@@ -20,7 +20,6 @@ namespace MS_06S
 	private:
 		IniFile ^ iniFile;
 
-		literal String^ INI_FILE_NAME     = "MS-06S.ini";		///< iniファイル名
 		literal String^ WINDOW_SECTION    = "WINDOW";			///< Window関連 セクション名
 		literal String^ TOP_LOCATION_KEY  = "WINDOW_TOP";		///< Window Top
 		literal String^ LEFT_LOCATION_KEY = "WINDOW_LEFT";		///< Window Left

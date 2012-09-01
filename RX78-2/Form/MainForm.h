@@ -3730,7 +3730,7 @@ namespace RX78_2
 					 {
 						 this->tcpServer->Start();
 
-						 this->t_listMessage->Items->Add("y" + DateTime::Now.ToString() + "z ");
+						 this->t_listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->t_textLocalIp->Text + " : " + this->t_textLocalPort->Text);
 						 this->t_listMessage->Items->Add("*** START ***");
 						 this->t_listMessage->SelectedIndex = this->t_listMessage->Items->Count - 1;
 						 this->t_listMessage->Items->Add(String::Empty);
@@ -3757,7 +3757,7 @@ namespace RX78_2
 			 {
 				 this->tcpServer->Stop();
 
-				 this->t_listMessage->Items->Add("y" + DateTime::Now.ToString() + "z ");
+				 this->t_listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->t_textLocalIp->Text + " : " + this->t_textLocalPort->Text);
 				 this->t_listMessage->Items->Add("*** STOP ***");
 				 this->t_listMessage->SelectedIndex = this->t_listMessage->Items->Count - 1;
 				 this->t_listMessage->Items->Add(String::Empty);

@@ -20,7 +20,6 @@ namespace RX77_2
 	private:
 		IniFile ^ iniFile;
 
-		literal String^ INI_FILE_NAME     = "RX77-2.ini";		///< iniファイル名
 		literal String^ WINDOW_SECTION    = "WINDOW";			///< Window関連 セクション名
 		literal String^ TOP_LOCATION_KEY  = "WINDOW_TOP";		///< Window Top
 		literal String^ LEFT_LOCATION_KEY = "WINDOW_LEFT";		///< Window Left

@@ -30,11 +30,11 @@ namespace MS_06S
 	private: TcpClientSocket^ tcpClient;	///< TCPƒNƒ‰ƒCƒAƒ“ƒg
 
 	private: System::Windows::Forms::Button^  buttonDisConnect;
-	private: System::Windows::Forms::TextBox^  textServerIp;
+	private: System::Windows::Forms::TextBox^  textRemoteIp;
 	private: System::Windows::Forms::Button^  buttonConnect;
-	private: System::Windows::Forms::TextBox^  textServerPort;
-	private: System::Windows::Forms::Label^  labelServerPort;
-	private: System::Windows::Forms::Label^  labelServerIp;
+	private: System::Windows::Forms::TextBox^  textRemotePort;
+	private: System::Windows::Forms::Label^  labelRemotePort;
+	private: System::Windows::Forms::Label^  labelRemoteIp;
 	private: System::Windows::Forms::Label^  labelLocalPort;
 	private: System::Windows::Forms::Label^  labelLocalIp;
 	private: System::Windows::Forms::TextBox^  textLocalPort;
@@ -87,11 +87,11 @@ namespace MS_06S
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->buttonDisConnect = (gcnew System::Windows::Forms::Button());
-			this->textServerIp = (gcnew System::Windows::Forms::TextBox());
+			this->textRemoteIp = (gcnew System::Windows::Forms::TextBox());
 			this->buttonConnect = (gcnew System::Windows::Forms::Button());
-			this->textServerPort = (gcnew System::Windows::Forms::TextBox());
-			this->labelServerPort = (gcnew System::Windows::Forms::Label());
-			this->labelServerIp = (gcnew System::Windows::Forms::Label());
+			this->textRemotePort = (gcnew System::Windows::Forms::TextBox());
+			this->labelRemotePort = (gcnew System::Windows::Forms::Label());
+			this->labelRemoteIp = (gcnew System::Windows::Forms::Label());
 			this->labelLocalPort = (gcnew System::Windows::Forms::Label());
 			this->labelLocalIp = (gcnew System::Windows::Forms::Label());
 			this->textLocalPort = (gcnew System::Windows::Forms::TextBox());
@@ -109,7 +109,7 @@ namespace MS_06S
 			// buttonDisConnect
 			// 
 			this->buttonDisConnect->Enabled = false;
-			this->buttonDisConnect->Location = System::Drawing::Point(187, 33);
+			this->buttonDisConnect->Location = System::Drawing::Point(193, 33);
 			this->buttonDisConnect->Name = L"buttonDisConnect";
 			this->buttonDisConnect->Size = System::Drawing::Size(75, 23);
 			this->buttonDisConnect->TabIndex = 17;
@@ -117,17 +117,17 @@ namespace MS_06S
 			this->buttonDisConnect->UseVisualStyleBackColor = true;
 			this->buttonDisConnect->Click += gcnew System::EventHandler(this, &MainForm::buttonDisConnect_Click);
 			// 
-			// textServerIp
+			// textRemoteIp
 			// 
-			this->textServerIp->ImeMode = System::Windows::Forms::ImeMode::Off;
-			this->textServerIp->Location = System::Drawing::Point(81, 6);
-			this->textServerIp->Name = L"textServerIp";
-			this->textServerIp->Size = System::Drawing::Size(100, 19);
-			this->textServerIp->TabIndex = 14;
+			this->textRemoteIp->ImeMode = System::Windows::Forms::ImeMode::Off;
+			this->textRemoteIp->Location = System::Drawing::Point(87, 6);
+			this->textRemoteIp->Name = L"textRemoteIp";
+			this->textRemoteIp->Size = System::Drawing::Size(100, 19);
+			this->textRemoteIp->TabIndex = 14;
 			// 
 			// buttonConnect
 			// 
-			this->buttonConnect->Location = System::Drawing::Point(187, 4);
+			this->buttonConnect->Location = System::Drawing::Point(193, 4);
 			this->buttonConnect->Name = L"buttonConnect";
 			this->buttonConnect->Size = System::Drawing::Size(75, 23);
 			this->buttonConnect->TabIndex = 16;
@@ -135,31 +135,31 @@ namespace MS_06S
 			this->buttonConnect->UseVisualStyleBackColor = true;
 			this->buttonConnect->Click += gcnew System::EventHandler(this, &MainForm::buttonConnect_Click);
 			// 
-			// textServerPort
+			// textRemotePort
 			// 
-			this->textServerPort->ImeMode = System::Windows::Forms::ImeMode::Off;
-			this->textServerPort->Location = System::Drawing::Point(81, 35);
-			this->textServerPort->Name = L"textServerPort";
-			this->textServerPort->Size = System::Drawing::Size(100, 19);
-			this->textServerPort->TabIndex = 15;
+			this->textRemotePort->ImeMode = System::Windows::Forms::ImeMode::Off;
+			this->textRemotePort->Location = System::Drawing::Point(87, 35);
+			this->textRemotePort->Name = L"textRemotePort";
+			this->textRemotePort->Size = System::Drawing::Size(100, 19);
+			this->textRemotePort->TabIndex = 15;
 			// 
-			// labelServerPort
+			// labelRemotePort
 			// 
-			this->labelServerPort->AutoSize = true;
-			this->labelServerPort->Location = System::Drawing::Point(12, 38);
-			this->labelServerPort->Name = L"labelServerPort";
-			this->labelServerPort->Size = System::Drawing::Size(63, 12);
-			this->labelServerPort->TabIndex = 21;
-			this->labelServerPort->Text = L"Server Port";
+			this->labelRemotePort->AutoSize = true;
+			this->labelRemotePort->Location = System::Drawing::Point(12, 38);
+			this->labelRemotePort->Name = L"labelRemotePort";
+			this->labelRemotePort->Size = System::Drawing::Size(69, 12);
+			this->labelRemotePort->TabIndex = 21;
+			this->labelRemotePort->Text = L"Remote Port";
 			// 
-			// labelServerIp
+			// labelRemoteIp
 			// 
-			this->labelServerIp->AutoSize = true;
-			this->labelServerIp->Location = System::Drawing::Point(23, 9);
-			this->labelServerIp->Name = L"labelServerIp";
-			this->labelServerIp->Size = System::Drawing::Size(52, 12);
-			this->labelServerIp->TabIndex = 20;
-			this->labelServerIp->Text = L"Server IP";
+			this->labelRemoteIp->AutoSize = true;
+			this->labelRemoteIp->Location = System::Drawing::Point(23, 9);
+			this->labelRemoteIp->Name = L"labelRemoteIp";
+			this->labelRemoteIp->Size = System::Drawing::Size(58, 12);
+			this->labelRemoteIp->TabIndex = 20;
+			this->labelRemoteIp->Text = L"Remote IP";
 			// 
 			// labelLocalPort
 			// 
@@ -201,7 +201,7 @@ namespace MS_06S
 			// 
 			this->buttonSend->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
 			this->buttonSend->Enabled = false;
-			this->buttonSend->Location = System::Drawing::Point(397, 430);
+			this->buttonSend->Location = System::Drawing::Point(397, 429);
 			this->buttonSend->Name = L"buttonSend";
 			this->buttonSend->Size = System::Drawing::Size(75, 23);
 			this->buttonSend->TabIndex = 25;
@@ -213,7 +213,7 @@ namespace MS_06S
 			// 
 			this->textMessage->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left) 
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->textMessage->Location = System::Drawing::Point(12, 432);
+			this->textMessage->Location = System::Drawing::Point(12, 431);
 			this->textMessage->Name = L"textMessage";
 			this->textMessage->Size = System::Drawing::Size(379, 19);
 			this->textMessage->TabIndex = 24;
@@ -226,7 +226,7 @@ namespace MS_06S
 			this->listMessage->FormattingEnabled = true;
 			this->listMessage->HorizontalScrollbar = true;
 			this->listMessage->ItemHeight = 12;
-			this->listMessage->Location = System::Drawing::Point(12, 108);
+			this->listMessage->Location = System::Drawing::Point(12, 109);
 			this->listMessage->Name = L"listMessage";
 			this->listMessage->Size = System::Drawing::Size(460, 316);
 			this->listMessage->TabIndex = 26;
@@ -245,7 +245,7 @@ namespace MS_06S
 			// labelMessage
 			// 
 			this->labelMessage->AutoSize = true;
-			this->labelMessage->Location = System::Drawing::Point(12, 87);
+			this->labelMessage->Location = System::Drawing::Point(12, 93);
 			this->labelMessage->Name = L"labelMessage";
 			this->labelMessage->Size = System::Drawing::Size(58, 12);
 			this->labelMessage->TabIndex = 28;
@@ -294,7 +294,7 @@ namespace MS_06S
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Snow;
-			this->ClientSize = System::Drawing::Size(484, 463);
+			this->ClientSize = System::Drawing::Size(484, 462);
 			this->Controls->Add(this->radioDefault);
 			this->Controls->Add(this->radioUtf8);
 			this->Controls->Add(this->radioAscii);
@@ -304,11 +304,11 @@ namespace MS_06S
 			this->Controls->Add(this->buttonSend);
 			this->Controls->Add(this->textMessage);
 			this->Controls->Add(this->buttonDisConnect);
-			this->Controls->Add(this->textServerIp);
+			this->Controls->Add(this->textRemoteIp);
 			this->Controls->Add(this->buttonConnect);
-			this->Controls->Add(this->textServerPort);
-			this->Controls->Add(this->labelServerPort);
-			this->Controls->Add(this->labelServerIp);
+			this->Controls->Add(this->textRemotePort);
+			this->Controls->Add(this->labelRemotePort);
+			this->Controls->Add(this->labelRemoteIp);
 			this->Controls->Add(this->labelLocalPort);
 			this->Controls->Add(this->labelLocalIp);
 			this->Controls->Add(this->textLocalPort);
@@ -331,8 +331,8 @@ namespace MS_06S
 				 String^ filename = System::IO::Path::ChangeExtension(System::Windows::Forms::Application::ExecutablePath, ".ini");
 				 this->config = gcnew ConfigFile(filename);
 				 this->config->LoadFormSizeAndLocation(this);
-				 this->textServerIp->Text = this->config->GetTcpIPEndPoint()->Address->ToString();
-				 this->textServerPort->Text = this->config->GetTcpIPEndPoint()->Port.ToString();
+				 this->textRemoteIp->Text = this->config->GetTcpIPEndPoint()->Address->ToString();
+				 this->textRemotePort->Text = this->config->GetTcpIPEndPoint()->Port.ToString();
 
 				 this->tcpClient = gcnew TcpClientSocket();
 				 this->tcpClient->Received += gcnew TcpEventHandler(this, &MainForm::ReceivedClient);
@@ -374,11 +374,11 @@ namespace MS_06S
 	/// Ú‘±
 	private: System::Void buttonConnect_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
-				 if (this->textServerIp->Text->Equals(String::Empty) || this->textServerPort->Text->Equals(String::Empty)) return;
+				 if (this->textRemoteIp->Text->Equals(String::Empty) || this->textRemotePort->Text->Equals(String::Empty)) return;
 
 				 try
 				 {
-					 IPEndPoint^ endPoint = gcnew IPEndPoint(IPAddress::Parse(this->textServerIp->Text), int::Parse(this->textServerPort->Text));
+					 IPEndPoint^ endPoint = gcnew IPEndPoint(IPAddress::Parse(this->textRemoteIp->Text), int::Parse(this->textRemotePort->Text));
 					 if (this->tcpClient->Connect(endPoint))
 					 {
 						 this->listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->tcpClient->RemoteEndPoint->Address->ToString() + " : " + this->tcpClient->RemoteEndPoint->Port.ToString());
@@ -405,7 +405,7 @@ namespace MS_06S
 			 {
 				 if (this->tcpClient->DisConnect())
 				 {
-					 this->listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->textServerIp->Text + " : " + this->textServerPort->Text);
+					 this->listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->textRemoteIp->Text + " : " + this->textRemotePort->Text);
 					 this->listMessage->Items->Add("*** DISCONNECT ***");
 					 this->listMessage->SelectedIndex = this->listMessage->Items->Count - 1;
 					 this->listMessage->Items->Add(String::Empty);
@@ -447,7 +447,7 @@ namespace MS_06S
 	/// Ø’f
 	private: void DisConnectedClient(System::Object ^sender, Anaheim::TcpSocket::TcpEventArgs ^e)
 			 {
-				 this->listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->textServerIp->Text + " : " + this->textServerPort->Text);
+				 this->listMessage->Items->Add("y" + DateTime::Now.ToString() + "z " + this->textRemoteIp->Text + " : " + this->textRemotePort->Text);
 				 this->listMessage->Items->Add("*** DISCONNECTED ***");
 				 this->listMessage->SelectedIndex = this->listMessage->Items->Count - 1;
 				 this->listMessage->Items->Add(String::Empty);
@@ -467,8 +467,8 @@ namespace MS_06S
 						 this->buttonSend->Enabled = true;
 						 this->textLocalIp->Text = this->tcpClient->LocalEndPoint->Address->ToString();
 						 this->textLocalPort->Text = this->tcpClient->LocalEndPoint->Port.ToString();
-						 this->textServerIp->ReadOnly = true;
-						 this->textServerPort->ReadOnly = true;
+						 this->textRemoteIp->ReadOnly = true;
+						 this->textRemotePort->ReadOnly = true;
 					 }
 					 else
 					 {
@@ -477,8 +477,8 @@ namespace MS_06S
 						 this->buttonSend->Enabled = false;
 						 this->textLocalIp->Text = String::Empty;
 						 this->textLocalPort->Text = String::Empty;
-						 this->textServerIp->ReadOnly = false;
-						 this->textServerPort->ReadOnly = false;
+						 this->textRemoteIp->ReadOnly = false;
+						 this->textRemotePort->ReadOnly = false;
 					 }
 				 }
 				 catch (Exception^)

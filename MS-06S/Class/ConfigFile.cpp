@@ -36,7 +36,7 @@ void ConfigFile::SaveFormSizeAndLocation(System::Windows::Forms::Form ^form)
 IPEndPoint^ ConfigFile::GetTcpIPEndPoint()
 {
 	String^ ip = this->iniFile->GetString(this->TCP_IP_SECTION, this->IP_ADDRESS_KEY, "127.0.0.1");
-	int port = this->iniFile->GetInteger(this->TCP_IP_SECTION, this->PORT_NUMBER_KEY, 7070);
+	int port = this->iniFile->GetInteger(this->TCP_IP_SECTION, this->PORT_NUMBER_KEY, 50000);
 	return gcnew IPEndPoint(IPAddress::Parse(ip), port);
 }
 // ----------------------------------------------------------------------------------------------------

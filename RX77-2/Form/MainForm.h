@@ -13,7 +13,7 @@ namespace RX77_2
 	using namespace Anaheim::Tetris;
 
 	/// <summary>
-	/// Form1 の概要
+	/// MainForm の概要
 	///
 	/// 警告: このクラスの名前を変更する場合、このクラスが依存するすべての .resx ファイルに関連付けられた
 	///          マネージ リソース コンパイラ ツールに対して 'Resource File Name' プロパティを

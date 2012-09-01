@@ -24,7 +24,7 @@ namespace Anaheim
 			UdpClient^ client;
 			BackgroundWorker^ receiveWorker;
 			Encoding^ encoding;
-			bool isBusy;
+			bool connected;
 
 		/**
 		 * コンストラクタ
@@ -48,6 +48,27 @@ namespace Anaheim
 			bool SendData(array<Byte>^ bytes, IPEndPoint^ endPoint);
 			/// メッセージ送信
 			bool SendMessage(String^ message, IPEndPoint^ endPoint);
+
+		/**
+		 * プロパティ
+		 */
+		public:
+			/// ローカルIP/ポート
+			property IPEndPoint^ LocalEndPoint
+			{
+				IPEndPoint^ get() { return (this->connected) ? dynamic_cast<IPEndPoint^>(this->client->Client->LocalEndPoint) : nullptr; }
+			}
+			/// 接続状態
+			property bool Connected
+			{
+				bool get() { return this->connected; }
+			}
+			/// エンコード
+			property System::Text::Encoding^ Encoding
+			{
+				System::Text::Encoding^ get() { return this->encoding; }
+				void set(System::Text::Encoding^ value) { this->encoding = value; }
+			}
 
 		/**
 		 * イベント
