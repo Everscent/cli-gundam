@@ -318,6 +318,7 @@ namespace RX78_2
 			this->menuCharCode = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuAscii = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuUtf8 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuDefault = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuTcpClient = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuFtpClient = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuFtpConnect = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -494,7 +495,6 @@ namespace RX78_2
 			this->timerBinaryTimer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->colorDialog = (gcnew System::Windows::Forms::ColorDialog());
 			this->timerArrow = (gcnew System::Windows::Forms::Timer(this->components));
-			this->menuDefault = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip->SuspendLayout();
 			this->toolStrip->SuspendLayout();
 			this->tabControl->SuspendLayout();
@@ -714,6 +714,13 @@ namespace RX78_2
 			this->menuUtf8->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuUtf8->Click += gcnew System::EventHandler(this, &MainForm::menuUtf8_Click);
 			// 
+			// menuDefault
+			// 
+			this->menuDefault->Name = L"menuDefault";
+			this->menuDefault->Size = System::Drawing::Size(152, 22);
+			this->menuDefault->Text = L"Default(&D)";
+			this->menuDefault->Click += gcnew System::EventHandler(this, &MainForm::menuDefault_Click);
+			// 
 			// menuTcpClient
 			// 
 			this->menuTcpClient->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuTcpClient.Image")));
@@ -735,7 +742,7 @@ namespace RX78_2
 			// 
 			this->menuFtpConnect->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuFtpConnect.Image")));
 			this->menuFtpConnect->Name = L"menuFtpConnect";
-			this->menuFtpConnect->Size = System::Drawing::Size(119, 22);
+			this->menuFtpConnect->Size = System::Drawing::Size(152, 22);
 			this->menuFtpConnect->Text = L"接続(&C)";
 			this->menuFtpConnect->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuFtpConnect->Click += gcnew System::EventHandler(this, &MainForm::menuFtpConnect_Click);
@@ -745,7 +752,7 @@ namespace RX78_2
 			this->menuFtpDisConnect->Enabled = false;
 			this->menuFtpDisConnect->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuFtpDisConnect.Image")));
 			this->menuFtpDisConnect->Name = L"menuFtpDisConnect";
-			this->menuFtpDisConnect->Size = System::Drawing::Size(119, 22);
+			this->menuFtpDisConnect->Size = System::Drawing::Size(152, 22);
 			this->menuFtpDisConnect->Text = L"切断(&D)";
 			this->menuFtpDisConnect->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuFtpDisConnect->Click += gcnew System::EventHandler(this, &MainForm::menuFtpDisConnect_Click);
@@ -1116,7 +1123,7 @@ namespace RX78_2
 			// statusStrip
 			// 
 			this->statusStrip->BackColor = System::Drawing::Color::GhostWhite;
-			this->statusStrip->Location = System::Drawing::Point(0, 641);
+			this->statusStrip->Location = System::Drawing::Point(0, 640);
 			this->statusStrip->Name = L"statusStrip";
 			this->statusStrip->Size = System::Drawing::Size(684, 22);
 			this->statusStrip->TabIndex = 3;
@@ -1137,7 +1144,7 @@ namespace RX78_2
 			this->tabControl->Location = System::Drawing::Point(12, 52);
 			this->tabControl->Name = L"tabControl";
 			this->tabControl->SelectedIndex = 0;
-			this->tabControl->Size = System::Drawing::Size(660, 586);
+			this->tabControl->Size = System::Drawing::Size(660, 585);
 			this->tabControl->TabIndex = 2;
 			this->tabControl->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::tabControl_SelectedIndexChanged);
 			// 
@@ -1161,7 +1168,7 @@ namespace RX78_2
 			this->tabReport->Location = System::Drawing::Point(4, 22);
 			this->tabReport->Name = L"tabReport";
 			this->tabReport->Padding = System::Windows::Forms::Padding(3);
-			this->tabReport->Size = System::Drawing::Size(652, 560);
+			this->tabReport->Size = System::Drawing::Size(652, 559);
 			this->tabReport->TabIndex = 0;
 			this->tabReport->Text = L"レポート編集";
 			this->tabReport->DragDrop += gcnew System::Windows::Forms::DragEventHandler(this, &MainForm::tabReport_DragDrop);
@@ -1171,7 +1178,7 @@ namespace RX78_2
 			// 
 			this->r_buttonAddRow->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->r_buttonAddRow->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"r_buttonAddRow.Image")));
-			this->r_buttonAddRow->Location = System::Drawing::Point(130, 531);
+			this->r_buttonAddRow->Location = System::Drawing::Point(130, 530);
 			this->r_buttonAddRow->Name = L"r_buttonAddRow";
 			this->r_buttonAddRow->Size = System::Drawing::Size(25, 23);
 			this->r_buttonAddRow->TabIndex = 8;
@@ -1183,7 +1190,7 @@ namespace RX78_2
 			// 
 			this->r_buttonAdd->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->r_buttonAdd->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"r_buttonAdd.Image")));
-			this->r_buttonAdd->Location = System::Drawing::Point(37, 531);
+			this->r_buttonAdd->Location = System::Drawing::Point(37, 530);
 			this->r_buttonAdd->Name = L"r_buttonAdd";
 			this->r_buttonAdd->Size = System::Drawing::Size(25, 23);
 			this->r_buttonAdd->TabIndex = 5;
@@ -1213,7 +1220,7 @@ namespace RX78_2
 			// 
 			this->r_buttonRemoveRow->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->r_buttonRemoveRow->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"r_buttonRemoveRow.Image")));
-			this->r_buttonRemoveRow->Location = System::Drawing::Point(161, 531);
+			this->r_buttonRemoveRow->Location = System::Drawing::Point(161, 530);
 			this->r_buttonRemoveRow->Name = L"r_buttonRemoveRow";
 			this->r_buttonRemoveRow->Size = System::Drawing::Size(25, 23);
 			this->r_buttonRemoveRow->TabIndex = 9;
@@ -1225,7 +1232,7 @@ namespace RX78_2
 			// 
 			this->r_buttonInsertRow->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->r_buttonInsertRow->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"r_buttonInsertRow.Image")));
-			this->r_buttonInsertRow->Location = System::Drawing::Point(99, 531);
+			this->r_buttonInsertRow->Location = System::Drawing::Point(99, 530);
 			this->r_buttonInsertRow->Name = L"r_buttonInsertRow";
 			this->r_buttonInsertRow->Size = System::Drawing::Size(25, 23);
 			this->r_buttonInsertRow->TabIndex = 7;
@@ -1237,7 +1244,7 @@ namespace RX78_2
 			// 
 			this->r_buttonRemove->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->r_buttonRemove->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"r_buttonRemove.Image")));
-			this->r_buttonRemove->Location = System::Drawing::Point(68, 531);
+			this->r_buttonRemove->Location = System::Drawing::Point(68, 530);
 			this->r_buttonRemove->Name = L"r_buttonRemove";
 			this->r_buttonRemove->Size = System::Drawing::Size(25, 23);
 			this->r_buttonRemove->TabIndex = 6;
@@ -1249,7 +1256,7 @@ namespace RX78_2
 			// 
 			this->r_buttonInsert->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->r_buttonInsert->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"r_buttonInsert.Image")));
-			this->r_buttonInsert->Location = System::Drawing::Point(6, 531);
+			this->r_buttonInsert->Location = System::Drawing::Point(6, 530);
 			this->r_buttonInsert->Name = L"r_buttonInsert";
 			this->r_buttonInsert->Size = System::Drawing::Size(25, 23);
 			this->r_buttonInsert->TabIndex = 4;
@@ -1271,7 +1278,7 @@ namespace RX78_2
 			// 
 			this->r_buttonSave->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
 			this->r_buttonSave->Enabled = false;
-			this->r_buttonSave->Location = System::Drawing::Point(571, 531);
+			this->r_buttonSave->Location = System::Drawing::Point(571, 530);
 			this->r_buttonSave->Name = L"r_buttonSave";
 			this->r_buttonSave->Size = System::Drawing::Size(75, 23);
 			this->r_buttonSave->TabIndex = 10;
@@ -1297,7 +1304,7 @@ namespace RX78_2
 			this->r_gridReport->Name = L"r_gridReport";
 			this->r_gridReport->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::AutoSizeToAllHeaders;
 			this->r_gridReport->RowTemplate->Height = 21;
-			this->r_gridReport->Size = System::Drawing::Size(640, 466);
+			this->r_gridReport->Size = System::Drawing::Size(640, 465);
 			this->r_gridReport->TabIndex = 3;
 			this->r_gridReport->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainForm::r_gridReport_CellEndEdit);
 			this->r_gridReport->SelectionChanged += gcnew System::EventHandler(this, &MainForm::r_gridReport_SelectionChanged);
@@ -1344,7 +1351,7 @@ namespace RX78_2
 			this->tabTcpServer->Location = System::Drawing::Point(4, 22);
 			this->tabTcpServer->Name = L"tabTcpServer";
 			this->tabTcpServer->Padding = System::Windows::Forms::Padding(3);
-			this->tabTcpServer->Size = System::Drawing::Size(652, 560);
+			this->tabTcpServer->Size = System::Drawing::Size(652, 559);
 			this->tabTcpServer->TabIndex = 1;
 			this->tabTcpServer->Text = L"TCPサーバ";
 			// 
@@ -1516,7 +1523,7 @@ namespace RX78_2
 			this->tabFtpClient->Location = System::Drawing::Point(4, 22);
 			this->tabFtpClient->Name = L"tabFtpClient";
 			this->tabFtpClient->Padding = System::Windows::Forms::Padding(3);
-			this->tabFtpClient->Size = System::Drawing::Size(652, 560);
+			this->tabFtpClient->Size = System::Drawing::Size(652, 559);
 			this->tabFtpClient->TabIndex = 2;
 			this->tabFtpClient->Text = L"FTPクライアント";
 			this->tabFtpClient->UseVisualStyleBackColor = true;
@@ -1784,7 +1791,7 @@ namespace RX78_2
 			this->tabPicturePuzzle->Location = System::Drawing::Point(4, 22);
 			this->tabPicturePuzzle->Name = L"tabPicturePuzzle";
 			this->tabPicturePuzzle->Padding = System::Windows::Forms::Padding(3);
-			this->tabPicturePuzzle->Size = System::Drawing::Size(652, 560);
+			this->tabPicturePuzzle->Size = System::Drawing::Size(652, 559);
 			this->tabPicturePuzzle->TabIndex = 3;
 			this->tabPicturePuzzle->Text = L"写真パズル";
 			this->tabPicturePuzzle->UseVisualStyleBackColor = true;
@@ -1897,7 +1904,7 @@ namespace RX78_2
 			this->tabBinaryClock->Location = System::Drawing::Point(4, 22);
 			this->tabBinaryClock->Name = L"tabBinaryClock";
 			this->tabBinaryClock->Padding = System::Windows::Forms::Padding(3);
-			this->tabBinaryClock->Size = System::Drawing::Size(652, 560);
+			this->tabBinaryClock->Size = System::Drawing::Size(652, 559);
 			this->tabBinaryClock->TabIndex = 4;
 			this->tabBinaryClock->Text = L"バイナリクロック";
 			this->tabBinaryClock->Resize += gcnew System::EventHandler(this, &MainForm::tabBinaryClock_Resize);
@@ -2222,7 +2229,7 @@ namespace RX78_2
 			this->tabTetris->Location = System::Drawing::Point(4, 22);
 			this->tabTetris->Name = L"tabTetris";
 			this->tabTetris->Padding = System::Windows::Forms::Padding(3);
-			this->tabTetris->Size = System::Drawing::Size(652, 560);
+			this->tabTetris->Size = System::Drawing::Size(652, 559);
 			this->tabTetris->TabIndex = 5;
 			this->tabTetris->Text = L"TETRiS";
 			this->tabTetris->Resize += gcnew System::EventHandler(this, &MainForm::tabTetris_Resize);
@@ -2470,7 +2477,7 @@ namespace RX78_2
 			this->tabArrow->Location = System::Drawing::Point(4, 22);
 			this->tabArrow->Name = L"tabArrow";
 			this->tabArrow->Padding = System::Windows::Forms::Padding(3);
-			this->tabArrow->Size = System::Drawing::Size(652, 560);
+			this->tabArrow->Size = System::Drawing::Size(652, 559);
 			this->tabArrow->TabIndex = 6;
 			this->tabArrow->Text = L"ARROW";
 			// 
@@ -2479,7 +2486,7 @@ namespace RX78_2
 			this->a_panelCanvas->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->a_panelCanvas->Location = System::Drawing::Point(3, 3);
 			this->a_panelCanvas->Name = L"a_panelCanvas";
-			this->a_panelCanvas->Size = System::Drawing::Size(646, 554);
+			this->a_panelCanvas->Size = System::Drawing::Size(646, 553);
 			this->a_panelCanvas->TabIndex = 0;
 			this->a_panelCanvas->MouseLeave += gcnew System::EventHandler(this, &MainForm::a_panelCanvas_MouseLeave);
 			this->a_panelCanvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::a_panelCanvas_Paint);
@@ -2544,19 +2551,12 @@ namespace RX78_2
 			this->timerArrow->Interval = 70;
 			this->timerArrow->Tick += gcnew System::EventHandler(this, &MainForm::timerArrow_Tick);
 			// 
-			// menuDefault
-			// 
-			this->menuDefault->Name = L"menuDefault";
-			this->menuDefault->Size = System::Drawing::Size(152, 22);
-			this->menuDefault->Text = L"Default(&D)";
-			this->menuDefault->Click += gcnew System::EventHandler(this, &MainForm::menuDefault_Click);
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::GhostWhite;
-			this->ClientSize = System::Drawing::Size(684, 663);
+			this->ClientSize = System::Drawing::Size(684, 662);
 			this->Controls->Add(this->tabControl);
 			this->Controls->Add(this->statusStrip);
 			this->Controls->Add(this->toolStrip);

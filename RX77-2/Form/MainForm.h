@@ -89,7 +89,7 @@ namespace RX77_2
 			this->ClientSize = System::Drawing::Size(300, 600);
 			this->Controls->Add(this->panelCanvas);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
-			this->MinimumSize = System::Drawing::Size(316, 637);
+			this->MinimumSize = System::Drawing::Size(316, 638);
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"RX77-2";
