@@ -3195,6 +3195,16 @@ namespace RX78_2
 				 else
 				 {
 					 this->menuRemote->Checked = true;
+
+					 String^ filename = System::Windows::Forms::Application::StartupPath + "\\RX77-2.exe";
+					 if (System::IO::File::Exists(filename))
+					 {
+						 System::Diagnostics::Process::Start(filename);
+					 }
+					 else
+					 {
+						 System::Windows::Forms::MessageBox::Show("TETRiSリモート表示の起動に失敗しました！", this->Text, MessageBoxButtons::OK, MessageBoxIcon::Error);
+					 }
 				 }
 				 this->config->SetTetrisRemoteEnabled(this->menuRemote->Checked);
 			 }
