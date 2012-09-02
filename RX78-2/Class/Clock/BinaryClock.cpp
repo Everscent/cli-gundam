@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "BinaryClock.h"
 
-using namespace RX78_2;
+using namespace RX78_2::Clock;
 
 /**
  * バイナリクロック

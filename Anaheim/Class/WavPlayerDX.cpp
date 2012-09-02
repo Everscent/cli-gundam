@@ -4,7 +4,7 @@
 using namespace Anaheim;
 
 /**
- * 音楽プレイヤー（DirextX版）
+ * 音楽プレイヤー（DirectX版）
  */
 WavPlayerDX::WavPlayerDX(System::Windows::Forms::Control ^owner, System::IO::Stream ^stream)
 {

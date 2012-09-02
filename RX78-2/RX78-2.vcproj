@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report;.\Class\Clock"
+				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report;.\Class\Clock;.\Class\DirectX"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report;.\Class\Clock"
+				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report;.\Class\Clock;.\Class\DirectX"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -198,6 +198,21 @@
 			RelativePath="Microsoft.VisualBasic.dll"
 			AssemblyName="Microsoft.VisualBasic, Version=8.0.0.0, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="Microsoft.DirectX.dll"
+			AssemblyName="Microsoft.DirectX, Version=1.0.2902.0, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86"
+			MinFrameworkVersion="0"
+		/>
+		<AssemblyReference
+			RelativePath="Microsoft.DirectX.Direct3D.dll"
+			AssemblyName="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86"
+			MinFrameworkVersion="0"
+		/>
+		<AssemblyReference
+			RelativePath="Microsoft.DirectX.Direct3DX.dll"
+			AssemblyName="Microsoft.DirectX.Direct3DX, Version=1.0.2911.0, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86"
+			MinFrameworkVersion="0"
 		/>
 	</References>
 	<Files>
@@ -315,6 +330,14 @@
 				>
 				<File
 					RelativePath=".\Class\Clock\BinaryClock.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DirectX"
+				>
+				<File
+					RelativePath=".\Class\DirectX\DirectX3D.cpp"
 					>
 				</File>
 			</Filter>
@@ -443,6 +466,14 @@
 				>
 				<File
 					RelativePath=".\Class\Clock\BinaryClock.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DirectX"
+				>
+				<File
+					RelativePath=".\Class\DirectX\DirectX3D.h"
 					>
 				</File>
 			</Filter>

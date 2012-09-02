@@ -10,6 +10,7 @@
 #include "PicturePuzzle.h"
 #include "BinaryClock.h"
 #include "ArrowInsectCage.h"
+#include "DirectX3D.h"
 
 namespace RX78_2
 {
@@ -22,7 +23,9 @@ namespace RX78_2
 	using namespace System::Net;
 	using namespace Report;
 	using namespace Puzzle;
+	using namespace Clock;
 	using namespace Arrow;
+	using namespace DirectX;
 	using namespace Anaheim;
 	using namespace Anaheim::TcpSocket;
 	using namespace Anaheim::Tetris;
@@ -55,6 +58,7 @@ namespace RX78_2
 	private: BinaryClock^ clock;					///< バイナリクロック
 	private: TetrisPackage^ tetris;					///< テトリス
 	private: ArrowInsectCage^ arrow;				///< Arrow虫
+	private: DirectX3D^ directX;					///< DirectX
 
 	private: System::Windows::Forms::MenuStrip^  menuStrip;
 	private: System::Windows::Forms::ToolStrip^  toolStrip;
@@ -254,6 +258,8 @@ namespace RX78_2
 	private: System::Windows::Forms::Timer^  timerArrow;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuRemote;
 	private: System::Windows::Forms::ToolStripMenuItem^  menuSound;
+	private: System::Windows::Forms::TabPage^  tabDirectX;
+	private: System::Windows::Forms::Panel^  d_panelCanvas;
 	private: System::Windows::Forms::ToolStripSeparator^  menuFileSeparator;
 
 #pragma endregion
@@ -483,6 +489,8 @@ namespace RX78_2
 			this->g_labelMessage = (gcnew System::Windows::Forms::Label());
 			this->tabArrow = (gcnew System::Windows::Forms::TabPage());
 			this->a_panelCanvas = (gcnew System::Windows::Forms::Panel());
+			this->tabDirectX = (gcnew System::Windows::Forms::TabPage());
+			this->d_panelCanvas = (gcnew System::Windows::Forms::Panel());
 			this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->notifyIcon = (gcnew System::Windows::Forms::NotifyIcon(this->components));
@@ -521,6 +529,7 @@ namespace RX78_2
 			this->g_panelScore->SuspendLayout();
 			this->g_panelTetris->SuspendLayout();
 			this->tabArrow->SuspendLayout();
+			this->tabDirectX->SuspendLayout();
 			this->contextTaskTray->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -701,7 +710,7 @@ namespace RX78_2
 			this->menuAscii->Checked = true;
 			this->menuAscii->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->menuAscii->Name = L"menuAscii";
-			this->menuAscii->Size = System::Drawing::Size(152, 22);
+			this->menuAscii->Size = System::Drawing::Size(137, 22);
 			this->menuAscii->Text = L"ASCII(&A)";
 			this->menuAscii->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuAscii->Click += gcnew System::EventHandler(this, &MainForm::menuAscii_Click);
@@ -709,7 +718,7 @@ namespace RX78_2
 			// menuUtf8
 			// 
 			this->menuUtf8->Name = L"menuUtf8";
-			this->menuUtf8->Size = System::Drawing::Size(152, 22);
+			this->menuUtf8->Size = System::Drawing::Size(137, 22);
 			this->menuUtf8->Text = L"UTF-8(&U)";
 			this->menuUtf8->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuUtf8->Click += gcnew System::EventHandler(this, &MainForm::menuUtf8_Click);
@@ -717,7 +726,7 @@ namespace RX78_2
 			// menuDefault
 			// 
 			this->menuDefault->Name = L"menuDefault";
-			this->menuDefault->Size = System::Drawing::Size(152, 22);
+			this->menuDefault->Size = System::Drawing::Size(137, 22);
 			this->menuDefault->Text = L"Default(&D)";
 			this->menuDefault->Click += gcnew System::EventHandler(this, &MainForm::menuDefault_Click);
 			// 
@@ -742,7 +751,7 @@ namespace RX78_2
 			// 
 			this->menuFtpConnect->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuFtpConnect.Image")));
 			this->menuFtpConnect->Name = L"menuFtpConnect";
-			this->menuFtpConnect->Size = System::Drawing::Size(152, 22);
+			this->menuFtpConnect->Size = System::Drawing::Size(119, 22);
 			this->menuFtpConnect->Text = L"接続(&C)";
 			this->menuFtpConnect->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuFtpConnect->Click += gcnew System::EventHandler(this, &MainForm::menuFtpConnect_Click);
@@ -752,7 +761,7 @@ namespace RX78_2
 			this->menuFtpDisConnect->Enabled = false;
 			this->menuFtpDisConnect->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuFtpDisConnect.Image")));
 			this->menuFtpDisConnect->Name = L"menuFtpDisConnect";
-			this->menuFtpDisConnect->Size = System::Drawing::Size(152, 22);
+			this->menuFtpDisConnect->Size = System::Drawing::Size(119, 22);
 			this->menuFtpDisConnect->Text = L"切断(&D)";
 			this->menuFtpDisConnect->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuFtpDisConnect->Click += gcnew System::EventHandler(this, &MainForm::menuFtpDisConnect_Click);
@@ -1141,6 +1150,7 @@ namespace RX78_2
 			this->tabControl->Controls->Add(this->tabBinaryClock);
 			this->tabControl->Controls->Add(this->tabTetris);
 			this->tabControl->Controls->Add(this->tabArrow);
+			this->tabControl->Controls->Add(this->tabDirectX);
 			this->tabControl->Location = System::Drawing::Point(12, 52);
 			this->tabControl->Name = L"tabControl";
 			this->tabControl->SelectedIndex = 0;
@@ -1951,7 +1961,7 @@ namespace RX78_2
 			this->b_labelColon1->AutoSize = true;
 			this->b_labelColon1->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelColon1->Location = System::Drawing::Point(406, 400);
+			this->b_labelColon1->Location = System::Drawing::Point(406, 395);
 			this->b_labelColon1->Name = L"b_labelColon1";
 			this->b_labelColon1->Size = System::Drawing::Size(27, 37);
 			this->b_labelColon1->TabIndex = 46;
@@ -1962,7 +1972,7 @@ namespace RX78_2
 			this->b_labelColon2->AutoSize = true;
 			this->b_labelColon2->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelColon2->Location = System::Drawing::Point(220, 400);
+			this->b_labelColon2->Location = System::Drawing::Point(220, 395);
 			this->b_labelColon2->Name = L"b_labelColon2";
 			this->b_labelColon2->Size = System::Drawing::Size(27, 37);
 			this->b_labelColon2->TabIndex = 45;
@@ -1973,7 +1983,7 @@ namespace RX78_2
 			this->b_labelSec1->AutoSize = true;
 			this->b_labelSec1->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelSec1->Location = System::Drawing::Point(541, 400);
+			this->b_labelSec1->Location = System::Drawing::Point(541, 395);
 			this->b_labelSec1->Name = L"b_labelSec1";
 			this->b_labelSec1->Size = System::Drawing::Size(35, 37);
 			this->b_labelSec1->TabIndex = 44;
@@ -1984,7 +1994,7 @@ namespace RX78_2
 			this->b_labelSec2->AutoSize = true;
 			this->b_labelSec2->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelSec2->Location = System::Drawing::Point(448, 400);
+			this->b_labelSec2->Location = System::Drawing::Point(448, 395);
 			this->b_labelSec2->Name = L"b_labelSec2";
 			this->b_labelSec2->Size = System::Drawing::Size(35, 37);
 			this->b_labelSec2->TabIndex = 43;
@@ -1995,7 +2005,7 @@ namespace RX78_2
 			this->b_labelMin1->AutoSize = true;
 			this->b_labelMin1->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelMin1->Location = System::Drawing::Point(355, 400);
+			this->b_labelMin1->Location = System::Drawing::Point(355, 395);
 			this->b_labelMin1->Name = L"b_labelMin1";
 			this->b_labelMin1->Size = System::Drawing::Size(35, 37);
 			this->b_labelMin1->TabIndex = 42;
@@ -2006,7 +2016,7 @@ namespace RX78_2
 			this->b_labelMin2->AutoSize = true;
 			this->b_labelMin2->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelMin2->Location = System::Drawing::Point(262, 400);
+			this->b_labelMin2->Location = System::Drawing::Point(262, 395);
 			this->b_labelMin2->Name = L"b_labelMin2";
 			this->b_labelMin2->Size = System::Drawing::Size(35, 37);
 			this->b_labelMin2->TabIndex = 41;
@@ -2017,7 +2027,7 @@ namespace RX78_2
 			this->b_labelHour1->AutoSize = true;
 			this->b_labelHour1->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelHour1->Location = System::Drawing::Point(169, 400);
+			this->b_labelHour1->Location = System::Drawing::Point(169, 395);
 			this->b_labelHour1->Name = L"b_labelHour1";
 			this->b_labelHour1->Size = System::Drawing::Size(35, 37);
 			this->b_labelHour1->TabIndex = 40;
@@ -2028,7 +2038,7 @@ namespace RX78_2
 			this->b_labelHour2->AutoSize = true;
 			this->b_labelHour2->Font = (gcnew System::Drawing::Font(L"Arial", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->b_labelHour2->Location = System::Drawing::Point(76, 400);
+			this->b_labelHour2->Location = System::Drawing::Point(76, 395);
 			this->b_labelHour2->Name = L"b_labelHour2";
 			this->b_labelHour2->Size = System::Drawing::Size(35, 37);
 			this->b_labelHour2->TabIndex = 39;
@@ -2038,7 +2048,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec2->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec2->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec2->Location = System::Drawing::Point(541, 240);
+			this->b_panelSec2->Location = System::Drawing::Point(541, 237);
 			this->b_panelSec2->Name = L"b_panelSec2";
 			this->b_panelSec2->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec2->TabIndex = 36;
@@ -2047,7 +2057,7 @@ namespace RX78_2
 			// 
 			this->b_panelHour20->BackColor = System::Drawing::Color::Snow;
 			this->b_panelHour20->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelHour20->Location = System::Drawing::Point(76, 240);
+			this->b_panelHour20->Location = System::Drawing::Point(76, 237);
 			this->b_panelHour20->Name = L"b_panelHour20";
 			this->b_panelHour20->Size = System::Drawing::Size(35, 35);
 			this->b_panelHour20->TabIndex = 35;
@@ -2056,7 +2066,7 @@ namespace RX78_2
 			// 
 			this->b_panelHour10->BackColor = System::Drawing::Color::Snow;
 			this->b_panelHour10->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelHour10->Location = System::Drawing::Point(76, 320);
+			this->b_panelHour10->Location = System::Drawing::Point(76, 316);
 			this->b_panelHour10->Name = L"b_panelHour10";
 			this->b_panelHour10->Size = System::Drawing::Size(35, 35);
 			this->b_panelHour10->TabIndex = 34;
@@ -2065,7 +2075,7 @@ namespace RX78_2
 			// 
 			this->b_panelHour1->BackColor = System::Drawing::Color::Snow;
 			this->b_panelHour1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelHour1->Location = System::Drawing::Point(169, 320);
+			this->b_panelHour1->Location = System::Drawing::Point(169, 316);
 			this->b_panelHour1->Name = L"b_panelHour1";
 			this->b_panelHour1->Size = System::Drawing::Size(35, 35);
 			this->b_panelHour1->TabIndex = 31;
@@ -2074,7 +2084,7 @@ namespace RX78_2
 			// 
 			this->b_panelHour2->BackColor = System::Drawing::Color::Snow;
 			this->b_panelHour2->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelHour2->Location = System::Drawing::Point(169, 240);
+			this->b_panelHour2->Location = System::Drawing::Point(169, 237);
 			this->b_panelHour2->Name = L"b_panelHour2";
 			this->b_panelHour2->Size = System::Drawing::Size(35, 35);
 			this->b_panelHour2->TabIndex = 33;
@@ -2083,7 +2093,7 @@ namespace RX78_2
 			// 
 			this->b_panelHour4->BackColor = System::Drawing::Color::Snow;
 			this->b_panelHour4->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelHour4->Location = System::Drawing::Point(169, 160);
+			this->b_panelHour4->Location = System::Drawing::Point(169, 158);
 			this->b_panelHour4->Name = L"b_panelHour4";
 			this->b_panelHour4->Size = System::Drawing::Size(35, 35);
 			this->b_panelHour4->TabIndex = 32;
@@ -2092,7 +2102,7 @@ namespace RX78_2
 			// 
 			this->b_panelHour8->BackColor = System::Drawing::Color::Snow;
 			this->b_panelHour8->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelHour8->Location = System::Drawing::Point(169, 80);
+			this->b_panelHour8->Location = System::Drawing::Point(169, 79);
 			this->b_panelHour8->Name = L"b_panelHour8";
 			this->b_panelHour8->Size = System::Drawing::Size(35, 35);
 			this->b_panelHour8->TabIndex = 30;
@@ -2101,7 +2111,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin40->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin40->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin40->Location = System::Drawing::Point(262, 160);
+			this->b_panelMin40->Location = System::Drawing::Point(262, 158);
 			this->b_panelMin40->Name = L"b_panelMin40";
 			this->b_panelMin40->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin40->TabIndex = 29;
@@ -2110,7 +2120,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin20->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin20->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin20->Location = System::Drawing::Point(262, 240);
+			this->b_panelMin20->Location = System::Drawing::Point(262, 237);
 			this->b_panelMin20->Name = L"b_panelMin20";
 			this->b_panelMin20->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin20->TabIndex = 28;
@@ -2119,7 +2129,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin10->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin10->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin10->Location = System::Drawing::Point(262, 320);
+			this->b_panelMin10->Location = System::Drawing::Point(262, 316);
 			this->b_panelMin10->Name = L"b_panelMin10";
 			this->b_panelMin10->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin10->TabIndex = 27;
@@ -2128,7 +2138,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec40->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec40->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec40->Location = System::Drawing::Point(448, 160);
+			this->b_panelSec40->Location = System::Drawing::Point(448, 158);
 			this->b_panelSec40->Name = L"b_panelSec40";
 			this->b_panelSec40->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec40->TabIndex = 22;
@@ -2137,7 +2147,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin1->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin1->Location = System::Drawing::Point(355, 320);
+			this->b_panelMin1->Location = System::Drawing::Point(355, 316);
 			this->b_panelMin1->Name = L"b_panelMin1";
 			this->b_panelMin1->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin1->TabIndex = 24;
@@ -2146,7 +2156,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin2->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin2->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin2->Location = System::Drawing::Point(355, 240);
+			this->b_panelMin2->Location = System::Drawing::Point(355, 237);
 			this->b_panelMin2->Name = L"b_panelMin2";
 			this->b_panelMin2->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin2->TabIndex = 26;
@@ -2155,7 +2165,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin4->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin4->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin4->Location = System::Drawing::Point(355, 160);
+			this->b_panelMin4->Location = System::Drawing::Point(355, 158);
 			this->b_panelMin4->Name = L"b_panelMin4";
 			this->b_panelMin4->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin4->TabIndex = 25;
@@ -2164,7 +2174,7 @@ namespace RX78_2
 			// 
 			this->b_panelMin8->BackColor = System::Drawing::Color::Snow;
 			this->b_panelMin8->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelMin8->Location = System::Drawing::Point(355, 80);
+			this->b_panelMin8->Location = System::Drawing::Point(355, 79);
 			this->b_panelMin8->Name = L"b_panelMin8";
 			this->b_panelMin8->Size = System::Drawing::Size(35, 35);
 			this->b_panelMin8->TabIndex = 23;
@@ -2173,7 +2183,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec20->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec20->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec20->Location = System::Drawing::Point(448, 240);
+			this->b_panelSec20->Location = System::Drawing::Point(448, 237);
 			this->b_panelSec20->Name = L"b_panelSec20";
 			this->b_panelSec20->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec20->TabIndex = 20;
@@ -2182,7 +2192,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec10->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec10->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec10->Location = System::Drawing::Point(448, 320);
+			this->b_panelSec10->Location = System::Drawing::Point(448, 316);
 			this->b_panelSec10->Name = L"b_panelSec10";
 			this->b_panelSec10->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec10->TabIndex = 21;
@@ -2191,7 +2201,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec1->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec1->Location = System::Drawing::Point(541, 320);
+			this->b_panelSec1->Location = System::Drawing::Point(541, 316);
 			this->b_panelSec1->Name = L"b_panelSec1";
 			this->b_panelSec1->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec1->TabIndex = 18;
@@ -2200,7 +2210,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec4->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec4->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec4->Location = System::Drawing::Point(541, 160);
+			this->b_panelSec4->Location = System::Drawing::Point(541, 158);
 			this->b_panelSec4->Name = L"b_panelSec4";
 			this->b_panelSec4->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec4->TabIndex = 19;
@@ -2209,7 +2219,7 @@ namespace RX78_2
 			// 
 			this->b_panelSec8->BackColor = System::Drawing::Color::Snow;
 			this->b_panelSec8->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->b_panelSec8->Location = System::Drawing::Point(541, 80);
+			this->b_panelSec8->Location = System::Drawing::Point(541, 79);
 			this->b_panelSec8->Name = L"b_panelSec8";
 			this->b_panelSec8->Size = System::Drawing::Size(35, 35);
 			this->b_panelSec8->TabIndex = 17;
@@ -2492,6 +2502,26 @@ namespace RX78_2
 			this->a_panelCanvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::a_panelCanvas_Paint);
 			this->a_panelCanvas->MouseEnter += gcnew System::EventHandler(this, &MainForm::a_panelCanvas_MouseEnter);
 			// 
+			// tabDirectX
+			// 
+			this->tabDirectX->BackColor = System::Drawing::Color::GhostWhite;
+			this->tabDirectX->Controls->Add(this->d_panelCanvas);
+			this->tabDirectX->Location = System::Drawing::Point(4, 22);
+			this->tabDirectX->Name = L"tabDirectX";
+			this->tabDirectX->Padding = System::Windows::Forms::Padding(3);
+			this->tabDirectX->Size = System::Drawing::Size(652, 559);
+			this->tabDirectX->TabIndex = 7;
+			this->tabDirectX->Text = L"DirectX";
+			// 
+			// d_panelCanvas
+			// 
+			this->d_panelCanvas->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->d_panelCanvas->Location = System::Drawing::Point(3, 3);
+			this->d_panelCanvas->Name = L"d_panelCanvas";
+			this->d_panelCanvas->Size = System::Drawing::Size(646, 553);
+			this->d_panelCanvas->TabIndex = 0;
+			this->d_panelCanvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::d_panelCanvas_Paint);
+			// 
 			// notifyIcon
 			// 
 			this->notifyIcon->ContextMenuStrip = this->contextTaskTray;
@@ -2606,6 +2636,7 @@ namespace RX78_2
 			this->g_panelTetris->ResumeLayout(false);
 			this->g_panelTetris->PerformLayout();
 			this->tabArrow->ResumeLayout(false);
+			this->tabDirectX->ResumeLayout(false);
 			this->contextTaskTray->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -2747,6 +2778,10 @@ namespace RX78_2
 
 				 // Arrow虫
 				 this->arrow = gcnew ArrowInsectCage(this->a_panelCanvas, 10);
+
+				 // DirectX
+				 this->directX = gcnew DirectX3D();
+				 this->directX->Initialize(this->d_panelCanvas);
 
 #ifndef _DEBUG
 				 // デバッグ
@@ -4941,6 +4976,17 @@ namespace RX78_2
 	private: System::Void a_panelCanvas_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e)
 			 {
 				 this->arrow->Draw();
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
+#pragma endregion
+
+#pragma region DirectX
+
+	/// 描画
+	private: System::Void d_panelCanvas_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e)
+			 {
+				 this->directX->Draw();
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 

@@ -9,7 +9,7 @@ namespace Anaheim
 	using namespace Microsoft::DirectX::DirectSound;
 
 	/**
-	 * 音楽プレイヤー（DirextX版）
+	 * 音楽プレイヤー（DirectX版）
 	 */
 	public ref class WavPlayerDX
 	{
