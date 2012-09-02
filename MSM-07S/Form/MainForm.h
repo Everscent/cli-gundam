@@ -112,7 +112,7 @@ namespace MSM_07S
 			this->labelLocalIp->Location = System::Drawing::Point(23, 9);
 			this->labelLocalIp->Name = L"labelLocalIp";
 			this->labelLocalIp->Size = System::Drawing::Size(46, 12);
-			this->labelLocalIp->TabIndex = 0;
+			this->labelLocalIp->TabIndex = 10;
 			this->labelLocalIp->Text = L"Local IP";
 			// 
 			// labelLocalPort
@@ -121,7 +121,7 @@ namespace MSM_07S
 			this->labelLocalPort->Location = System::Drawing::Point(12, 38);
 			this->labelLocalPort->Name = L"labelLocalPort";
 			this->labelLocalPort->Size = System::Drawing::Size(57, 12);
-			this->labelLocalPort->TabIndex = 1;
+			this->labelLocalPort->TabIndex = 11;
 			this->labelLocalPort->Text = L"Local Port";
 			// 
 			// labelRemoteIp
@@ -130,7 +130,7 @@ namespace MSM_07S
 			this->labelRemoteIp->Location = System::Drawing::Point(308, 9);
 			this->labelRemoteIp->Name = L"labelRemoteIp";
 			this->labelRemoteIp->Size = System::Drawing::Size(58, 12);
-			this->labelRemoteIp->TabIndex = 2;
+			this->labelRemoteIp->TabIndex = 12;
 			this->labelRemoteIp->Text = L"Remote IP";
 			// 
 			// labelRemotePort
@@ -139,7 +139,7 @@ namespace MSM_07S
 			this->labelRemotePort->Location = System::Drawing::Point(297, 38);
 			this->labelRemotePort->Name = L"labelRemotePort";
 			this->labelRemotePort->Size = System::Drawing::Size(69, 12);
-			this->labelRemotePort->TabIndex = 3;
+			this->labelRemotePort->TabIndex = 13;
 			this->labelRemotePort->Text = L"Remote Port";
 			// 
 			// textLocalIp
@@ -147,28 +147,28 @@ namespace MSM_07S
 			this->textLocalIp->Location = System::Drawing::Point(75, 6);
 			this->textLocalIp->Name = L"textLocalIp";
 			this->textLocalIp->Size = System::Drawing::Size(100, 19);
-			this->textLocalIp->TabIndex = 4;
+			this->textLocalIp->TabIndex = 0;
 			// 
 			// textLocalPort
 			// 
 			this->textLocalPort->Location = System::Drawing::Point(75, 35);
 			this->textLocalPort->Name = L"textLocalPort";
 			this->textLocalPort->Size = System::Drawing::Size(100, 19);
-			this->textLocalPort->TabIndex = 5;
+			this->textLocalPort->TabIndex = 1;
 			// 
 			// textRemoteIp
 			// 
 			this->textRemoteIp->Location = System::Drawing::Point(372, 6);
 			this->textRemoteIp->Name = L"textRemoteIp";
 			this->textRemoteIp->Size = System::Drawing::Size(100, 19);
-			this->textRemoteIp->TabIndex = 6;
+			this->textRemoteIp->TabIndex = 4;
 			// 
 			// textRemotePort
 			// 
 			this->textRemotePort->Location = System::Drawing::Point(372, 35);
 			this->textRemotePort->Name = L"textRemotePort";
 			this->textRemotePort->Size = System::Drawing::Size(100, 19);
-			this->textRemotePort->TabIndex = 7;
+			this->textRemotePort->TabIndex = 5;
 			// 
 			// buttonStop
 			// 
@@ -176,7 +176,7 @@ namespace MSM_07S
 			this->buttonStop->Location = System::Drawing::Point(181, 33);
 			this->buttonStop->Name = L"buttonStop";
 			this->buttonStop->Size = System::Drawing::Size(75, 23);
-			this->buttonStop->TabIndex = 19;
+			this->buttonStop->TabIndex = 3;
 			this->buttonStop->Text = L"ストップ";
 			this->buttonStop->UseVisualStyleBackColor = true;
 			this->buttonStop->Click += gcnew System::EventHandler(this, &MainForm::buttonStop_Click);
@@ -186,7 +186,7 @@ namespace MSM_07S
 			this->buttonStart->Location = System::Drawing::Point(181, 4);
 			this->buttonStart->Name = L"buttonStart";
 			this->buttonStart->Size = System::Drawing::Size(75, 23);
-			this->buttonStart->TabIndex = 18;
+			this->buttonStart->TabIndex = 2;
 			this->buttonStart->Text = L"スタート";
 			this->buttonStart->UseVisualStyleBackColor = true;
 			this->buttonStart->Click += gcnew System::EventHandler(this, &MainForm::buttonStart_Click);
@@ -198,7 +198,7 @@ namespace MSM_07S
 			this->radioDefault->Location = System::Drawing::Point(412, 60);
 			this->radioDefault->Name = L"radioDefault";
 			this->radioDefault->Size = System::Drawing::Size(60, 16);
-			this->radioDefault->TabIndex = 35;
+			this->radioDefault->TabIndex = 16;
 			this->radioDefault->Text = L"Default";
 			this->radioDefault->UseVisualStyleBackColor = true;
 			this->radioDefault->CheckedChanged += gcnew System::EventHandler(this, &MainForm::CharCodeRadioCheckedChanged);
@@ -210,7 +210,7 @@ namespace MSM_07S
 			this->radioUtf8->Location = System::Drawing::Point(349, 60);
 			this->radioUtf8->Name = L"radioUtf8";
 			this->radioUtf8->Size = System::Drawing::Size(57, 16);
-			this->radioUtf8->TabIndex = 34;
+			this->radioUtf8->TabIndex = 15;
 			this->radioUtf8->Text = L"UTF-8";
 			this->radioUtf8->UseVisualStyleBackColor = true;
 			this->radioUtf8->CheckedChanged += gcnew System::EventHandler(this, &MainForm::CharCodeRadioCheckedChanged);
@@ -223,7 +223,7 @@ namespace MSM_07S
 			this->radioAscii->Location = System::Drawing::Point(291, 60);
 			this->radioAscii->Name = L"radioAscii";
 			this->radioAscii->Size = System::Drawing::Size(52, 16);
-			this->radioAscii->TabIndex = 33;
+			this->radioAscii->TabIndex = 14;
 			this->radioAscii->TabStop = true;
 			this->radioAscii->Text = L"ASCII";
 			this->radioAscii->UseVisualStyleBackColor = true;
@@ -235,7 +235,7 @@ namespace MSM_07S
 			this->buttonClear->Location = System::Drawing::Point(397, 82);
 			this->buttonClear->Name = L"buttonClear";
 			this->buttonClear->Size = System::Drawing::Size(75, 23);
-			this->buttonClear->TabIndex = 32;
+			this->buttonClear->TabIndex = 8;
 			this->buttonClear->Text = L"クリア";
 			this->buttonClear->UseVisualStyleBackColor = true;
 			this->buttonClear->Click += gcnew System::EventHandler(this, &MainForm::buttonClear_Click);
@@ -246,7 +246,7 @@ namespace MSM_07S
 			this->labelMessage->Location = System::Drawing::Point(12, 93);
 			this->labelMessage->Name = L"labelMessage";
 			this->labelMessage->Size = System::Drawing::Size(58, 12);
-			this->labelMessage->TabIndex = 36;
+			this->labelMessage->TabIndex = 17;
 			this->labelMessage->Text = L"MESSAGE";
 			// 
 			// listMessage
@@ -260,7 +260,7 @@ namespace MSM_07S
 			this->listMessage->Location = System::Drawing::Point(12, 109);
 			this->listMessage->Name = L"listMessage";
 			this->listMessage->Size = System::Drawing::Size(460, 316);
-			this->listMessage->TabIndex = 39;
+			this->listMessage->TabIndex = 9;
 			// 
 			// buttonSend
 			// 
@@ -269,7 +269,7 @@ namespace MSM_07S
 			this->buttonSend->Location = System::Drawing::Point(397, 429);
 			this->buttonSend->Name = L"buttonSend";
 			this->buttonSend->Size = System::Drawing::Size(75, 23);
-			this->buttonSend->TabIndex = 38;
+			this->buttonSend->TabIndex = 7;
 			this->buttonSend->Text = L"送信";
 			this->buttonSend->UseVisualStyleBackColor = true;
 			this->buttonSend->Click += gcnew System::EventHandler(this, &MainForm::buttonSend_Click);
@@ -281,7 +281,7 @@ namespace MSM_07S
 			this->textMessage->Location = System::Drawing::Point(12, 431);
 			this->textMessage->Name = L"textMessage";
 			this->textMessage->Size = System::Drawing::Size(379, 19);
-			this->textMessage->TabIndex = 37;
+			this->textMessage->TabIndex = 6;
 			// 
 			// MainForm
 			// 
