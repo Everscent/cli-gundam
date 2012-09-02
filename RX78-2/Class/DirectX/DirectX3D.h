@@ -21,20 +21,23 @@ namespace RX78_2
 		private:
 			Control^ canvas;
 			Device^ device;
+			Microsoft::DirectX::Direct3D::Font^ font;
 			VertexBuffer^ vertex;
+			Texture^ texture;
 
 		/**
 		 * コンストラクタ
 		 */
 		public:
 			DirectX3D();
-			~DirectX3D();
 
 		/**
 		 * メソッド
 		 */
 		private:
 			bool CreateDevice();
+			void CreateFont();
+			void SetCamera();
 			void DrawCore();
 
 		public:
@@ -42,6 +45,8 @@ namespace RX78_2
 			bool Initialize(Control^ canvas);
 			/// 描画
 			void Draw();
+			/// 開放
+			void Release();
 		};
 		// ----------------------------------------------------------------------------------------------------
 	}

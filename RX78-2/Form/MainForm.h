@@ -2660,128 +2660,15 @@ namespace RX78_2
 				 this->startupName = System::Environment::GetFolderPath(System::Environment::SpecialFolder::Startup) + "\\" + applicationName + ".lnk";
 				 this->menuStartUp->Checked = (System::IO::File::Exists(this->startupName)) ? true : false;
 
-				 // メニュー
-				 this->menuPair = gcnew MenuPairList();
-				 this->menuPair->SetPair(this->menuView, this->trayMenuView);
-				 this->menuPair->SetPair(this->menuHide, this->trayMenuHide);
-				 this->menuPair->SetPair(this->menuExit, this->trayMenuExit, this->toolExit);
-				 this->menuPair->SetPair(this->menuOpen, this->toolOpen);
-				 this->menuPair->SetPair(this->menuSave, this->toolSave);
-				 this->menuPair->SetPair(this->menuUndo, this->toolUndo);
-				 this->menuPair->SetPair(this->menuRedo, this->toolRedo);
-				 this->menuPair->SetPair(this->menuTcpStart, this->toolTcpStart);
-				 this->menuPair->SetPair(this->menuTcpStop, this->toolTcpStop);
-				 this->menuPair->SetPair(this->menuTcpClient, this->toolTcpClient);
-				 this->menuPair->SetPair(this->menuFtpConnect, this->toolFtpConnect);
-				 this->menuPair->SetPair(this->menuFtpDisConnect, this->toolFtpDisConnect);
-				 this->menuPair->SetPair(this->menuPictureLoad, this->toolPictureLoad);
-				 this->menuPair->SetPair(this->menuTimer, this->toolTimer);
-				 this->menuPair->SetPair(this->menuRanking, this->toolRanking);
-				 this->menuPair->SetPair(this->menuReset, this->toolReset);
-
-				 // レポート編集
-				 this->report = gcnew ReportBook();
-				 this->editor = gcnew ReportEditor(this->report);
-				 this->editor->EndAction += gcnew ReportEventHandler(this, &MainForm::EndReportAction);
-				 this->r_textFileName->Text = this->config->GetReportFileName();
-				 this->r_buttonInsertRow->Location = this->r_buttonInsert->Location;
-				 this->r_buttonAddRow->Location = this->r_buttonAdd->Location;
-				 this->r_buttonRemoveRow->Location = this->r_buttonRemove->Location;
-
-				 // TCPサーバ
-				 this->tcpServer = gcnew TcpServerSocket();
-				 this->tcpServer->Connected += gcnew TcpEventHandler(this, &MainForm::ConnectedTcpClient);
-				 this->tcpServer->DisConnected += gcnew TcpEventHandler(this, &MainForm::DisConnectedTcpClient);
-				 this->tcpServer->Received += gcnew TcpEventHandler(this, &MainForm::ReceivedTcpMessage);
-				 IPEndPoint^ endPoint = this->config->GetTcpIPEndPoint();
-				 this->t_textLocalIp->Text = endPoint->Address->ToString();
-				 this->t_textLocalPort->Text = endPoint->Port.ToString();
-				 this->tcpServer->Encoding = this->config->GetTcpEncoding();
-				 if (this->tcpServer->Encoding == System::Text::Encoding::ASCII)
-				 {
-					 this->menuAscii->Checked = true;
-					 this->menuUtf8->Checked = false;
-					 this->menuDefault->Checked = false;
-				 }
-				 else if (this->tcpServer->Encoding == System::Text::Encoding::UTF8)
-				 {
-					 this->menuAscii->Checked = false;
-					 this->menuUtf8->Checked = true;
-					 this->menuDefault->Checked = false;
-				 }
-				 else
-				 {
-					 this->menuAscii->Checked = false;
-					 this->menuUtf8->Checked = false;
-					 this->menuDefault->Checked = true;
-				 }
-
-				 // FTPクライアント
-				 this->ftpClient = gcnew FtpClient();
-				 this->InitializeLocalTree(this->f_treeLocal);
-
-				 // 写真パズル
-				 this->puzzle = gcnew PicturePuzzle();
-				 this->pictureArray = gcnew array<PictureBox^, 2>(5, 5);
-				 for (int y = 0; y < 5; y++)
-				 {
-					 for (int x = 0; x < 5; x++)
-					 {
-						 this->pictureArray[x, y] = gcnew System::Windows::Forms::PictureBox();
-						 this->pictureArray[x, y]->SizeChanged += gcnew System::EventHandler(this, &MainForm::SizeChangedPuzzle);
-						 this->pictureArray[x, y]->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::MouseMove);
-						 this->pictureArray[x, y]->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::MouseDown);
-						 this->pictureArray[x, y]->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::MouseUp);
-						 this->p_panelBase->Controls->Add(this->pictureArray[x, y]);
-					 }
-				 }
-				 this->puzzle->SetPuzzleControl(this->pictureArray);
-				 this->ChangePuzzleView(false);
-
-				 // バイナリクロック
-				 array<Panel^, 2>^ sec =
-				 {
-					 {this->b_panelSec1,  this->b_panelSec2,  this->b_panelSec4,  this->b_panelSec8},
-					 {this->b_panelSec10, this->b_panelSec20, this->b_panelSec40, nullptr}
-				 };
-				 array<Panel^, 2>^ min =
-				 {
-					 {this->b_panelMin1,  this->b_panelMin2,  this->b_panelMin4,  this->b_panelMin8},
-					 {this->b_panelMin10, this->b_panelMin20, this->b_panelMin40, nullptr}
-				 };
-				 array<Panel^, 2>^ hour =
-				 {
-					 {this->b_panelHour1,  this->b_panelHour2,  this->b_panelHour4, this->b_panelHour8},
-					 {this->b_panelHour10, this->b_panelHour20, nullptr,            nullptr}
-				 };
-				 this->clock = gcnew BinaryClock(sec, min, hour);
-
-				 // テトリス
-				 array<Control^>^ canvases = { this->g_panelNext1, this->g_panelNext2, this->g_panelNext3 };
-				 this->tetris = gcnew TetrisPackage(this->g_panelTetris, canvases);
-				 this->tetris->ScoreChanged += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisScoreChanged);
-				 this->tetris->GameOver += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisGameOver);
-				 array<Keys>^ moveDownKeys = { Keys::NumPad2, Keys::Down };
-				 array<Keys>^ moveLeftKeys = { Keys::NumPad4, Keys::Left };
-				 array<Keys>^ moveRightKeys = { Keys::NumPad6, Keys::Right };
-				 array<Keys>^ rotateLeftKeys = { Keys::NumPad7 };
-				 array<Keys>^ rotateRightKeys = { Keys::NumPad9, Keys::Up };
-				 array<Keys>^ hardDropKeys = { Keys::Space };
-				 this->tetris->Controller->Key->MoveDownKeys = moveDownKeys;
-				 this->tetris->Controller->Key->MoveLeftKeys = moveLeftKeys;
-				 this->tetris->Controller->Key->MoveRightKeys = moveRightKeys;
-				 this->tetris->Controller->Key->RotateLeftKeys = rotateLeftKeys;
-				 this->tetris->Controller->Key->RotateRightKeys = rotateRightKeys;
-				 this->tetris->Controller->Key->HardDropKeys = hardDropKeys;
-				 this->menuSound->Checked = this->config->GetTetrisSoundON();
-				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
-
-				 // Arrow虫
-				 this->arrow = gcnew ArrowInsectCage(this->a_panelCanvas, 10);
-
-				 // DirectX
-				 this->directX = gcnew DirectX3D();
-				 this->directX->Initialize(this->d_panelCanvas);
+				 this->InitializeMenu();
+				 this->InitializeReport();
+				 this->InitializeTcp();
+				 this->InitializeFtp();
+				 this->InitializePuzzle();
+				 this->InitializeClock();
+				 this->InitializeTetris();
+				 this->InitializeArrow();
+				 this->InitializeDirectX();
 
 #ifndef _DEBUG
 				 // デバッグ
@@ -2847,6 +2734,7 @@ namespace RX78_2
 				 this->config->SaveFormSizeAndLocation(this);
 				 this->config->Save();
 
+				 this->directX->Release();
 				 this->tcpServer->Stop();
 			 }
 			 // ----------------------------------------------------------------------------------------------------
@@ -2899,6 +2787,29 @@ namespace RX78_2
 #pragma endregion
 
 #pragma region メニューバー
+
+	/// 初期化
+	private: void InitializeMenu()
+			 {
+				 this->menuPair = gcnew MenuPairList();
+				 this->menuPair->SetPair(this->menuView, this->trayMenuView);
+				 this->menuPair->SetPair(this->menuHide, this->trayMenuHide);
+				 this->menuPair->SetPair(this->menuExit, this->trayMenuExit, this->toolExit);
+				 this->menuPair->SetPair(this->menuOpen, this->toolOpen);
+				 this->menuPair->SetPair(this->menuSave, this->toolSave);
+				 this->menuPair->SetPair(this->menuUndo, this->toolUndo);
+				 this->menuPair->SetPair(this->menuRedo, this->toolRedo);
+				 this->menuPair->SetPair(this->menuTcpStart, this->toolTcpStart);
+				 this->menuPair->SetPair(this->menuTcpStop, this->toolTcpStop);
+				 this->menuPair->SetPair(this->menuTcpClient, this->toolTcpClient);
+				 this->menuPair->SetPair(this->menuFtpConnect, this->toolFtpConnect);
+				 this->menuPair->SetPair(this->menuFtpDisConnect, this->toolFtpDisConnect);
+				 this->menuPair->SetPair(this->menuPictureLoad, this->toolPictureLoad);
+				 this->menuPair->SetPair(this->menuTimer, this->toolTimer);
+				 this->menuPair->SetPair(this->menuRanking, this->toolRanking);
+				 this->menuPair->SetPair(this->menuReset, this->toolReset);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
 
 	/// 表示
 	private: System::Void menuView_Click(System::Object^  sender, System::EventArgs^  e)
@@ -3398,6 +3309,19 @@ namespace RX78_2
 
 #pragma region レポート編集
 
+	/// 初期化
+	private: void InitializeReport()
+			 {
+				 this->report = gcnew ReportBook();
+				 this->editor = gcnew ReportEditor(this->report);
+				 this->editor->EndAction += gcnew ReportEventHandler(this, &MainForm::EndReportAction);
+				 this->r_textFileName->Text = this->config->GetReportFileName();
+				 this->r_buttonInsertRow->Location = this->r_buttonInsert->Location;
+				 this->r_buttonAddRow->Location = this->r_buttonAdd->Location;
+				 this->r_buttonRemoveRow->Location = this->r_buttonRemove->Location;
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	/// 読み込み
 	private: System::Void r_buttonLoad_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
@@ -3763,6 +3687,38 @@ namespace RX78_2
 
 #pragma region TCPサーバ
 
+	/// 初期化
+	private: void InitializeTcp()
+			 {
+				 this->tcpServer = gcnew TcpServerSocket();
+				 this->tcpServer->Connected += gcnew TcpEventHandler(this, &MainForm::ConnectedTcpClient);
+				 this->tcpServer->DisConnected += gcnew TcpEventHandler(this, &MainForm::DisConnectedTcpClient);
+				 this->tcpServer->Received += gcnew TcpEventHandler(this, &MainForm::ReceivedTcpMessage);
+				 IPEndPoint^ endPoint = this->config->GetTcpIPEndPoint();
+				 this->t_textLocalIp->Text = endPoint->Address->ToString();
+				 this->t_textLocalPort->Text = endPoint->Port.ToString();
+				 this->tcpServer->Encoding = this->config->GetTcpEncoding();
+				 if (this->tcpServer->Encoding == System::Text::Encoding::ASCII)
+				 {
+					 this->menuAscii->Checked = true;
+					 this->menuUtf8->Checked = false;
+					 this->menuDefault->Checked = false;
+				 }
+				 else if (this->tcpServer->Encoding == System::Text::Encoding::UTF8)
+				 {
+					 this->menuAscii->Checked = false;
+					 this->menuUtf8->Checked = true;
+					 this->menuDefault->Checked = false;
+				 }
+				 else
+				 {
+					 this->menuAscii->Checked = false;
+					 this->menuUtf8->Checked = false;
+					 this->menuDefault->Checked = true;
+				 }
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	/// スタート
 	private: System::Void t_buttonStart_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
@@ -3985,6 +3941,14 @@ namespace RX78_2
 #pragma endregion
 
 #pragma region FTPクライアント
+
+	/// 初期化
+	private: void InitializeFtp()
+			 {
+				 this->ftpClient = gcnew FtpClient();
+				 this->InitializeLocalTree(this->f_treeLocal);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
 
 	/// 接続/切断
 	private: System::Void f_buttonConnect_Click(System::Object^  sender, System::EventArgs^  e)
@@ -4335,6 +4299,28 @@ namespace RX78_2
 
 #pragma region 写真パズル
 
+	/// 初期化
+	private: void InitializePuzzle()
+			 {
+				 this->puzzle = gcnew PicturePuzzle();
+				 this->pictureArray = gcnew array<PictureBox^, 2>(5, 5);
+				 for (int y = 0; y < 5; y++)
+				 {
+					 for (int x = 0; x < 5; x++)
+					 {
+						 this->pictureArray[x, y] = gcnew System::Windows::Forms::PictureBox();
+						 this->pictureArray[x, y]->SizeChanged += gcnew System::EventHandler(this, &MainForm::SizeChangedPuzzle);
+						 this->pictureArray[x, y]->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::MouseMove);
+						 this->pictureArray[x, y]->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::MouseDown);
+						 this->pictureArray[x, y]->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::MouseUp);
+						 this->p_panelBase->Controls->Add(this->pictureArray[x, y]);
+					 }
+				 }
+				 this->puzzle->SetPuzzleControl(this->pictureArray);
+				 this->ChangePuzzleView(false);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	/// 読み込み
 	private: System::Void p_buttonLoad_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
@@ -4634,6 +4620,28 @@ namespace RX78_2
 
 #pragma region バイナリクロック
 
+	/// 初期化
+	private: void InitializeClock()
+			 {
+				 array<Panel^, 2>^ sec =
+				 {
+					 {this->b_panelSec1,  this->b_panelSec2,  this->b_panelSec4,  this->b_panelSec8},
+					 {this->b_panelSec10, this->b_panelSec20, this->b_panelSec40, nullptr}
+				 };
+				 array<Panel^, 2>^ min =
+				 {
+					 {this->b_panelMin1,  this->b_panelMin2,  this->b_panelMin4,  this->b_panelMin8},
+					 {this->b_panelMin10, this->b_panelMin20, this->b_panelMin40, nullptr}
+				 };
+				 array<Panel^, 2>^ hour =
+				 {
+					 {this->b_panelHour1,  this->b_panelHour2,  this->b_panelHour4, this->b_panelHour8},
+					 {this->b_panelHour10, this->b_panelHour20, nullptr,            nullptr}
+				 };
+				 this->clock = gcnew BinaryClock(sec, min, hour);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	/// タイマー
 	private: System::Void b_buttonTimerSet_Click(System::Object^  sender, System::EventArgs^  e)
 			 {
@@ -4786,6 +4794,30 @@ namespace RX78_2
 #pragma endregion
 
 #pragma region TETRiS
+
+	/// 初期化
+	private: void InitializeTetris()
+			 {
+				 array<Control^>^ canvases = { this->g_panelNext1, this->g_panelNext2, this->g_panelNext3 };
+				 this->tetris = gcnew TetrisPackage(this->g_panelTetris, canvases);
+				 this->tetris->ScoreChanged += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisScoreChanged);
+				 this->tetris->GameOver += gcnew Anaheim::Tetris::TetrisScoreEventHandler(this, &MainForm::TetrisGameOver);
+				 array<Keys>^ moveDownKeys = { Keys::NumPad2, Keys::Down };
+				 array<Keys>^ moveLeftKeys = { Keys::NumPad4, Keys::Left };
+				 array<Keys>^ moveRightKeys = { Keys::NumPad6, Keys::Right };
+				 array<Keys>^ rotateLeftKeys = { Keys::NumPad7 };
+				 array<Keys>^ rotateRightKeys = { Keys::NumPad9, Keys::Up };
+				 array<Keys>^ hardDropKeys = { Keys::Space };
+				 this->tetris->Controller->Key->MoveDownKeys = moveDownKeys;
+				 this->tetris->Controller->Key->MoveLeftKeys = moveLeftKeys;
+				 this->tetris->Controller->Key->MoveRightKeys = moveRightKeys;
+				 this->tetris->Controller->Key->RotateLeftKeys = rotateLeftKeys;
+				 this->tetris->Controller->Key->RotateRightKeys = rotateRightKeys;
+				 this->tetris->Controller->Key->HardDropKeys = hardDropKeys;
+				 this->menuSound->Checked = this->config->GetTetrisSoundON();
+				 this->menuRemote->Checked = this->config->GetTetrisRemoteEnabled();
+			 }
+			 // ----------------------------------------------------------------------------------------------------
 
 	/// Start/Stop/Restartボタン
 	private: System::Void g_buttonStart_Click(System::Object^  sender, System::EventArgs^  e)
@@ -4950,6 +4982,13 @@ namespace RX78_2
 
 #pragma region ARROW
 
+	/// 初期化
+	private: void InitializeArrow()
+			 {
+				 this->arrow = gcnew ArrowInsectCage(this->a_panelCanvas, 10);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
 	/// タイマー処理
 	private: System::Void timerArrow_Tick(System::Object^  sender, System::EventArgs^  e)
 			 {
@@ -4982,6 +5021,14 @@ namespace RX78_2
 #pragma endregion
 
 #pragma region DirectX
+
+	/// 初期化
+	private: void InitializeDirectX()
+			 {
+				 this->directX = gcnew DirectX3D();
+				 this->directX->Initialize(this->d_panelCanvas);
+			 }
+			 // ----------------------------------------------------------------------------------------------------
 
 	/// 描画
 	private: System::Void d_panelCanvas_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e)

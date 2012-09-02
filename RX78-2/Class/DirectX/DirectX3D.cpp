@@ -10,21 +10,9 @@ DirectX3D::DirectX3D()
 {
 	this->canvas = nullptr;
 	this->device = nullptr;
+	this->font = nullptr;
 	this->vertex = nullptr;
-}
-// ----------------------------------------------------------------------------------------------------
-
-DirectX3D::~DirectX3D()
-{
-	if (this->vertex != nullptr)
-	{
-		delete this->vertex;
-	}
-
-	if (this->device != nullptr)
-	{
-		delete this->device;
-	}
+	this->texture = nullptr;
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -64,22 +52,40 @@ bool DirectX3D::CreateDevice()
 		}
 	}
 
+	return true;
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::CreateFont()
+{
+	FontDescription fd = FontDescription();
+
+	fd.Height = 24;
+	fd.FaceName = "ＭＳ ゴシック";
+
+	this->font = gcnew Microsoft::DirectX::Direct3D::Font(this->device, fd);
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::SetCamera()
+{
 	// ビュー変換行列を設定
 	this->device->Transform->View = Matrix::LookAtLH(Vector3(0.0f, 0.0f, -10.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
 
 	// 射影変換を設定
 	this->device->Transform->Projection = Matrix::PerspectiveFovLH(Geometry::DegreeToRadian(60.0f),
 		static_cast<float>(this->device->Viewport.Width) / static_cast<float>(this->device->Viewport.Height), 1.0f, 100.0f);
-
-	return true;
 }
 // ----------------------------------------------------------------------------------------------------
 
 void DirectX3D::DrawCore()
 {
+	this->device->SetTexture(0, this->texture);
 	this->device->SetStreamSource(0, this->vertex, 0);
-	this->device->VertexFormat = CustomVertex::PositionColored::Format;
-	this->device->DrawPrimitives(PrimitiveType::TriangleList, 0, 1);
+	this->device->VertexFormat = CustomVertex::PositionTextured::Format;
+	this->device->DrawPrimitives(PrimitiveType::TriangleStrip, 0, 2);
+
+	this->font->DrawText(nullptr, "DirectX", 0, 0, Color::White);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -91,19 +97,26 @@ bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas)
 	{
 		return false;
 	}
+	this->CreateFont();
+	this->SetCamera();
 
-	// 三角形ポリゴンを表示するための頂点バッファを作成
-	this->vertex = gcnew VertexBuffer(CustomVertex::PositionColored::typeid, 3, this->device, Usage::None, CustomVertex::PositionColored::Format, Pool::Managed);
+	// 四角形ポリゴンを表示するための頂点バッファを作成
+	this->vertex = gcnew VertexBuffer(
+		CustomVertex::PositionTextured::typeid, 4, this->device, Usage::None, CustomVertex::PositionTextured::Format, Pool::Managed);
 	
-	array<CustomVertex::PositionColored>^ vertices = gcnew array<CustomVertex::PositionColored>(3);
-	vertices[0] = CustomVertex::PositionColored(0.0f, 5.0f, 0.0f, Color::Red.ToArgb());
-	vertices[1] = CustomVertex::PositionColored(4.0f, -3.0f, 0.0f, Color::Blue.ToArgb());
-	vertices[2] = CustomVertex::PositionColored(-4.0f, -3.0f, 0.0f, Color::Green.ToArgb());
+	array<CustomVertex::PositionTextured>^ vertices = gcnew array<CustomVertex::PositionTextured>(4);
+	vertices[0] = CustomVertex::PositionTextured(-4.0f, 4.0f, 0.0f, 0.0f, 0.0f);
+	vertices[1] = CustomVertex::PositionTextured(4.0f, 4.0f, 0.0f, 1.0f, 0.0f);
+	vertices[2] = CustomVertex::PositionTextured(-4.0f, -4.0f, 0.0f, 0.0f, 1.0f);
+	vertices[3] = CustomVertex::PositionTextured(4.0f, -4.0f, 0.0f, 1.0f, 1.0f);
 
 	GraphicsStream^ stream = this->vertex->Lock(0, 0, LockFlags::None);
 	stream->Write(vertices);
 	this->vertex->Unlock();
 	delete stream;
+
+	// テクスチャー作成
+	this->texture = TextureLoader::FromFile(this->device, "..\\sample_data\\SampleImage.jpg");
 
 	// ライトを無効
 	this->device->RenderState->Lighting = false;
@@ -114,14 +127,42 @@ bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas)
 
 void DirectX3D::Draw()
 {
+	if (this->device == nullptr) return;
+
 	this->device->Clear(ClearFlags::Target | ClearFlags::ZBuffer, Color::DarkBlue, 1.0f, 0);
 
 	this->device->BeginScene();
-
 	this->DrawCore();
-
 	this->device->EndScene();
 
 	this->device->Present();
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::Release()
+{
+	if (this->texture != nullptr)
+	{
+		delete this->texture;
+		this->texture = nullptr;
+	}
+
+	if (this->vertex != nullptr)
+	{
+		delete this->vertex;
+		this->vertex = nullptr;
+	}
+
+	if (this->font != nullptr)
+	{
+		delete this->font;
+		this->font = nullptr;
+	}
+
+	if (this->device != nullptr)
+	{
+		delete this->device;
+		this->device = nullptr;
+	}
 }
 // ----------------------------------------------------------------------------------------------------
