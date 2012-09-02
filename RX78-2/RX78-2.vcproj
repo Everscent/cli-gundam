@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report"
+				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report;.\Class\Clock"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report"
+				AdditionalIncludeDirectories=".\Form;.\Class;.\Class\Arrow;.\Class\Puzzle;.\Class\Report;.\Class\Clock"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -208,10 +208,6 @@
 			>
 			<File
 				RelativePath=".\AssemblyInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Class\BinaryClock.cpp"
 				>
 			</File>
 			<File
@@ -314,16 +310,20 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Clock"
+				>
+				<File
+					RelativePath=".\Class\Clock\BinaryClock.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="ヘッダー ファイル"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\Class\BinaryClock.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Class\ConfigFile.h"
 				>
@@ -435,6 +435,14 @@
 				</File>
 				<File
 					RelativePath=".\Class\Report\ReportEventArgs.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Clock"
+				>
+				<File
+					RelativePath=".\Class\Clock\BinaryClock.h"
 					>
 				</File>
 			</Filter>
