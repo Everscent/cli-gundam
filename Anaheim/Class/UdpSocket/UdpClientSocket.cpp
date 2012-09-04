@@ -11,7 +11,6 @@ UdpClientSocket::UdpClientSocket()
 {
 	this->client = nullptr;
 	this->receiveWorker = gcnew BackgroundWorker();
-	this->receiveWorker->WorkerSupportsCancellation = true;
 	this->receiveWorker->WorkerReportsProgress = true;
 	this->receiveWorker->DoWork += gcnew DoWorkEventHandler(this, &UdpClientSocket::ReceiveWorkerDoWork);
 	this->receiveWorker->ProgressChanged += gcnew ProgressChangedEventHandler(this, &UdpClientSocket::ReceiveWorkerProgressChanged);
@@ -72,10 +71,6 @@ bool UdpClientSocket::Stop()
 
 	try
 	{
-		if (this->receiveWorker->IsBusy)
-		{
-			this->receiveWorker->CancelAsync();
-		}
 		this->client->Close();
 		this->connected = false;
 	}

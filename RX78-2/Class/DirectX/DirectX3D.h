@@ -7,6 +7,7 @@ namespace RX78_2
 		using namespace System;
 		using namespace System::Windows::Forms;
 		using namespace System::Drawing;
+		using namespace System::ComponentModel;
 		using namespace Microsoft::DirectX;
 		using namespace Microsoft::DirectX::Direct3D;
 
@@ -24,6 +25,11 @@ namespace RX78_2
 			Microsoft::DirectX::Direct3D::Font^ font;
 			VertexBuffer^ vertex;
 			Texture^ texture;
+			array<bool>^ keys;
+			float lensPosTheta;
+			float lensPosPhi;
+
+			BackgroundWorker^ backWorker;
 
 		/**
 		 * コンストラクタ
@@ -35,18 +41,27 @@ namespace RX78_2
 		 * メソッド
 		 */
 		private:
+			void CreateInputEvent(Control^ keyOwner);
 			bool CreateDevice();
 			void CreateFont();
+			void CreateSquarePolygon();
 			void SetCamera();
-			void DrawCore();
+			void DoLoopProcess();
+			void Draw();
+			void DrawSquarePolygon();
+			void BackWorkerDoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e);
+			void ControlKeyDown(Object^ sender, KeyEventArgs^ e);
+			void ControlKeyUp(Object^ sender, KeyEventArgs^ e);
 
 		public:
 			/// 初期化
-			bool Initialize(Control^ canvas);
-			/// 描画
-			void Draw();
+			bool Initialize(Control^ canvas, Control^ keyOwner);
 			/// 開放
 			void Release();
+			/// スタート
+			bool Start();
+			/// ストップ
+			bool Stop();
 		};
 		// ----------------------------------------------------------------------------------------------------
 	}

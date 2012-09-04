@@ -150,9 +150,9 @@ System::Drawing::Color Insect::GetColor()
 
 void Insect::Move()
 {
-	if (this->skipMove)
+	if (this->skipMoveCount != 0)
 	{
-		this->skipMove = false;
+		this->skipMoveCount--;
 		return;
 	}
 
@@ -163,7 +163,7 @@ void Insect::Move()
 	if (this->moveCount == this->MOVE_COUNT_MAX - 1)
 	{
 		this->moveCount = 0;
-		this->skipMove = true;
+		this->skipMoveCount = 2;
 	}
 	else
 	{
@@ -194,7 +194,7 @@ void Insect::Reset()
 	this->moveLegLocatin = this->legLocations[this->movingLegNo];
 	this->moveDegree = this->degree;
 
-	this->skipMove = false;
+	this->skipMoveCount = 0;
 
 	this->CalcSpeed();
 }

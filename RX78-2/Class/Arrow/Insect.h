@@ -21,7 +21,7 @@ namespace RX78_2
 			literal int HEIGHT = 45;
 			literal int LEG_LENGTH = 10;
 			literal int LEG_COUNT = 4;
-			literal int MOVE_COUNT_MAX = 5;
+			literal int MOVE_COUNT_MAX = 10;
 
 			PointF location;				///< 位置
 			array<PointF>^ legLocations;	///< 足座標	
@@ -36,7 +36,7 @@ namespace RX78_2
 			Point targetPoint;				///< 移動先位置（マウス座標）
 
 			int speed;						///< 移動スピードゆらぎ
-			int skipMove;					///< 移動スキップフラグ
+			int skipMoveCount;				///< 移動スキップ数
 
 			Control^ canvas;				///< キャンバス
 			Random^ random;					///< 乱数

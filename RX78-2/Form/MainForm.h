@@ -1157,6 +1157,7 @@ namespace RX78_2
 			this->tabControl->Size = System::Drawing::Size(660, 585);
 			this->tabControl->TabIndex = 2;
 			this->tabControl->SelectedIndexChanged += gcnew System::EventHandler(this, &MainForm::tabControl_SelectedIndexChanged);
+			this->tabControl->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::tabControl_KeyDown);
 			// 
 			// tabReport
 			// 
@@ -2520,7 +2521,6 @@ namespace RX78_2
 			this->d_panelCanvas->Name = L"d_panelCanvas";
 			this->d_panelCanvas->Size = System::Drawing::Size(646, 553);
 			this->d_panelCanvas->TabIndex = 0;
-			this->d_panelCanvas->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::d_panelCanvas_Paint);
 			// 
 			// notifyIcon
 			// 
@@ -2578,7 +2578,7 @@ namespace RX78_2
 			// 
 			// timerArrow
 			// 
-			this->timerArrow->Interval = 70;
+			this->timerArrow->Interval = 40;
 			this->timerArrow->Tick += gcnew System::EventHandler(this, &MainForm::timerArrow_Tick);
 			// 
 			// MainForm
@@ -2762,7 +2762,7 @@ namespace RX78_2
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// タブ切替え
+	/// タブコントロール切替え
 	private: System::Void tabControl_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
 			 {
 				 // バイナリクロック
@@ -2780,6 +2780,32 @@ namespace RX78_2
 				 if (this->tetris->Controller->IsRunning)
 				 {
 					 this->g_buttonStart_Click(this->g_buttonStart, nullptr);
+				 }
+
+				 // DirectX
+				 if (this->tabControl->SelectedTab == this->tabDirectX)
+				 {
+					 this->directX->Start();
+				 }
+				 else
+				 {
+					 this->directX->Stop();
+				 }
+			 }
+			 // ----------------------------------------------------------------------------------------------------
+
+	/// タブコントロールキーダウン
+	private: System::Void tabControl_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e)
+			 {
+				 if (this->tabControl->SelectedTab == this->tabDirectX)
+				 {
+					 switch (e->KeyCode)
+					 {
+						 case Keys::Left:
+						 case Keys::Right:
+							 e->Handled = true;
+							 break;
+					}
 				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
@@ -4966,7 +4992,7 @@ namespace RX78_2
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
-	/// キーダウン（ダイアログ文字）
+	/// キープレス（ダイアログ文字）
 	protected: virtual bool ProcessDialogKey(System::Windows::Forms::Keys keyData) override
 			   {
 				   if (this->tetris->Controller->IsRunning && this->tetris->Controller->Key->IsRegisteredKey(keyData))
@@ -5026,14 +5052,7 @@ namespace RX78_2
 	private: void InitializeDirectX()
 			 {
 				 this->directX = gcnew DirectX3D();
-				 this->directX->Initialize(this->d_panelCanvas);
-			 }
-			 // ----------------------------------------------------------------------------------------------------
-
-	/// 描画
-	private: System::Void d_panelCanvas_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e)
-			 {
-				 this->directX->Draw();
+				 this->directX->Initialize(this->d_panelCanvas, this->tabControl);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
