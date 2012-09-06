@@ -12,20 +12,31 @@ DirectX3D::DirectX3D()
 	this->device = nullptr;
 	this->font = nullptr;
 	this->vertex = nullptr;
+	this->index = nullptr;
 	this->texture = nullptr;
+	this->material = Material();
 	this->keys = gcnew array<bool>(256);
+	this->lensPosRadius = 10.0f;
 	this->lensPosTheta = 270.0f;
 	this->lensPosPhi = 0.0f;
+	this->oldMousePoint = Point::Empty;
 	this->backWorker = gcnew BackgroundWorker();
 	this->backWorker->WorkerSupportsCancellation = true;
 	this->backWorker->DoWork += gcnew DoWorkEventHandler(this, &DirectX3D::BackWorkerDoWork);
 }
 // ----------------------------------------------------------------------------------------------------
 
-void DirectX3D::CreateInputEvent(System::Windows::Forms::Control ^keyOwner)
+static DirectX3D::DirectX3D()
+{
+	DirectX3D::vertexIndices = gcnew array<short> { 2, 0, 1, 1, 3, 2, 4, 0, 2, 2, 6, 4, 5, 1, 0, 0, 4, 5, 7, 3, 1, 1, 5, 7, 6, 2, 3, 3, 7, 6, 4, 6, 7, 7, 5, 4 };
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::CreateInputEvent(System::Windows::Forms::Control ^keyOwner, System::Windows::Forms::Control ^mouseOwner)
 {
 	keyOwner->KeyDown += gcnew KeyEventHandler(this, &DirectX3D::ControlKeyDown);
 	keyOwner->KeyUp += gcnew KeyEventHandler(this, &DirectX3D::ControlKeyUp);
+	mouseOwner->MouseMove += gcnew MouseEventHandler(this, &DirectX3D::ControlMouseMove);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -100,8 +111,15 @@ void DirectX3D::CreateSquarePolygon()
 
 void DirectX3D::SetCamera()
 {
-	// ビュー変換行列を設定
-	this->device->Transform->View = Matrix::LookAtLH(Vector3(0.0f, 0.0f, -10.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
+	// レンズの位置を三次元極座標で変換
+	float radius = this->lensPosRadius;
+	float theta = Geometry::DegreeToRadian(this->lensPosTheta);
+	float phi = Geometry::DegreeToRadian(this->lensPosPhi);
+	Vector3 lensPosition = Vector3(static_cast<float>(radius * Math::Cos(theta) * Math::Cos(phi)),
+		static_cast<float>(radius * Math::Sin(phi)), static_cast<float>(radius * Math::Sin(theta) * Math::Cos(phi)));
+
+	// ビュー変換行列を左手座標系ビュー行列で設定する
+	this->device->Transform->View = Matrix::LookAtLH(lensPosition, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
 
 	// 射影変換を設定
 	this->device->Transform->Projection = Matrix::PerspectiveFovLH(Geometry::DegreeToRadian(60.0f),
@@ -109,7 +127,7 @@ void DirectX3D::SetCamera()
 }
 // ----------------------------------------------------------------------------------------------------
 
-void DirectX3D::DoLoopProcess()
+void DirectX3D::InputKey()
 {
 	if (this->keys[static_cast<int>(Keys::Left)])
 	{
@@ -137,16 +155,19 @@ void DirectX3D::DoLoopProcess()
 	{
 		this->lensPosPhi = -89.9999f;
 	}
+}
+// ----------------------------------------------------------------------------------------------------
 
-	// レンズの位置を三次元極座標で変換
-	float radius = 10.0f;
-	float theta = Geometry::DegreeToRadian(this->lensPosTheta);
-	float phi = Geometry::DegreeToRadian(this->lensPosPhi);
-	Vector3 lensPosition = Vector3(static_cast<float>(radius * Math::Cos(theta) * Math::Cos(phi)),
-		static_cast<float>(radius * Math::Sin(phi)), static_cast<float>(radius * Math::Sin(theta) * Math::Cos(phi)));
+void DirectX3D::DoLoopProcess()
+{
+	this->InputKey();
+	this->SetCamera();
 
-	// ビュー変換行列を左手座標系ビュー行列で設定する
-	this->device->Transform->View = Matrix::LookAtLH(lensPosition, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
+	Matrix mtx = Matrix::RotationY(Environment::TickCount / 1000.0f);
+	this->device->Lights[0]->Direction = Vector3::TransformCoordinate(Vector3::Normalize(Vector3(0.0f, -1.5f, 2.0f)), mtx);
+	this->device->Lights[0]->Update();
+	this->device->Lights[1]->Direction = Vector3::TransformCoordinate(Vector3::Normalize(Vector3(2.0f, 1.5f, 0.0f)), mtx);
+	this->device->Lights[1]->Update();
 
 	this->device->Clear(ClearFlags::Target | ClearFlags::ZBuffer, Color::DarkBlue, 1.0f, 0);
 
@@ -160,11 +181,13 @@ void DirectX3D::DoLoopProcess()
 
 void DirectX3D::Draw()
 {
-	this->DrawSquarePolygon();
+	this->DrawCubePolygon();
 
-	this->font->DrawText(nullptr, "[↑↓]カメラの上下回転  [←→]カメラの左右回転", 0, 0, Color::White);
-	this->font->DrawText(nullptr, "θ：" + this->lensPosTheta, 0, 12, Color::White);
-	this->font->DrawText(nullptr, "φ：" + this->lensPosPhi, 0, 24, Color::White);
+	this->font->DrawText(nullptr, "θ：" + this->lensPosTheta, 0, 0, Color::White);
+	this->font->DrawText(nullptr, "φ：" + this->lensPosPhi, 0, 12, Color::White);
+	this->font->DrawText(nullptr, "マウス位置：" + this->oldMousePoint, 0, 24, Color::White);
+	this->font->DrawText(nullptr, "ライトベクトル1：" + Environment::NewLine + this->device->Lights[0]->Direction, 0, 36, Color::White);
+	this->font->DrawText(nullptr, "ライトベクトル2：" + Environment::NewLine + this->device->Lights[1]->Direction, 0, 84, Color::White);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -173,6 +196,16 @@ void DirectX3D::DrawSquarePolygon()
 	this->device->SetStreamSource(0, this->vertex, 0);
 	this->device->VertexFormat = CustomVertex::PositionColored::Format;
 	this->device->DrawPrimitives(PrimitiveType::TriangleStrip, 0, 2);
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::DrawCubePolygon()
+{
+	this->device->Material = this->material;
+	this->device->SetStreamSource(0, this->vertex, 0);
+	this->device->VertexFormat = CustomVertex::PositionNormal::Format;
+	this->device->Indices = this->index;
+	this->device->DrawIndexedPrimitives(PrimitiveType::TriangleList, 0, 0, 8, 0, 12);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -211,11 +244,32 @@ void DirectX3D::ControlKeyUp(System::Object ^sender, System::Windows::Forms::Key
 }
 // ----------------------------------------------------------------------------------------------------
 
-bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas, System::Windows::Forms::Control ^keyOwner)
+void DirectX3D::ControlMouseMove(System::Object ^sender, System::Windows::Forms::MouseEventArgs ^e)
+{
+	if (e->Button == MouseButtons::Left)
+	{
+		this->lensPosTheta -= e->Location.X - this->oldMousePoint.X;
+		this->lensPosPhi += e->Location.Y - this->oldMousePoint.Y;
+
+		if (90.0f <= this->lensPosPhi)
+		{
+			this->lensPosPhi = 89.9999f;
+		}
+		else if (this->lensPosPhi <= -90.0f)
+		{
+			this->lensPosPhi = -89.9999f;
+		}
+	}
+
+	this->oldMousePoint = e->Location;
+}
+// ----------------------------------------------------------------------------------------------------
+
+bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas, System::Windows::Forms::Control ^keyOwner, System::Windows::Forms::Control ^mouseOwner)
 {
 	this->canvas = canvas;
 
-	this->CreateInputEvent(keyOwner);
+	this->CreateInputEvent(keyOwner, mouseOwner);
 
 	if (!this->CreateDevice())
 	{
@@ -223,17 +277,39 @@ bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas, System::Wind
 	}
 	this->CreateFont();
 
-	this->CreateSquarePolygon();
+	this->vertex = gcnew VertexBuffer(
+		CustomVertex::PositionNormal::typeid, 8, this->device, Usage::None, CustomVertex::PositionNormal::Format, Pool::Managed);
 
-	// カメラの設定
-	this->SetCamera();
+	array<CustomVertex::PositionNormal>^ vertices = gcnew array<CustomVertex::PositionNormal>(8);
+	vertices[0] = CustomVertex::PositionNormal(Vector3(-2.0f, 2.0f, 2.0f), Vector3::Normalize(Vector3(-1.0f, 1.0f, 1.0f)));
+	vertices[1] = CustomVertex::PositionNormal(Vector3(2.0f, 2.0f, 2.0f), Vector3::Normalize(Vector3(1.0f, 1.0f, 1.0f)));
+	vertices[2] = CustomVertex::PositionNormal(Vector3(-2.0f, 2.0f, -2.0f), Vector3::Normalize(Vector3(-1.0f, 1.0f, -1.0f)));
+	vertices[3] = CustomVertex::PositionNormal(Vector3(2.0f, 2.0f, -2.0f), Vector3::Normalize(Vector3(1.0f, 1.0f, -1.0f)));
+	vertices[4] = CustomVertex::PositionNormal(Vector3(-2.0f, -2.0f, 2.0f), Vector3::Normalize(Vector3(-1.0f, -1.0f, 1.0f)));
+	vertices[5] = CustomVertex::PositionNormal(Vector3(2.0f, -2.0f, 2.0f), Vector3::Normalize(Vector3(1.0f, -1.0f, 1.0f)));
+	vertices[6] = CustomVertex::PositionNormal(Vector3(-2.0f, -2.0f, -2.0f), Vector3::Normalize(Vector3(-1.0f, -1.0f, -1.0f)));
+	vertices[7] = CustomVertex::PositionNormal(Vector3(2.0f, -2.0f, -2.0f), Vector3::Normalize(Vector3(1.0f, -1.0f, -1.0f)));
 
-	// ライトを無効
-	this->device->RenderState->Lighting = false;
+	GraphicsStream^ stream = this->vertex->Lock(0, 0, LockFlags::None);
+	stream->Write(vertices);
+	this->vertex->Unlock();
 
-	// カリングを無効にしてポリゴンの裏も描画する
-	this->device->RenderState->CullMode = Cull::None;
+	this->index = gcnew IndexBuffer(this->device, 12 * 3 * 2, Usage::WriteOnly, Pool::Managed, true);
 
+	stream = this->index->Lock(0, 0, LockFlags::None);
+	stream->Write(vertexIndices);
+	this->index->Unlock();
+
+	this->material.Diffuse = Color::White;
+
+	this->device->Lights[0]->Type = LightType::Directional;
+	this->device->Lights[0]->Diffuse = Color::Yellow;
+	this->device->Lights[0]->Enabled = true;
+	this->device->Lights[0]->Update();
+	this->device->Lights[1]->Type = LightType::Directional;
+	this->device->Lights[1]->Diffuse = Color::Red;
+	this->device->Lights[1]->Enabled = true;
+	this->device->Lights[1]->Update();
 
 	return true;
 }
@@ -251,6 +327,12 @@ void DirectX3D::Release()
 	{
 		delete this->vertex;
 		this->vertex = nullptr;
+	}
+
+	if (this->index != nullptr)
+	{
+		delete this->index;
+		this->index = nullptr;
 	}
 
 	if (this->font != nullptr)

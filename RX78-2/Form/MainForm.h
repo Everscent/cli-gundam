@@ -2734,7 +2734,9 @@ namespace RX78_2
 				 this->config->SaveFormSizeAndLocation(this);
 				 this->config->Save();
 
+				 this->directX->Stop();
 				 this->directX->Release();
+
 				 this->tcpServer->Stop();
 			 }
 			 // ----------------------------------------------------------------------------------------------------
@@ -5052,7 +5054,7 @@ namespace RX78_2
 	private: void InitializeDirectX()
 			 {
 				 this->directX = gcnew DirectX3D();
-				 this->directX->Initialize(this->d_panelCanvas, this->tabControl);
+				 this->directX->Initialize(this->d_panelCanvas, this->tabControl, this->d_panelCanvas);
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
