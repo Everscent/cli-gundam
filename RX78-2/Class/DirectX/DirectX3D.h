@@ -5,6 +5,7 @@ namespace RX78_2
 	namespace DirectX
 	{
 		using namespace System;
+		using namespace System::IO;
 		using namespace System::Windows::Forms;
 		using namespace System::Drawing;
 		using namespace System::ComponentModel;
@@ -27,6 +28,9 @@ namespace RX78_2
 			IndexBuffer^ index;
 			Texture^ texture;
 			Material material;
+			Mesh^ mesh;
+			array<ExtendedMaterial>^ materials;
+			array<Texture^>^ textures;
 			array<bool>^ keys;
 			float lensPosRadius;
 			float lensPosTheta;
@@ -51,12 +55,17 @@ namespace RX78_2
 			bool CreateDevice();
 			void CreateFont();
 			void CreateSquarePolygon();
+			void CreateCubePolygon();
+			bool CreateMesh();
 			void SetCamera();
+			void SetLight();
+			void MoveLight();
 			void InputKey();
 			void DoLoopProcess();
 			void Draw();
 			void DrawSquarePolygon();
 			void DrawCubePolygon();
+			void DrawMesh();
 			void BackWorkerDoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e);
 			void ControlKeyDown(Object^ sender, KeyEventArgs^ e);
 			void ControlKeyUp(Object^ sender, KeyEventArgs^ e);
