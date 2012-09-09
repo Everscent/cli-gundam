@@ -14,14 +14,18 @@ DirectX3D::DirectX3D()
 	this->vertex = nullptr;
 	this->index = nullptr;
 	this->texture = nullptr;
+	this->scale = Vector3(1.0f, 1.0f, 1.0f);
 	this->material = Material();
 	this->mesh = nullptr;
+	this->xyzLineVertex = nullptr;
+	this->trans = Vector3(0.0f, 1.5f, 0.0f);
 	this->materials = nullptr;
 	this->textures = nullptr;
 	this->keys = gcnew array<bool>(256);
-	this->lensPosRadius = 10.0f;
+	this->lensPosRadius = 20.0f;
 	this->lensPosTheta = 270.0f;
 	this->lensPosPhi = 0.0f;
+	this->rotate = 0.0f;
 	this->oldMousePoint = Point::Empty;
 	this->backWorker = gcnew BackgroundWorker();
 	this->backWorker->WorkerSupportsCancellation = true;
@@ -140,11 +144,11 @@ void DirectX3D::CreateCubePolygon()
 }
 // ----------------------------------------------------------------------------------------------------
 
-bool DirectX3D::CreateMesh()
+bool DirectX3D::CreateMesh(System::String ^xfileName)
 {
 	System::Reflection::Assembly^ assembly = System::Reflection::Assembly::GetExecutingAssembly();
 	System::Resources::ResourceManager^ resources = gcnew System::Resources::ResourceManager("RX78_2.RX78_2", assembly);
-	array<Byte>^ bytes = safe_cast<array<Byte>^>(resources->GetObject(L"DeruderuXFile"));
+	array<Byte>^ bytes = safe_cast<array<Byte>^>(resources->GetObject(xfileName));
 	MemoryStream^ stream = gcnew MemoryStream(bytes);
 	this->mesh = Mesh::FromStream(stream, MeshFlags::Managed, this->device, this->materials);
 
@@ -188,6 +192,27 @@ bool DirectX3D::CreateMesh()
 }
 // ----------------------------------------------------------------------------------------------------
 
+void DirectX3D::CreateXYZLine()
+{
+	this->xyzLineVertex = gcnew VertexBuffer(
+		CustomVertex::PositionColored::typeid, 6, this->device, Usage::None, CustomVertex::PositionColored::Format, Pool::Managed);
+
+	const float length = 20.0f;
+	array<CustomVertex::PositionColored>^ vertices = gcnew array<CustomVertex::PositionColored>(6);
+	vertices[0] = CustomVertex::PositionColored(0.0f, 0.0f, 0.0f, Color::Red.ToArgb());
+	vertices[1] = CustomVertex::PositionColored(length, 0.0f, 0.0f, Color::Red.ToArgb());
+	vertices[2] = CustomVertex::PositionColored(0.0f, 0.0f, 0.0f, Color::Green.ToArgb());
+	vertices[3] = CustomVertex::PositionColored(0.0f, length, 0.0f, Color::Green.ToArgb());
+	vertices[4] = CustomVertex::PositionColored(0.0f, 0.0f, 0.0f, Color::Blue.ToArgb());
+	vertices[5] = CustomVertex::PositionColored(0.0f, 0.0f, length, Color::Blue.ToArgb());
+
+	GraphicsStream^ stream = this->xyzLineVertex->Lock(0, 0, LockFlags::None);
+	stream->Write(vertices);
+	this->xyzLineVertex->Unlock();
+	delete stream;
+}
+// ----------------------------------------------------------------------------------------------------
+
 void DirectX3D::SetCamera()
 {
 	// レンズの位置を三次元極座標で変換
@@ -209,7 +234,7 @@ void DirectX3D::SetCamera()
 void DirectX3D::SetLight()
 {
 	this->device->Lights[0]->Type = LightType::Directional;
-	this->device->Lights[0]->Direction = Vector3(1.0f, -1.5f, 2.0f);
+	this->device->Lights[0]->Direction = Vector3(1.0f, -5.0f, 2.0f);
 	this->device->Lights[0]->Diffuse = Color::White;
 	this->device->Lights[0]->Ambient = Color::FromArgb(255, 128, 128, 128);
 	this->device->Lights[0]->Enabled = true;
@@ -220,7 +245,7 @@ void DirectX3D::SetLight()
 void DirectX3D::MoveLight()
 {
 	Matrix matrix = Matrix::RotationY(Environment::TickCount / 1000.0f);
-	this->device->Lights[0]->Direction = Vector3::TransformCoordinate(Vector3::Normalize(Vector3(1.0f, -1.5f, 2.0f)), matrix);
+	this->device->Lights[0]->Direction = Vector3::TransformCoordinate(Vector3::Normalize(Vector3(1.0f, -5.0f, 2.0f)), matrix);
 	this->device->Lights[0]->Update();
 }
 // ----------------------------------------------------------------------------------------------------
@@ -229,28 +254,29 @@ void DirectX3D::InputKey()
 {
 	if (this->keys[static_cast<int>(Keys::Left)])
 	{
-		this->lensPosTheta -= 3.0f;
+		this->rotate -= 5.0f;
 	}
 	if (this->keys[static_cast<int>(Keys::Right)])
 	{
-		this->lensPosTheta += 3.0f;
+		this->rotate += 5.0f;
 	}
 	if (this->keys[static_cast<int>(Keys::Up)])
 	{
-		this->lensPosPhi += 3.0f;
+		this->trans += Vector3::TransformCoordinate(Vector3(0.0f, 0.0f, -0.3f), Matrix::RotationY(Geometry::DegreeToRadian(this->rotate)));
 	}
 	if (this->keys[static_cast<int>(Keys::Down)])
 	{
-		this->lensPosPhi -= 3.0f;
+		this->trans -= Vector3::TransformCoordinate(Vector3(0.0f, 0.0f, -0.3f), Matrix::RotationY(Geometry::DegreeToRadian(this->rotate)));
 	}
-
-	if (this->lensPosPhi >= 90.0f)
+	if (this->keys[static_cast<int>(Keys::Z)])
 	{
-		this->lensPosPhi = 89.9999f;
+		this->scale.X /= 1.01f;
+		this->scale.Y /= 1.01f;
+		this->scale.Z /= 1.01f;
 	}
-	else if (this->lensPosPhi <= -90.0f)
+	if (this->keys[static_cast<int>(Keys::A)])
 	{
-		this->lensPosPhi = -89.9999f;
+		this->scale *= 1.01f;
 	}
 }
 // ----------------------------------------------------------------------------------------------------
@@ -275,11 +301,8 @@ void DirectX3D::DoLoopProcess()
 void DirectX3D::Draw()
 {
 	this->DrawMesh();
-
-	this->font->DrawText(nullptr, "θ：" + this->lensPosTheta, 0, 0, Color::White);
-	this->font->DrawText(nullptr, "φ：" + this->lensPosPhi, 0, 12, Color::White);
-	this->font->DrawText(nullptr, "マウス位置：" + this->oldMousePoint, 0, 24, Color::White);
-	this->font->DrawText(nullptr, "ライトベクトル：" + Environment::NewLine + this->device->Lights[0]->Direction, 0, 36, Color::White);
+	this->DrawText();
+	this->DrawXYZLine();
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -303,12 +326,48 @@ void DirectX3D::DrawCubePolygon()
 
 void DirectX3D::DrawMesh()
 {
+	// モデル座標変換用マトリックスを初期化
+	Matrix modelTransform = Matrix::Identity;
+	// 最初に拡大縮小
+	modelTransform *= Matrix::Scaling(this->scale);
+	// 回転
+	modelTransform *= Matrix::RotationY(Geometry::DegreeToRadian(this->rotate));
+	// 最後に移動
+	modelTransform *= Matrix::Translation(this->trans);
+
+	this->device->SetTransform(TransformType::World, modelTransform);
+
 	for (int i = 0; i < this->materials->Length; i++)
 	{
 		this->device->SetTexture(0, this->textures[i]);
 		this->device->Material = this->materials[i].Material3D;
 		this->mesh->DrawSubset(i);
 	}
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::DrawXYZLine()
+{
+	this->device->RenderState->Lighting = false;
+
+	this->device->SetTransform(TransformType::World, Matrix::Identity);
+
+	this->device->SetStreamSource(0, this->xyzLineVertex, 0);
+	this->device->VertexFormat = CustomVertex::PositionColored::Format;
+	this->device->DrawPrimitives(PrimitiveType::LineList, 0, 3);
+
+	this->device->RenderState->Lighting = true;
+}
+// ----------------------------------------------------------------------------------------------------
+
+void DirectX3D::DrawText()
+{
+	this->font->DrawText(nullptr, "[←→]回転 [↑↓]移動 [ZA]拡大縮小", 0, 0, Color::White);
+	this->font->DrawText(nullptr, "θ：" + this->lensPosTheta, 0, 12, Color::White);
+	this->font->DrawText(nullptr, "φ：" + this->lensPosPhi, 0, 24, Color::White);
+	this->font->DrawText(nullptr, "移動：" + this->trans.X + ", " + this->trans.Y + ", " + this->trans.Z, 0, 36, Color::White);
+	this->font->DrawText(nullptr, "回転：" + this->rotate, 0, 48, Color::White);
+	this->font->DrawText(nullptr, "拡大：" + this->scale.X, 0, 60, Color::White);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -378,11 +437,19 @@ bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas, System::Wind
 	{
 		return false;
 	}
+	
+	if (!this->CreateMesh(L"DeruderuXFile"))
+	{
+		return false;
+	}
+
 	this->CreateFont();
 
-	this->CreateMesh();
+	this->CreateXYZLine();
 
 	this->SetLight();
+
+	this->device->RenderState->NormalizeNormals = true;
 
 	return true;
 }
@@ -390,6 +457,11 @@ bool DirectX3D::Initialize(System::Windows::Forms::Control ^canvas, System::Wind
 
 void DirectX3D::Release()
 {
+	if (this->xyzLineVertex != nullptr)
+	{
+		delete this->xyzLineVertex;
+	}
+
 	if (this->texture != nullptr)
 	{
 		for each (Texture^ texture in this->textures)

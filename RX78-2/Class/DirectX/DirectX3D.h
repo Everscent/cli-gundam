@@ -29,12 +29,16 @@ namespace RX78_2
 			Texture^ texture;
 			Material material;
 			Mesh^ mesh;
+			VertexBuffer^ xyzLineVertex;
+			Vector3 trans;
+			Vector3 scale;
 			array<ExtendedMaterial>^ materials;
 			array<Texture^>^ textures;
 			array<bool>^ keys;
 			float lensPosRadius;
 			float lensPosTheta;
 			float lensPosPhi;
+			float rotate;
 			Point oldMousePoint;
 			BackgroundWorker^ backWorker;
 
@@ -56,7 +60,8 @@ namespace RX78_2
 			void CreateFont();
 			void CreateSquarePolygon();
 			void CreateCubePolygon();
-			bool CreateMesh();
+			bool CreateMesh(String^ xfileName);
+			void CreateXYZLine();
 			void SetCamera();
 			void SetLight();
 			void MoveLight();
@@ -66,6 +71,8 @@ namespace RX78_2
 			void DrawSquarePolygon();
 			void DrawCubePolygon();
 			void DrawMesh();
+			void DrawXYZLine();
+			void DrawText();
 			void BackWorkerDoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e);
 			void ControlKeyDown(Object^ sender, KeyEventArgs^ e);
 			void ControlKeyUp(Object^ sender, KeyEventArgs^ e);

@@ -5054,7 +5054,10 @@ namespace RX78_2
 	private: void InitializeDirectX()
 			 {
 				 this->directX = gcnew DirectX3D();
-				 this->directX->Initialize(this->d_panelCanvas, this->tabControl, this->d_panelCanvas);
+				 if (!this->directX->Initialize(this->d_panelCanvas, this->tabControl, this->d_panelCanvas))
+				 {
+					 System::Windows::Forms::MessageBox::Show("DirectX‚Ì‰Šú‰»‚ÉŽ¸”s‚µ‚Ü‚µ‚½I", this->Text, MessageBoxButtons::OK, MessageBoxIcon::Error);
+				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
 
