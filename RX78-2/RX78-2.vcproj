@@ -337,7 +337,35 @@
 				Name="DirectX"
 				>
 				<File
+					RelativePath=".\Class\DirectX\Camera.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\DirectX\DirectX3D.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\DrawingText.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\DrawingWorld.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\Floor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\Lighting.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\RandomMovingCube.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\XYZLine.cpp"
 					>
 				</File>
 			</Filter>
@@ -473,7 +501,43 @@
 				Name="DirectX"
 				>
 				<File
+					RelativePath=".\Class\DirectX\Camera.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Class\DirectX\DirectX3D.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\DrawingText.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\DrawingWorld.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\Floor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\IDrawable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\IMovable.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\Lighting.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\RandomMovingCube.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Class\DirectX\XYZLine.h"
 					>
 				</File>
 			</Filter>

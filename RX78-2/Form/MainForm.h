@@ -10,7 +10,7 @@
 #include "PicturePuzzle.h"
 #include "BinaryClock.h"
 #include "ArrowInsectCage.h"
-#include "DirectX3D.h"
+#include "DrawingWorld.h"
 
 namespace RX78_2
 {
@@ -58,7 +58,7 @@ namespace RX78_2
 	private: BinaryClock^ clock;					///< バイナリクロック
 	private: TetrisPackage^ tetris;					///< テトリス
 	private: ArrowInsectCage^ arrow;				///< Arrow虫
-	private: DirectX3D^ directX;					///< DirectX
+	private: DrawingWorld^ drawingWorld;			///< 描画世界（DirectX）
 
 	private: System::Windows::Forms::MenuStrip^  menuStrip;
 	private: System::Windows::Forms::ToolStrip^  toolStrip;
@@ -2734,8 +2734,8 @@ namespace RX78_2
 				 this->config->SaveFormSizeAndLocation(this);
 				 this->config->Save();
 
-				 this->directX->Stop();
-				 this->directX->Release();
+				 this->drawingWorld->Stop();
+				 this->drawingWorld->Release();
 
 				 this->tcpServer->Stop();
 			 }
@@ -2787,11 +2787,11 @@ namespace RX78_2
 				 // DirectX
 				 if (this->tabControl->SelectedTab == this->tabDirectX)
 				 {
-					 this->directX->Start();
+					 this->drawingWorld->Start();
 				 }
 				 else
 				 {
-					 this->directX->Stop();
+					 this->drawingWorld->Stop();
 				 }
 			 }
 			 // ----------------------------------------------------------------------------------------------------
@@ -5053,8 +5053,8 @@ namespace RX78_2
 	/// 初期化
 	private: void InitializeDirectX()
 			 {
-				 this->directX = gcnew DirectX3D();
-				 if (!this->directX->Initialize(this->d_panelCanvas, this->tabControl, this->d_panelCanvas))
+				 this->drawingWorld = gcnew DrawingWorld(this->d_panelCanvas, this->tabControl, this->d_panelCanvas);
+				 if (!this->drawingWorld->Initialize())
 				 {
 					 System::Windows::Forms::MessageBox::Show("DirectXの初期化に失敗しました！", this->Text, MessageBoxButtons::OK, MessageBoxIcon::Error);
 				 }
