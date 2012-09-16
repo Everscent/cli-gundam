@@ -21,19 +21,19 @@ namespace Anaheim
 			 */
 			public:
 				/// 描画開始
-				virtual void BeginDraw();
+				virtual void BeginDraw() abstract;
 				/// 直線描画
-				virtual void DrawLine(Color color, float width, PointF point1, PointF point2);
+				virtual void DrawLine(Color color, float width, PointF point1, PointF point2) abstract;
 				/// 四角形描画
-				virtual void DrawRectangle(Color color, float width, PointF point, SizeF size);
+				virtual void DrawRectangle(Color color, float width, PointF point, SizeF size) abstract;
 				/// 四角形塗りつぶし
-				virtual void FillRectangle(Color color, PointF point, SizeF size);
+				virtual void FillRectangle(Color color, PointF point, SizeF size) abstract;
 				/// 四角形塗りつぶし（グラデーション）
-				virtual void FillRectangleGradation(Color color1, Color color2, PointF point, SizeF size);
+				virtual void FillRectangleGradation(Color color1, Color color2, PointF point, SizeF size) abstract;
 				/// 描画終了
-				virtual void EndDraw();
+				virtual void EndDraw() abstract;
 				/// クリア
-				virtual void Clear();
+				virtual void Clear() abstract;
 			};
 			// ----------------------------------------------------------------------------------------------------
 

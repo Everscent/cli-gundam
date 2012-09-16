@@ -21,7 +21,7 @@ namespace Anaheim
 		/**
 		 * フィールド
 		 */
-		public:
+		private:
 			TcpClient^ client;
 			BackgroundWorker^ receiveWorker;
 			Encoding^ encoding;
