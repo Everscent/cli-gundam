@@ -13,6 +13,7 @@ Lighting::Lighting(Microsoft::DirectX::Direct3D::Device ^device, float distance,
 	this->mesh = Mesh::Sphere(device, 0.2f, 16, 16);
 	this->material.Diffuse = color;
 	this->material.Ambient = color;
+	this->location = Vector3::Empty;
 
 	device->RenderState->Lighting = true;
 	device->Lights[index]->Type = LightType::Directional;

@@ -6,17 +6,18 @@ using namespace RX78_2::DirectX;
 /**
  * ランダム移動キューブ
  */
-RandomMovingCube::RandomMovingCube(Microsoft::DirectX::Direct3D::Device ^device, Microsoft::DirectX::Vector3 range, float size)
+RandomMovingCube::RandomMovingCube(Microsoft::DirectX::Direct3D::Device ^device, Microsoft::DirectX::Vector3 range, float size, System::Random ^random)
 {
 	this->range = range;
 	this->shadowMaterial.Diffuse = Color::FromArgb(128, 0, 0, 0);
 	this->shadowMaterial.Ambient = Color::FromArgb(128, 0, 0, 0);
+	this->size = size;
+
 	this->mesh = Mesh::Box(device, size, size, size);
 
-	System::Threading::Thread::Sleep(10);
-	Random^ random = gcnew Random();
+	this->random = random;
 	double x = random->NextDouble() * range.X * 2 - range.X;
-	double y = random->NextDouble() * range.Y;
+	double y = random->NextDouble() * range.Y + this->size / 2;
 	double z = random->NextDouble() * range.Z * 2 - range.Z;
 	this->location = Vector3(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
 
@@ -26,21 +27,19 @@ RandomMovingCube::RandomMovingCube(Microsoft::DirectX::Direct3D::Device ^device,
 
 void RandomMovingCube::Reset()
 {
-	Random^ random = gcnew Random();
-
-	this->material.Diffuse = Color::FromArgb(255, random->Next(256), random->Next(256), random->Next(256));
+	this->material.Diffuse = Color::FromArgb(255, this->random->Next(256), this->random->Next(256), this->random->Next(256));
 	this->material.Ambient = this->material.Diffuse;
 
-	double tx = random->NextDouble() * range.X * 2 - range.X;
-	double ty = random->NextDouble() * range.Y;
-	double tz = random->NextDouble() * range.Z * 2 - range.Z;
+	double tx = this->random->NextDouble() * range.X * 2 - range.X;
+	double ty = this->random->NextDouble() * range.Y + this->size / 2;
+	double tz = this->random->NextDouble() * range.Z * 2 - range.Z;
 	this->targetLocation = Vector3(static_cast<float>(tx), static_cast<float>(ty), static_cast<float>(tz));
 
-	this->count = random->Next(50, 100);
+	this->count = this->random->Next(100, 200);
 	float sx = (this->targetLocation.X - this->location.X) / count;
 	float sy = (this->targetLocation.Y - this->location.Y) / count;
 	float sz = (this->targetLocation.Z - this->location.Z) / count;
-	this->step = Vector3(sx, sy,sz);
+	this->step = Vector3(sx, sy, sz);
 }
 // ----------------------------------------------------------------------------------------------------
 

@@ -23,6 +23,9 @@ namespace RX78_2
 		private:
 			initonly Vector3 range;
 			initonly Material shadowMaterial;
+			initonly float size;
+
+			Random^ random;
 
 			Mesh^ mesh;
 			Material material;
@@ -36,7 +39,7 @@ namespace RX78_2
 		 * コンストラクタ
 		 */
 		public:
-			RandomMovingCube(Device^ device, Vector3 range, float size);
+			RandomMovingCube(Device^ device, Vector3 range, float size, Random^ random);
 
 		/**
 		 * メソッド

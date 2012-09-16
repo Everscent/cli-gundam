@@ -38,7 +38,7 @@ void Camera::InputMouseMove(System::Drawing::Point mouseLocation, System::Window
 
 void Camera::InputMouseWheel(int delta)
 {
-	this->radius += delta / 480.0f;
+	this->radius -= delta / 480.0f;
 	if (this->radius < 4.0f)
 	{
 		this->radius = 4.0f;

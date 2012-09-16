@@ -6,6 +6,7 @@
 #include "XYZLine.h"
 #include "Floor.h"
 #include "RandomMovingCube.h"
+#include "Deruderu.h"
 
 using namespace RX78_2::DirectX;
 
@@ -29,8 +30,9 @@ DrawingWorld::DrawingWorld(System::Windows::Forms::Control ^canvas, System::Wind
 
 	this->lighting = nullptr;
 	this->camera = nullptr;
-	this->text = nullptr;
 	this->floor = nullptr;
+	this->deruderu = nullptr;
+	this->text = nullptr;
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -67,23 +69,29 @@ bool DrawingWorld::CreateInstance()
 
 	this->lighting = gcnew Lighting(this->device, 12.0f, 0, Color::Gold);
 	this->camera = gcnew Camera(16.0f);
-	this->text = gcnew DrawingText(this->device, 12, "‚l‚r ƒSƒVƒbƒN");
 	this->floor = gcnew Floor(this->device, 10.0f, Color::DarkGreen, Color::DarkGray);
+	this->deruderu = gcnew Deruderu(this->device);
+	this->text = gcnew DrawingText(this->device, 12, "‚l‚r ƒSƒVƒbƒN");
 	XYZLine^ xyzLine = gcnew XYZLine(this->device, 20.0f);
 
 	this->movingItems->Add(this->lighting);
 	this->movingItems->Add(this->camera);
+	this->movingItems->Add(this->deruderu);
 
 	this->drawingItems->Add(this->lighting);
 	this->drawingItems->Add(xyzLine);
 	this->drawingItems->Add(floor);
+	this->drawingItems->Add(this->deruderu);
 
+	Random^ random = gcnew Random();
 	for (int i = 0; i < 10; i++)
 	{
-		RandomMovingCube^ cube = gcnew RandomMovingCube(this->device, Vector3(10.0f, 10.0f, 10.0f), 1.0f);
+		RandomMovingCube^ cube = gcnew RandomMovingCube(this->device, Vector3(10.0f, 10.0f, 10.0f), 1.0f, random);
 		this->movingItems->Add(cube);
 		this->drawingItems->Add(cube);
 	}
+
+	if (!this->deruderu->Initialize(this->device)) return false;
 
 	return true;
 }
@@ -122,19 +130,27 @@ void DrawingWorld::Draw()
 
 	int lineIndex = 0;
 	this->text->Write("Camera setting", lineIndex++, Color::Crimson);
-	this->text->Write("ƒÆF" + this->camera->Theta, lineIndex++, Color::Crimson);
-	this->text->Write("ƒÓF" + this->camera->Phi, lineIndex++, Color::Crimson);
+	this->text->Write("ƒÆF" + this->camera->Theta + "‹", lineIndex++, Color::Crimson);
+	this->text->Write("ƒÓF" + this->camera->Phi + "‹", lineIndex++, Color::Crimson);
 	this->text->Write("‚qF" + String::Format("{0:F2}", this->camera->Radius), lineIndex++, Color::Crimson);
+	this->text->Write(String::Empty, lineIndex++, Color::Crimson);
+	this->text->Write("Deruderu", lineIndex++, Color::Crimson);
+	this->text->Write("[©¨]‰ñ“] [ª«]ˆÚ“®", lineIndex++, Color::Crimson);
+	this->text->Write("ˆÊ’uF" + String::Format("{0:F4}", this->deruderu->Location.X) + ", " + 
+		String::Format("{0:F4}", this->deruderu->Location.Y) + ", " + String::Format("{0:F4}", this->deruderu->Location.Z), lineIndex++, Color::Crimson);
+	this->text->Write("‰ñ“]F" + this->deruderu->Rotate + "‹", lineIndex++, Color::Crimson);
 }
 // ----------------------------------------------------------------------------------------------------
 
 void DrawingWorld::ControlKeyDown(System::Object ^sender, System::Windows::Forms::KeyEventArgs ^e)
 {
+	this->deruderu->InputKeyDown(e->KeyCode);
 }
 // ----------------------------------------------------------------------------------------------------
 
 void DrawingWorld::ControlKeyUp(System::Object ^sender, System::Windows::Forms::KeyEventArgs ^e)
 {
+	this->deruderu->InputKeyUp(e->KeyCode);
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -188,9 +204,10 @@ void DrawingWorld::Release()
 	this->movingItems->Clear();
 
 	delete this->text;
+	delete this->deruderu;
+	delete this->floor;
 	delete this->camera;
 	delete this->lighting;
-	delete this->floor;
 
 	if (this->device != nullptr)
 	{

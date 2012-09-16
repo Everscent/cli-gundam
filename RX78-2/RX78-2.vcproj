@@ -341,7 +341,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\DirectX\DirectX3D.cpp"
+					RelativePath=".\Class\DirectX\Deruderu.cpp"
 					>
 				</File>
 				<File
@@ -505,7 +505,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\DirectX\DirectX3D.h"
+					RelativePath=".\Class\DirectX\Deruderu.h"
 					>
 				</File>
 				<File

@@ -28,7 +28,6 @@ XYZLine::XYZLine(Microsoft::DirectX::Direct3D::Device ^device, float length)
 
 void XYZLine::Draw(Device ^device)
 {
-#ifdef _DEBUG
 	device->RenderState->Lighting = false;
 
 	device->SetTransform(TransformType::World, Matrix::Identity);
@@ -37,7 +36,6 @@ void XYZLine::Draw(Device ^device)
 	device->DrawPrimitives(PrimitiveType::LineList, 0, 3);
 
 	device->RenderState->Lighting = true;
-#endif
 }
 // ----------------------------------------------------------------------------------------------------
 

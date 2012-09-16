@@ -17,6 +17,7 @@ namespace RX78_2
 		ref class XYZLine;
 		ref class Floor;
 		ref class RandomMovingCube;
+		ref class Deruderu;
 		ref class DrawingText;
 		interface class IMovable;
 		interface class IDrawable;
@@ -37,6 +38,7 @@ namespace RX78_2
 			Lighting^ lighting;
 			Camera^ camera;
 			Floor^ floor;
+			Deruderu^ deruderu;
 			DrawingText^ text;
 
 			List<IMovable^>^ movingItems;
