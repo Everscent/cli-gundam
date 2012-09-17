@@ -101,7 +101,7 @@ void DrawingWorld::DoLoopProcess()
 {
 	this->Move();
 
-	this->device->Clear(ClearFlags::Target | ClearFlags::ZBuffer | ClearFlags::Stencil, Color::Lavender, 1.0f, 0xFFFFFFFF);
+	this->device->Clear(ClearFlags::Target | ClearFlags::ZBuffer | ClearFlags::Stencil, Color::LightSteelBlue, 1.0f, 0xFFFFFFFF);
 
 	this->device->BeginScene();
 	this->Draw();

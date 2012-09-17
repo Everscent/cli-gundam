@@ -18,7 +18,7 @@ Lighting::Lighting(Microsoft::DirectX::Direct3D::Device ^device, float distance,
 	device->RenderState->Lighting = true;
 	device->Lights[index]->Type = LightType::Directional;
 	device->Lights[index]->Diffuse = Color::White;
-	device->Lights[index]->Ambient = Color::FromArgb(255, 192, 192, 192);
+	device->Lights[index]->Ambient = Color::FromArgb(255, 128, 128, 128);
 	device->Lights[index]->Enabled = true;
 	device->Lights[index]->Update();
 }
