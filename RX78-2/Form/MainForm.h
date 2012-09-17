@@ -561,7 +561,7 @@ namespace RX78_2
 			this->menuView->Enabled = false;
 			this->menuView->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuView.Image")));
 			this->menuView->Name = L"menuView";
-			this->menuView->Size = System::Drawing::Size(119, 22);
+			this->menuView->Size = System::Drawing::Size(152, 22);
 			this->menuView->Text = L"表示(&V)";
 			this->menuView->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuView->Click += gcnew System::EventHandler(this, &MainForm::menuView_Click);
@@ -570,7 +570,7 @@ namespace RX78_2
 			// 
 			this->menuHide->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuHide.Image")));
 			this->menuHide->Name = L"menuHide";
-			this->menuHide->Size = System::Drawing::Size(119, 22);
+			this->menuHide->Size = System::Drawing::Size(152, 22);
 			this->menuHide->Text = L"隠す(&H)";
 			this->menuHide->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuHide->Click += gcnew System::EventHandler(this, &MainForm::menuHide_Click);
@@ -578,13 +578,13 @@ namespace RX78_2
 			// menuFileSeparator
 			// 
 			this->menuFileSeparator->Name = L"menuFileSeparator";
-			this->menuFileSeparator->Size = System::Drawing::Size(116, 6);
+			this->menuFileSeparator->Size = System::Drawing::Size(149, 6);
 			// 
 			// menuExit
 			// 
 			this->menuExit->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuExit.Image")));
 			this->menuExit->Name = L"menuExit";
-			this->menuExit->Size = System::Drawing::Size(119, 22);
+			this->menuExit->Size = System::Drawing::Size(152, 22);
 			this->menuExit->Text = L"終了(&X)";
 			this->menuExit->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuExit->Click += gcnew System::EventHandler(this, &MainForm::menuExit_Click);
@@ -669,6 +669,7 @@ namespace RX78_2
 			// menuClear
 			// 
 			this->menuClear->Enabled = false;
+			this->menuClear->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuClear.Image")));
 			this->menuClear->Name = L"menuClear";
 			this->menuClear->Size = System::Drawing::Size(202, 22);
 			this->menuClear->Text = L"クリア(&C)";
@@ -715,7 +716,7 @@ namespace RX78_2
 			this->menuAscii->Checked = true;
 			this->menuAscii->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->menuAscii->Name = L"menuAscii";
-			this->menuAscii->Size = System::Drawing::Size(152, 22);
+			this->menuAscii->Size = System::Drawing::Size(137, 22);
 			this->menuAscii->Text = L"ASCII(&A)";
 			this->menuAscii->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuAscii->Click += gcnew System::EventHandler(this, &MainForm::menuAscii_Click);
@@ -723,7 +724,7 @@ namespace RX78_2
 			// menuUtf8
 			// 
 			this->menuUtf8->Name = L"menuUtf8";
-			this->menuUtf8->Size = System::Drawing::Size(152, 22);
+			this->menuUtf8->Size = System::Drawing::Size(137, 22);
 			this->menuUtf8->Text = L"UTF-8(&U)";
 			this->menuUtf8->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuUtf8->Click += gcnew System::EventHandler(this, &MainForm::menuUtf8_Click);
@@ -731,7 +732,7 @@ namespace RX78_2
 			// menuDefault
 			// 
 			this->menuDefault->Name = L"menuDefault";
-			this->menuDefault->Size = System::Drawing::Size(152, 22);
+			this->menuDefault->Size = System::Drawing::Size(137, 22);
 			this->menuDefault->Text = L"Default(&D)";
 			this->menuDefault->Click += gcnew System::EventHandler(this, &MainForm::menuDefault_Click);
 			// 
@@ -756,7 +757,7 @@ namespace RX78_2
 			// 
 			this->menuFtpConnect->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuFtpConnect.Image")));
 			this->menuFtpConnect->Name = L"menuFtpConnect";
-			this->menuFtpConnect->Size = System::Drawing::Size(152, 22);
+			this->menuFtpConnect->Size = System::Drawing::Size(119, 22);
 			this->menuFtpConnect->Text = L"接続(&C)";
 			this->menuFtpConnect->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuFtpConnect->Click += gcnew System::EventHandler(this, &MainForm::menuFtpConnect_Click);
@@ -766,7 +767,7 @@ namespace RX78_2
 			this->menuFtpDisConnect->Enabled = false;
 			this->menuFtpDisConnect->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuFtpDisConnect.Image")));
 			this->menuFtpDisConnect->Name = L"menuFtpDisConnect";
-			this->menuFtpDisConnect->Size = System::Drawing::Size(152, 22);
+			this->menuFtpDisConnect->Size = System::Drawing::Size(119, 22);
 			this->menuFtpDisConnect->Text = L"切断(&D)";
 			this->menuFtpDisConnect->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuFtpDisConnect->Click += gcnew System::EventHandler(this, &MainForm::menuFtpDisConnect_Click);
@@ -799,7 +800,7 @@ namespace RX78_2
 			// 
 			this->menuTimer->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuTimer.Image")));
 			this->menuTimer->Name = L"menuTimer";
-			this->menuTimer->Size = System::Drawing::Size(152, 22);
+			this->menuTimer->Size = System::Drawing::Size(142, 22);
 			this->menuTimer->Text = L"タイマー(&T)";
 			this->menuTimer->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuTimer->Click += gcnew System::EventHandler(this, &MainForm::menuTimer_Click);
@@ -810,7 +811,7 @@ namespace RX78_2
 				this->menuOffColor});
 			this->menuColor->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuColor.Image")));
 			this->menuColor->Name = L"menuColor";
-			this->menuColor->Size = System::Drawing::Size(152, 22);
+			this->menuColor->Size = System::Drawing::Size(142, 22);
 			this->menuColor->Text = L"色設定(&C)";
 			// 
 			// menuOnColor
@@ -873,7 +874,7 @@ namespace RX78_2
 			// 
 			this->menuReset->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"menuReset.Image")));
 			this->menuReset->Name = L"menuReset";
-			this->menuReset->Size = System::Drawing::Size(152, 22);
+			this->menuReset->Size = System::Drawing::Size(142, 22);
 			this->menuReset->Text = L"リセット(&R)";
 			this->menuReset->EnabledChanged += gcnew System::EventHandler(this, &MainForm::MenuEnabledChanged);
 			this->menuReset->Click += gcnew System::EventHandler(this, &MainForm::menuReset_Click);
