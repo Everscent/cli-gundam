@@ -70,7 +70,7 @@ void RandomMovingCube::DrawShadow(Microsoft::DirectX::Direct3D::Device ^device, 
 	Matrix matrix = Matrix::Identity;
 	matrix *= Matrix::Translation(this->location);
 	Matrix shadowMtrix = Matrix::Identity;
-	Vector4 lightingLocationV4 = Vector4(lightingLocation.X, lightingLocation.Y, lightingLocation.Z, 0);
+	Vector4 lightingLocationV4 = Vector4(lightingLocation.X - this->location.X, lightingLocation.Y - this->location.Y, lightingLocation.Z - this->location.Z, 0);
 	shadowMtrix.Shadow(lightingLocationV4, plane);
 	matrix *= shadowMtrix;
 
