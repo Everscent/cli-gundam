@@ -3,7 +3,7 @@
 #include "Lighting.h"
 #include "Camera.h"
 #include "DrawingText.h"
-#include "XYZLine.h"
+#include "XYZAxis.h"
 #include "Floor.h"
 #include "RandomMovingCube.h"
 #include "Deruderu.h"
@@ -33,6 +33,7 @@ DrawingWorld::DrawingWorld(System::Windows::Forms::Control ^canvas, System::Wind
 	this->floor = nullptr;
 	this->deruderu = nullptr;
 	this->text = nullptr;
+	this->xyzAxis = nullptr;
 }
 // ----------------------------------------------------------------------------------------------------
 
@@ -72,16 +73,16 @@ bool DrawingWorld::CreateInstance()
 	this->floor = gcnew Floor(this->device, 10.0f, Color::DarkGreen, Color::DarkGray);
 	this->deruderu = gcnew Deruderu(this->device);
 	this->text = gcnew DrawingText(this->device, 12, "‚l‚r ƒSƒVƒbƒN");
-	XYZLine^ xyzLine = gcnew XYZLine(this->device, 20.0f);
+	this->xyzAxis = gcnew XYZAxis(this->device, 20.0f);
 
 	this->movingItems->Add(this->lighting);
 	this->movingItems->Add(this->camera);
 	this->movingItems->Add(this->deruderu);
 
 	this->drawingItems->Add(this->lighting);
-	this->drawingItems->Add(xyzLine);
 	this->drawingItems->Add(floor);
 	this->drawingItems->Add(this->deruderu);
+	this->drawingItems->Add(this->xyzAxis);
 
 	Random^ random = gcnew Random();
 	for (int i = 0; i < 10; i++)
@@ -183,6 +184,12 @@ void DrawingWorld::BackWorkerDoWork(System::Object ^sender, System::ComponentMod
 }
 // ----------------------------------------------------------------------------------------------------
 
+void DrawingWorld::SetXYZAxisEnabled(bool enabled)
+{
+	this->xyzAxis->Enabled = enabled;
+}
+// ----------------------------------------------------------------------------------------------------
+
 bool DrawingWorld::Initialize()
 {
 	if (!this->CreateInstance()) return false;
@@ -203,6 +210,7 @@ void DrawingWorld::Release()
 	this->drawingItems->Clear();
 	this->movingItems->Clear();
 
+	delete this->xyzAxis;
 	delete this->text;
 	delete this->deruderu;
 	delete this->floor;

@@ -12,21 +12,22 @@ namespace RX78_2
 		using namespace Microsoft::DirectX::Direct3D;
 
 		/**
-		 * XYZ線
+		 * XYZ軸
 		 */
-		ref class XYZLine : public IDrawable
+		ref class XYZAxis : public IDrawable
 		{
 		/**
 		 * フィールド
 		 */
 		private:
 			VertexBuffer^ vertex;
+			bool enabled;
 
 		/**
 		 * コンストラクタ
 		 */
 		public:
-			XYZLine(Device^ device, float length);
+			XYZAxis(Device^ device, float length);
 
 		/**
 		 * メソッド
@@ -36,6 +37,16 @@ namespace RX78_2
 			virtual void Draw(Device^ device);
 			/// 影描画
 			virtual void DrawShadow(Device^ device, Vector3 lightingLocation, Plane plane);
+
+		/**
+		 * プロパティ
+		 */
+		public:
+			/// 有効/無効
+			property bool Enabled
+			{
+				void set(bool value) { this->enabled = value; }
+			}
 		};
 		// ----------------------------------------------------------------------------------------------------
 	}

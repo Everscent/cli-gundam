@@ -365,7 +365,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\DirectX\XYZLine.cpp"
+					RelativePath=".\Class\DirectX\XYZAxis.cpp"
 					>
 				</File>
 			</Filter>
@@ -537,7 +537,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Class\DirectX\XYZLine.h"
+					RelativePath=".\Class\DirectX\XYZAxis.h"
 					>
 				</File>
 			</Filter>

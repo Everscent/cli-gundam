@@ -14,11 +14,11 @@ namespace RX78_2
 
 		ref class Lighting;
 		ref class Camera;
-		ref class XYZLine;
 		ref class Floor;
 		ref class RandomMovingCube;
 		ref class Deruderu;
 		ref class DrawingText;
+		ref class XYZAxis;
 		interface class IMovable;
 		interface class IDrawable;
 
@@ -40,6 +40,7 @@ namespace RX78_2
 			Floor^ floor;
 			Deruderu^ deruderu;
 			DrawingText^ text;
+			XYZAxis^ xyzAxis;
 
 			List<IMovable^>^ movingItems;
 			List<IDrawable^>^ drawingItems;
@@ -63,6 +64,7 @@ namespace RX78_2
 			void ControlMouseMove(Object^ sender, MouseEventArgs^ e);
 			void ControlMouseWheel(Object^ sender, MouseEventArgs^ e);
 			void BackWorkerDoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e);
+			void SetXYZAxisEnabled(bool enabled);
 
 		public:
 			/// 初期化
@@ -73,6 +75,16 @@ namespace RX78_2
 			bool Start();
 			/// ストップ
 			bool Stop();
+
+		/**
+		 * プロパティ
+		 */
+		public:
+			/// XYZ軸有効/無効
+			property bool XYZAxisEnabled
+			{
+				void set(bool value) { this->SetXYZAxisEnabled(value); }
+			}
 		};
 		// ----------------------------------------------------------------------------------------------------
 	}

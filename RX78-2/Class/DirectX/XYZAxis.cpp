@@ -1,12 +1,12 @@
 #include "StdAfx.h"
-#include "XYZLine.h"
+#include "XYZAxis.h"
 
 using namespace RX78_2::DirectX;
 
 /**
- * XYZü
+ * XYZŽ²
  */
-XYZLine::XYZLine(Microsoft::DirectX::Direct3D::Device ^device, float length)
+XYZAxis::XYZAxis(Microsoft::DirectX::Direct3D::Device ^device, float length)
 {
 	this->vertex = gcnew VertexBuffer(
 		CustomVertex::PositionColored::typeid, 6, device, Usage::None, CustomVertex::PositionColored::Format, Pool::Managed);
@@ -26,8 +26,10 @@ XYZLine::XYZLine(Microsoft::DirectX::Direct3D::Device ^device, float length)
 }
 // ----------------------------------------------------------------------------------------------------
 
-void XYZLine::Draw(Device ^device)
+void XYZAxis::Draw(Device ^device)
 {
+	if (!this->enabled) return;
+
 	device->RenderState->Lighting = false;
 
 	device->SetTransform(TransformType::World, Matrix::Identity);
@@ -39,7 +41,7 @@ void XYZLine::Draw(Device ^device)
 }
 // ----------------------------------------------------------------------------------------------------
 
-void XYZLine::DrawShadow(Microsoft::DirectX::Direct3D::Device ^device, Microsoft::DirectX::Vector3 lightingLocation, Microsoft::DirectX::Plane plane)
+void XYZAxis::DrawShadow(Microsoft::DirectX::Direct3D::Device ^device, Microsoft::DirectX::Vector3 lightingLocation, Microsoft::DirectX::Plane plane)
 {
 	// ‰e‚È‚µ
 }

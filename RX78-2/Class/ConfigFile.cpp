@@ -201,10 +201,23 @@ XmlElement^ ConfigFile::GetBinaryClockElement()
 XmlElement^ ConfigFile::GetTetrisElement()
 {
 	XmlElement^ root = this->GetRootElement();
-	XmlElement^ ele = this->GetElement(root, "TETRIS");
+	XmlElement^ ele = this->GetElement(root, "TETRiS");
 	if (ele == nullptr)
 	{
-		ele = this->xmlDoc->CreateElement("TETRIS");
+		ele = this->xmlDoc->CreateElement("TETRiS");
+		root->AppendChild(ele);
+	}
+	return ele;
+}
+// ----------------------------------------------------------------------------------------------------
+
+XmlElement^ ConfigFile::GetDirectXElement()
+{
+	XmlElement^ root = this->GetRootElement();
+	XmlElement^ ele = this->GetElement(root, "DirectX");
+	if (ele == nullptr)
+	{
+		ele = this->xmlDoc->CreateElement("DirectX");
 		root->AppendChild(ele);
 	}
 	return ele;
@@ -490,5 +503,19 @@ void ConfigFile::SetTetrisRemoteEnabled(bool enabled)
 {
 	XmlElement^ ele = this->GetTetrisElement();
 	this->SetValue(ele, "RemoteEnabled", enabled.ToString());
+}
+// ----------------------------------------------------------------------------------------------------
+
+bool ConfigFile::GetDirectXXYZAxisON()
+{
+	XmlElement^ ele = this->GetDirectXElement();
+	return bool::Parse(this->GetValue(ele, "XYZAxisON", false.ToString()));
+}
+// ----------------------------------------------------------------------------------------------------
+
+void ConfigFile::SetDirectXXYZAxisON(bool isON)
+{
+	XmlElement^ ele = this->GetDirectXElement();
+	this->SetValue(ele, "XYZAxisON", isON.ToString());
 }
 // ----------------------------------------------------------------------------------------------------

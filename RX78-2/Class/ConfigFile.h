@@ -47,6 +47,7 @@ namespace RX78_2
 		XmlElement^ GetPicturePuzzleElement();
 		XmlElement^ GetBinaryClockElement();
 		XmlElement^ GetTetrisElement();
+		XmlElement^ GetDirectXElement();
 
 	public:
 		/// 保存
@@ -143,6 +144,14 @@ namespace RX78_2
 		bool GetTetrisRemoteEnabled();
 		/// リモート有効保存
 		void SetTetrisRemoteEnabled(bool enabled);
+
+
+		/// DirectX
+
+		/// XYZ軸表示ON読み込み
+		bool GetDirectXXYZAxisON();
+		/// XYZ軸表示ON保存
+		void SetDirectXXYZAxisON(bool isON);
 	};
 	// ----------------------------------------------------------------------------------------------------
 }
